@@ -1,0 +1,8 @@
+# gitignore for bugworld
+
+# Object files and executables
+build/
+bin/
+
+# Other nonsense
+**/.*.swp
