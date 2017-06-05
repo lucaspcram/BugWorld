@@ -75,7 +75,7 @@ clean:
 # Run executable
 run:
 	@echo "Running..."
-	./$(TARGET) play
+	./$(TARGET)
 
 # Run tests
 runtest:
