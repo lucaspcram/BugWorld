@@ -116,6 +116,8 @@ struct score ** read_scorefile(char * scorepath)
 	}
 
 	*tmp = NULL;
+	fclose(file);
+	
 	return scores;
 }
 
