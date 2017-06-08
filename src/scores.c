@@ -36,7 +36,7 @@ char * create_scorefile()
 
 	scorepath = (char *) malloc(sizeof(*scorepath) * (len_total + 1));
 	if (scorepath == NULL) {
-		// TODO abort the game here
+		abort_game("malloc failed in function \'create_scorefile\'");
 	}
 	strcpy(scorepath, homedir);
 	strcat(scorepath, "/");
@@ -100,7 +100,7 @@ struct score ** read_scorefile(char * scorepath)
 	fread(&len, sizeof(size_t), 1, file);
 	scores = (struct score **) malloc(sizeof(*scores) * (len + 1));
 	if (scores == NULL) {
-		// TODO abort the game here
+		abort_game("malloc failed in function \'read_scorefile\'");
 	}
 
 	tmp = scores;
@@ -108,7 +108,7 @@ struct score ** read_scorefile(char * scorepath)
 	while (i < len) {
 		*tmp = (struct score *) malloc(sizeof(**tmp));
 		if (*tmp == NULL) {
-			// TODO abort the game here
+			abort_game("malloc failed in function \'read_scorefile\'");
 		}
 		fread(*tmp, sizeof(struct score), 1, file);
 		tmp++;

@@ -1,8 +1,10 @@
 #include "util.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include <ncurses.h>
 
 #define M_EPSILON 0.00000001
 
@@ -47,4 +49,17 @@ bool percentage_chance(double rate)
 	r = (double) rand() / (double) RAND_MAX;
 
 	return r <= rate;
+}
+
+/*
+ * Aborts the game, closes ncurses, and prints an abort message to stderr.
+ * Note that this function does not free any heap-allocated objects.
+ */
+void abort_game(char const * msg)
+{
+	nocbreak();
+	endwin();
+	fprintf(stderr, "BugWorld FATAL: %s\n", msg);
+	fprintf(stderr, "Aborting.\n");
+	exit(1);
 }

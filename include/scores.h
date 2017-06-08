@@ -1,7 +1,7 @@
 #ifndef SCORES_H
 #define SCORES_H
 
-#define MAX_LEN_NAME 256
+#define M_MAX_LEN 256
 
 #include <sys/types.h>
 
@@ -10,7 +10,7 @@
  */
 
 struct score {
-	char name[MAX_LEN_NAME];
+	char name[M_MAX_LEN];
 	int levels_cleared;
 	int turns_elapsed;
 	int decoys_used;

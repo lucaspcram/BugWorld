@@ -20,4 +20,6 @@ int get_rand_int(int low_inc, int high_ex);
 
 bool percentage_chance(double rate);
 
+void abort_game(char const * msg);
+
 #endif
