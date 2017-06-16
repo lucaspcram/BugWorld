@@ -1,9 +1,5 @@
 TODO LIST FOR BUGWORLD
 ______________________
 
-+ look into ncurses signal handlers to make sure the terminal is cleaned
-  up correctly when the user exits
-  http://invisible-island.net/ncurses/man/curs_initscr.3x.html#h3-Signal-Handlers
-
-+
++ 
 
