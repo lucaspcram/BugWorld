@@ -11,9 +11,11 @@
 
 static WINDOW * g_emptywin;
 static WINDOW * g_masterwin;
+static WINDOW * g_menuwin;
 
 static void init_emptywin();
 static void init_masterwin();
+static void init_menuwin();
 
 static void init_emptywin()
 {
@@ -23,9 +25,17 @@ static void init_emptywin()
 
 static void init_masterwin()
 {
-	g_emptywin = newwin(M_SCRHEIGHT, M_SCRWIDTH, 0, 0);
+	g_masterwin = newwin(M_SCRHEIGHT, M_SCRWIDTH, 0, 0);
 	wclear(g_masterwin);
+
+	// TODO is this line needed?
 	mvwin(g_masterwin, 0, 0);
+}
+
+static void init_menuwin()
+{
+	g_menuwin = newpad(M_SCRHEIGHT, M_SCRWIDTH, 0, 0);
+	wclear(g_menuwin);
 }
 
 void init_graphics()
@@ -43,6 +53,7 @@ void init_graphics()
 
 	init_emptywin();
 	init_masterwin();
+	init_menuwin();
 }
 
 void destroy_graphics()

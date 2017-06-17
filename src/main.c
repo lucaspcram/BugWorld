@@ -1,10 +1,10 @@
 #include "view.h"
+#include "game.h"
 
 #include <ncurses.h>
 
 int main(int argc, char * argv[])
 {
-	init_graphics();
-	destroy_graphics();
+	init_game();
 	return 0;
 }
