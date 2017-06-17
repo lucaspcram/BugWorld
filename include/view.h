@@ -6,6 +6,12 @@
  * Things like initializing the screen, closing the screen, etc.
  */
 
+// NOTE Runs in a standard 24x80 terminal
+// TODO do these belong here or in the C file?
+#define M_SCRWIDTH (80)
+#define M_SCRHEIGHT (24)
+
 void init_graphics(void);
+void destroy_graphics(void);
 
 #endif
