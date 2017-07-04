@@ -34,7 +34,7 @@ static void init_masterwin()
 
 static void init_menuwin()
 {
-	g_menuwin = newpad(M_SCRHEIGHT, M_SCRWIDTH, 0, 0);
+	g_menuwin = newpad(M_SCRHEIGHT, M_SCRWIDTH);
 	wclear(g_menuwin);
 }
 
