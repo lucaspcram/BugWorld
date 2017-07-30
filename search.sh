@@ -6,6 +6,6 @@ then
 	exit 1
 fi
 
-TAG=$1
-grep -rnw './src' './include' -e $TAG
+tag=$1
+grep -rnw './src' './include' -e "$tag"
 
