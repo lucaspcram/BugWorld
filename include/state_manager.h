@@ -14,6 +14,9 @@ struct state {
 	void (*update)(void);
 	void (*update_input)(void);
 	void (*render)(void);
+
+	/* Global gamestate data */
+	void * glob_dat;
 };
 
 /* 
@@ -24,8 +27,6 @@ struct state_circbuf {
 	struct state ** buf;
 	int cur;
 };
-
-static struct state_circbuf * states;
 
 void init_state_manager();
 
