@@ -12,3 +12,8 @@ void init_game(void)
 	destroy_state_manager();
 	destroy_graphics();
 }
+
+void tick(void)
+{
+
+}

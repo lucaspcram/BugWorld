@@ -14,6 +14,7 @@ struct state {
 	void (*render)(void);
 };
 
-void init_states();
+void init_state_manager();
+void destroy_state_manager();
 
 #endif
