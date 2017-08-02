@@ -1,8 +1,6 @@
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
 
-#define M_CIRCBUF_SIZE 32
-
 struct state {
 	/* Lifecycle functions */
 	int (*init)(void);
@@ -12,30 +10,10 @@ struct state {
 	
 	/* State functions */
 	void (*update)(void);
-	void (*update_input)(void);
+	void (*update_input)(char);
 	void (*render)(void);
-
-	/* Global gamestate data */
-	void * glob_dat;
 };
 
-/* 
-A LIFO buffer that overwrites oldest elements
-when it reaches capacity 
-*/
-struct state_circbuf {
-	struct state ** buf;
-	int cur;
-};
-
-void init_state_manager();
-
-void destroy_state_manager();
-
-void push_state(struct state_circbuf * buf, struct state * state);
-
-void pop_state(struct state_circbuf * buf);
-
-struct state * peek_state(struct state_circbuf * buf);
+void init_states();
 
 #endif
