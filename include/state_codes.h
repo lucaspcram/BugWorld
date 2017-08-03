@@ -11,5 +11,6 @@
 
 void init_state(int code);
 void resume_state(int code);
+void force_exit();
 
 #endif
