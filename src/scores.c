@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 
-static char const * G_SCOREFILE = ".cbeetlescore";
+static char const * G_SCOREFILE = ".bugworldscore";
 
 /*
  * Attempts to create the scorefile in the user's home directory.
@@ -52,7 +52,7 @@ char * create_scorefile()
 }
 
 /*
- * Takes a NULL termianted array of score struct pointers. Writes
+ * Takes a NULL terminated array of score struct pointers. Writes
  * the struct data sequentially to the scorefile.
  */
 void write_scorefile(struct score ** scores, char * scorepath)
