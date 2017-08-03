@@ -38,7 +38,7 @@ void menu_state_update(void)
 	timer++;
 }
 
-void menu_state_update_input(char input)
+void menu_state_handle_input(char input)
 {
 	if (input == 'q')
 		force_exit();
