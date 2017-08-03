@@ -1,6 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
+/*
+ * The core game code. Sets up the SIGALRM for dynamic
+ * updates, initializes the game, etc.
+ */
+
 #define FPS (60)
 
 void init_game(void);

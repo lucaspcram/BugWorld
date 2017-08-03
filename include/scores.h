@@ -1,13 +1,13 @@
 #ifndef SCORES_H
 #define SCORES_H
 
-#define M_MAX_LEN 256
-
-#include <sys/types.h>
-
 /*
  * Definitions and functions for the scores/stats tracking system.
  */
+
+#define M_MAX_LEN 256
+
+#include <sys/types.h>
 
 struct score {
 	char name[M_MAX_LEN];

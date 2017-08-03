@@ -2,6 +2,11 @@
 #ifndef STATE_CODES_H
 #define STATE_CODES_H
 
+/*
+ * Contains codes for the game states as well as definitions
+ * for functions that states use to hook into the manager.
+ */
+
 // Manually set this to the number of defined states
 #define NUM_STATES (4)
 

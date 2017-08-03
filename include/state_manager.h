@@ -1,6 +1,11 @@
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
 
+/*
+ * The state manager suite. Interfaces the main game code
+ * with the actual state code.
+ */
+
 #include <stdbool.h>
 
 bool exit_flag;
