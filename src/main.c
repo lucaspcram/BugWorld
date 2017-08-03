@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <getopt.h>
 
 void display_help();
@@ -23,9 +24,10 @@ int main(int argc, char * argv[])
 				return 1;
 			
 			default:
-				init_game();
+				exit(1);
 		}
 	}
+	init_game();
 	return 0;
 }
 

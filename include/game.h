@@ -5,7 +5,7 @@
 
 void init_game(void);
 void input_loop(void);
-void tick(void);
+void tick(int sig);
 void set_sigalarm();
 
 #endif

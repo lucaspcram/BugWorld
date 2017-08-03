@@ -6,7 +6,7 @@
 CC=gcc
 WARN=-Wall
 OPT=#-O2 # no opts for now
-STD=-std=c11
+STD=#-std=c11 # seems to be breaking the build
 CFLAGS=$(WARN) $(OPT) $(STD) -g
 
 # project sources #

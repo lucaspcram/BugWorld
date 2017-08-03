@@ -4,7 +4,7 @@
 
 #include <sys/time.h>
 #include <signal.h>
-#include <bits/sigaction.h> 
+#include <unistd.h>
 #include <ncurses.h>
 
 void init_game(void)
@@ -29,9 +29,19 @@ void input_loop(void)
 	}
 }
 
-void tick(void)
+void tick(int sig)
 {
-
+	static int timer = 0;
+	static int num = 0;
+	char buf[10];
+	sprintf(buf, "%d", num);
+	if (timer == 60) {
+		timer = 0;
+		num++;
+	}
+	mvprintw(1, 1, buf);
+	timer++;
+	refresh();
 }
 
 /*
