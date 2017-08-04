@@ -25,13 +25,13 @@ void input_loop(void)
 
 	while (!exit_flag) {
 		ch = getch();
-		statemgr_update_input(ch);
+		handle_input(ch);
 	}
 }
 
 void tick(int sig)
 {
-	statemgr_update_render();
+	update_render();
 }
 
 /*

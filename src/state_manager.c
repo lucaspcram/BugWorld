@@ -24,7 +24,7 @@ void init_state_manager()
 	state_tab[STATE_MENU].pause = &menu_state_pause;
 	state_tab[STATE_MENU].resume = &menu_state_resume;
 	state_tab[STATE_MENU].update = &menu_state_update;
-	state_tab[STATE_MENU].update_input = &menu_state_update_input;
+	state_tab[STATE_MENU].handle_input = &menu_state_handle_input;
 	state_tab[STATE_MENU].render = &menu_state_render;
 
 	cur_state = STATE_MENU;
@@ -36,12 +36,12 @@ void destroy_state_manager()
 
 }
 
-void statemgr_update_input(char input)
+void handle_input(char input)
 {
-	state_tab[cur_state].update_input(input);
+	state_tab[cur_state].handle_input(input);
 }
 
-void statemgr_update_render()
+void update_render()
 {
 	state_tab[cur_state].update();
 	state_tab[cur_state].render();

@@ -14,13 +14,13 @@ struct state {
 	
 	/* State functions */
 	void (*update)(void);
-	void (*update_input)(char);
+	void (*handle_input)(char);
 	void (*render)(void);
 };
 
 void init_state_manager();
 void destroy_state_manager();
-void statemgr_update_input(char input);
-void statemgr_update_render();
+void handle_input(char input);
+void update_render();
 
 #endif
