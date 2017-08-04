@@ -21,5 +21,6 @@ struct state {
 void init_state_manager();
 void destroy_state_manager();
 void statemgr_update_input(char input);
+void statemgr_update_render();
 
 #endif

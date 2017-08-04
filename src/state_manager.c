@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ncurses.h>
 
 // index into the state table
 static int cur_state;
@@ -27,6 +28,7 @@ void init_state_manager()
 	state_tab[STATE_MENU].render = &menu_state_render;
 
 	cur_state = STATE_MENU;
+	state_tab[cur_state].init();
 }
 
 void destroy_state_manager()
@@ -37,6 +39,12 @@ void destroy_state_manager()
 void statemgr_update_input(char input)
 {
 	state_tab[cur_state].update_input(input);
+}
+
+void statemgr_update_render()
+{
+	state_tab[cur_state].update();
+	state_tab[cur_state].render();
 }
 
 static void set_cur_state(int code)

@@ -31,17 +31,7 @@ void input_loop(void)
 
 void tick(int sig)
 {
-	static int timer = 0;
-	static int num = 0;
-	char buf[10];
-	sprintf(buf, "%d", num);
-	if (timer == 60) {
-		timer = 0;
-		num++;
-	}
-	mvprintw(1, 1, buf);
-	timer++;
-	refresh();
+	statemgr_update_render();
 }
 
 /*

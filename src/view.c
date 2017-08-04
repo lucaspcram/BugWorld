@@ -3,46 +3,16 @@
 #include <stdio.h>
 #include <ncurses.h>
 
-#define M_RED (1)
-#define M_GREEN (2)
-#define M_YELLOW (3)
-#define M_CYAN (4)
-#define M_MAGENTA (5)
-
-static WINDOW * g_emptywin;
-static WINDOW * g_masterwin;
-static WINDOW * g_menuwin;
-
-static void init_emptywin();
-static void init_masterwin();
-static void init_menuwin();
-
-static void init_emptywin()
-{
-	g_emptywin = newpad(M_SCRHEIGHT, M_SCRWIDTH);
-	wclear(g_emptywin);
-}
-
-static void init_masterwin()
-{
-	g_masterwin = newwin(M_SCRHEIGHT, M_SCRWIDTH, 0, 0);
-	wclear(g_masterwin);
-
-	// TODO is this line needed?
-	mvwin(g_masterwin, 0, 0);
-}
-
-static void init_menuwin()
-{
-	g_menuwin = newpad(M_SCRHEIGHT, M_SCRWIDTH);
-	wclear(g_menuwin);
-}
+// NOTE Runs in a standard 24x80 terminal
+#define M_SCRWIDTH (80)
+#define M_SCRHEIGHT (24)
 
 void init_graphics()
 {
 	initscr();
 	cbreak();
 	noecho();
+	curs_set(0);
 	start_color();
 
 	init_pair(M_RED, COLOR_RED, COLOR_BLACK);
@@ -50,14 +20,37 @@ void init_graphics()
 	init_pair(M_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(M_CYAN, COLOR_CYAN, COLOR_BLACK);
 	init_pair(M_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(M_BLACK, COLOR_BLACK, COLOR_BLACK);
 
-	init_emptywin();
-	init_masterwin();
-	init_menuwin();
+	// sets background color
+	//wbkgd(stdscr, COLOR_PAIR(M_GREEN));
 }
 
 void destroy_graphics()
 {
 	nocbreak();
 	endwin();
+}
+
+void draw(char ch, int col, int row, int color)
+{
+	char buf[2];
+
+	if (col >= 80 || col < 0 || row >= 24 || row < 0)
+		return;
+
+	sprintf(buf, "%c", ch);
+	attron(COLOR_PAIR(color));
+	mvprintw(row, col, buf);
+	attroff(COLOR_PAIR(color));
+}
+
+void refresh_view()
+{
+	refresh();
+}
+
+void clear_view()
+{
+	clear();
 }
