@@ -23,14 +23,17 @@ void input_loop(void)
 {
 	char ch;
 
+	// keep running while state manager exit not set
 	while (!exit_flag) {
 		ch = getch();
+		// send input to the state manager
 		handle_input(ch);
 	}
 }
 
 void tick(int sig)
 {
+	// call the state manager's update-render
 	update_render();
 }
 

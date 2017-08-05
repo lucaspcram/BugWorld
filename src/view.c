@@ -3,10 +3,6 @@
 #include <stdio.h>
 #include <ncurses.h>
 
-// NOTE Runs in a standard 24x80 terminal
-#define M_SCRWIDTH (80)
-#define M_SCRHEIGHT (24)
-
 void init_graphics()
 {
 	initscr();
@@ -21,10 +17,6 @@ void init_graphics()
 	init_pair(M_CYAN, COLOR_CYAN, COLOR_BLACK);
 	init_pair(M_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
 	init_pair(M_BLACK, COLOR_BLACK, COLOR_BLACK);
-
-
-	init_color(M_TESTCOLOR, 365, 235, 0);
-	init_pair(M_TEST, M_TESTCOLOR, COLOR_BLACK);
 }
 
 void destroy_graphics()
