@@ -2,7 +2,7 @@
 #include "state_codes.h"
 #include "view.h"
 #include "key_bindings.h"
-
+#include <ncurses.h>
 
 static char const * TITLE_TEXT[] =
 {
@@ -56,6 +56,10 @@ void menu_state_render(void)
 {
 	int i;
 
+	// sets background color
+	wbkgd(stdscr, COLOR_PAIR(M_MAGENTA));
+
+	// render the title text
 	for (i = 0; i < TITLE_LEN; i++) {
 		draw_str(TITLE_TEXT[i], 0, TITLE_ROW_OFFSET + i, M_GREEN);
 	}

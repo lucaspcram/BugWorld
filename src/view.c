@@ -22,8 +22,9 @@ void init_graphics()
 	init_pair(M_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
 	init_pair(M_BLACK, COLOR_BLACK, COLOR_BLACK);
 
-	// sets background color
-	//wbkgd(stdscr, COLOR_PAIR(M_GREEN));
+
+	init_color(M_TESTCOLOR, 365, 235, 0);
+	init_pair(M_TEST, M_TESTCOLOR, COLOR_BLACK);
 }
 
 void destroy_graphics()
@@ -36,7 +37,7 @@ void draw(char ch, int col, int row, int color)
 {
 	char buf[2];
 
-	if (col >= 80 || col < 0 || row >= 24 || row < 0)
+	if (col >= M_SCRWIDTH || col < 0 || row >= M_SCRHEIGHT || row < 0)
 		return;
 
 	sprintf(buf, "%c", ch);
@@ -47,7 +48,7 @@ void draw(char ch, int col, int row, int color)
 
 void draw_str(char const * str, int col, int row, int color)
 {
-	if (col >= 80 || col < 0 || row >= 24 || row < 0)
+	if (col >= M_SCRWIDTH || col < 0 || row >= M_SCRHEIGHT || row < 0)
 		return;
 
 	attron(COLOR_PAIR(color));
