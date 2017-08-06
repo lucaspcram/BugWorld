@@ -173,7 +173,7 @@ void menu_state_render(void)
 	// render the title text
 	for (i = 0; i < TITLE_LEN; i++) {
 		if (title_anim_state == 0)
-			draw_str(TITLE_TEXT[i], 0, TITLE_ROW_OFFSET + i, M_BLUE);
+			draw_str(TITLE_TEXT[i], 0, TITLE_ROW_OFFSET + i, M_CYAN);
 		else
 			draw_str(TITLE_TEXT_2[i], 0, TITLE_ROW_OFFSET + i, M_CYAN);
 	}
@@ -200,7 +200,7 @@ void menu_state_render(void)
 	}
 
 	// render control hints
-	draw_str(help_hint, (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1, M_MAGENTA);
+	draw_str(help_hint, (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1, M_CYAN);
 }
 
 static void draw_menu_option(
