@@ -54,6 +54,9 @@ $(TARGET): $(OBJECTS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@echo "Building project..."
+# this is the line that fails
+# the mkdir command doesn't recieve the full path
+# to the source file, so gcc fails out
 	@mkdir -p $(BUILDDIR)
 	$(CC) $(CFLAGS) $(INCDIR) -c -o $@ $<
 
