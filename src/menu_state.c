@@ -12,16 +12,30 @@
 /* Title text definitions */
 static char const * TITLE_TEXT[] =
 {
-" /#######                                                        /##       /##",
-"| ##__  ##                                                      | ##      | ##",
-"| ##  \\ ## /##   /##  /######  /##  /##  /##  /######   /###### | ##  /#######",
-"| ####### | ##  | ## /##__  ##| ## | ## | ## /##__  ## /##__  ##| ## /##__  ##",
-"| ##__  ##| ##  | ##| ##  \\ ##| ## | ## | ##| ##  \\ ##| ##  \\__/| ##| ##  | ##",
-"| ##  \\ ##| ##  | ##| ##  | ##| ## | ## | ##| ##  | ##| ##      | ##| ##  | ##",
-"| #######/|  ######/|  #######|  #####/####/|  ######/| ##      | ##|  #######",
-"|_______/  \\______/  \\____  ## \\_____/\\___/  \\______/ |__/      |__/ \\_______/",
-"                     /##  \\ ##                                                ",
-"                    |  ######/                                                ",
+" /+++++++                                                        /++       /++",
+"| ++__  ++                                                      | ++      | ++",
+"| ++  \\ ++ /++   /++  /++++++  /++  /++  /++  /++++++   /++++++ | ++  /+++++++",
+"| +++++++ | ++  | ++ /++__  ++| ++ | ++ | ++ /++__  ++ /++__  ++| ++ /++__  ++",
+"| ++__  ++| ++  | ++| ++  \\ ++| ++ | ++ | ++| ++  \\ ++| ++  \\__/| ++| ++  | ++",
+"| ++  \\ ++| ++  | ++| ++  | ++| ++ | ++ | ++| ++  | ++| ++      | ++| ++  | ++",
+"| +++++++/|  ++++++/|  +++++++|  +++++/++++/|  ++++++/| ++      | ++|  +++++++",
+"|_______/  \\______/  \\____  ++ \\_____/\\___/  \\______/ |__/      |__/ \\_______/",
+"                     /++  \\ ++                                                ",
+"                    |  ++++++/                                                ",
+"                     \\______/                                                 "
+};
+static char const * TITLE_TEXT_2[] =
+{
+" /xxxxxxx                                                        /xx       /xx",
+"| xx__  xx                                                      | xx      | xx",
+"| xx  \\ xx /xx   /xx  /xxxxxx  /xx  /xx  /xx  /xxxxxx   /xxxxxx | xx  /xxxxxxx",
+"| xxxxxxx | xx  | xx /xx__  xx| xx | xx | xx /xx__  xx /xx__  xx| xx /xx__  xx",
+"| xx__  xx| xx  | xx| xx  \\ xx| xx | xx | xx| xx  \\ xx| xx  \\__/| xx| xx  | xx",
+"| xx  \\ xx| xx  | xx| xx  | xx| xx | xx | xx| xx  | xx| xx      | xx| xx  | xx",
+"| xxxxxxx/|  xxxxxx/|  xxxxxxx|  xxxxx/xxxx/|  xxxxxx/| xx      | xx|  xxxxxxx",
+"|_______/  \\______/  \\____  xx \\_____/\\___/  \\______/ |__/      |__/ \\_______/",
+"                     /xx  \\ xx                                                ",
+"                    |  xxxxxx/                                                ",
 "                     \\______/                                                 "
 };
 static const int TITLE_LEN = 11;
@@ -34,30 +48,49 @@ static char const * MENU_PLAY[] =
 "|P|L|A|Y|",
 "x-x-x-x-x" // animated border frame 2
 };
-static const int MENU_PLAY_ROW_OFFSET = 12;
+static int MENU_PLAY_ROW_OFFSET;
 static int MENU_PLAY_COL_OFFSET;
 
-/* Exit seleciton */
+/* Exit selection */
 static char const * MENU_EXIT[] =
 {
 "+-+-+-+-+", // animated border frame 1
 "|E|X|I|T|",
 "x-x-x-x-x" // animated border frame 2
 };
-static const int MENU_EXIT_ROW_OFFSET = 16;
+static int MENU_EXIT_ROW_OFFSET;
+static int MENU_EXIT_COL_OFFSET;
 
+/* state globals */
 static int menu_index;
-static int anim_timer;
-static int anim_state;
+static int menu_anim_timer;
+
+// valid values are 0, 1
+static int menu_anim_state;
+static int title_anim_state;
+
+static void draw_menu_option(
+	char const ** menu,
+	int col_offset,
+	int row_offset,
+	int color,
+	int state
+);
 
 int menu_state_init(void)
 {
 	menu_index = M_OPTION_PLAY;
-	anim_timer = 0;
-	anim_state = 0;
+	menu_anim_timer = 0;
+	menu_anim_state = 0;
+	title_anim_state = 0;
 
-	// compute COL offsets for menu options
+	/* compute offsets for menu options */
+	MENU_PLAY_ROW_OFFSET = TITLE_LEN + 1;
 	MENU_PLAY_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(MENU_PLAY[0])) / 2);
+	
+	MENU_EXIT_ROW_OFFSET = MENU_PLAY_ROW_OFFSET + 4;
+	MENU_EXIT_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(MENU_EXIT[0])) / 2);
+
 	return 0;
 }
 
@@ -78,10 +111,11 @@ int menu_state_resume(void)
 
 void menu_state_update(void)
 {
-	anim_timer++;
-	if (anim_timer == 30) {
-		anim_timer = 0;
-		anim_state = 1 - anim_state;
+	menu_anim_timer++;
+	if (menu_anim_timer == 30) {
+		menu_anim_timer = 0;
+		menu_anim_state = 1 - menu_anim_state;
+		title_anim_state = 1 - title_anim_state;
 	}
 }
 
@@ -91,17 +125,19 @@ void menu_state_handle_input(char input)
 		if (menu_index == M_OPTION_PLAY) {
 
 		}
-		if (menu_index == M_OPTION_EXIT) {
+		if (menu_index == M_OPTION_EXIT)
 			force_exit();
-		}
 	}
+
 	if (input == M_MENU_UP) {
 		menu_index--;
+		menu_anim_state = 0;
 		if (menu_index < 0)
 			menu_index = M_NUM_OPTIONS - 1;
 	}
 	if (input == M_MENU_DOWN) {
 		menu_index++;
+		menu_anim_state = 0;
 		if (menu_index >= M_NUM_OPTIONS)
 			menu_index = 0;
 	}
@@ -113,38 +149,40 @@ void menu_state_render(void)
 
 	// render the title text
 	for (i = 0; i < TITLE_LEN; i++) {
-		draw_str(TITLE_TEXT[i], 0, TITLE_ROW_OFFSET + i, M_MAGENTA);
+		if (title_anim_state == 0)
+			draw_str(TITLE_TEXT[i], 0, TITLE_ROW_OFFSET + i, M_MAGENTA);
+		else
+			draw_str(TITLE_TEXT_2[i], 0, TITLE_ROW_OFFSET + i, M_MAGENTA);
 	}
 
 	switch (menu_index) {
 		case M_OPTION_PLAY:
-			if (anim_state == 0) {
-				draw_str(MENU_PLAY[0], 35, MENU_PLAY_ROW_OFFSET, M_RED);
-				draw_str(MENU_PLAY[1], 35, MENU_PLAY_ROW_OFFSET + 1, M_RED);
-				draw_str(MENU_PLAY[0], 35, MENU_PLAY_ROW_OFFSET + 2, M_RED);
-			} else {
-				draw_str(MENU_PLAY[2], 35, MENU_PLAY_ROW_OFFSET, M_RED);
-				draw_str(MENU_PLAY[1], 35, MENU_PLAY_ROW_OFFSET + 1, M_RED);
-				draw_str(MENU_PLAY[2], 35, MENU_PLAY_ROW_OFFSET + 2, M_RED);
-			}
-			draw_str(MENU_EXIT[0], 35, MENU_EXIT_ROW_OFFSET, M_MAGENTA);
-			draw_str(MENU_EXIT[1], 35, MENU_EXIT_ROW_OFFSET + 1, M_MAGENTA);
-			draw_str(MENU_EXIT[0], 35, MENU_EXIT_ROW_OFFSET + 2, M_MAGENTA);
+			draw_menu_option(MENU_PLAY, MENU_PLAY_COL_OFFSET, MENU_PLAY_ROW_OFFSET, M_RED, menu_anim_state);
+			draw_menu_option(MENU_EXIT, MENU_EXIT_COL_OFFSET, MENU_EXIT_ROW_OFFSET, M_MAGENTA, 0);
 			break;
 		
 		case M_OPTION_EXIT:
-			draw_str(MENU_PLAY[0], 35, MENU_PLAY_ROW_OFFSET, M_MAGENTA);
-			draw_str(MENU_PLAY[1], 35, MENU_PLAY_ROW_OFFSET + 1, M_MAGENTA);
-			draw_str(MENU_PLAY[0], 35, MENU_PLAY_ROW_OFFSET + 2, M_MAGENTA);
-			if (anim_state == 0) {
-				draw_str(MENU_EXIT[0], 35, MENU_EXIT_ROW_OFFSET, M_RED);
-				draw_str(MENU_EXIT[1], 35, MENU_EXIT_ROW_OFFSET + 1, M_RED);
-				draw_str(MENU_EXIT[0], 35, MENU_EXIT_ROW_OFFSET + 2, M_RED);
-			} else {
-				draw_str(MENU_EXIT[2], 35, MENU_EXIT_ROW_OFFSET, M_RED);
-				draw_str(MENU_EXIT[1], 35, MENU_EXIT_ROW_OFFSET + 1, M_RED);
-				draw_str(MENU_EXIT[2], 35, MENU_EXIT_ROW_OFFSET + 2, M_RED);
-			}
+			draw_menu_option(MENU_PLAY, MENU_PLAY_COL_OFFSET, MENU_PLAY_ROW_OFFSET, M_MAGENTA, 0);
+			draw_menu_option(MENU_EXIT, MENU_EXIT_COL_OFFSET, MENU_EXIT_ROW_OFFSET, M_RED, menu_anim_state);
 			break;
+	}
+}
+
+static void draw_menu_option(
+	char const ** menu,
+	int col_offset,
+	int row_offset,
+	int color,
+	int state
+)
+{
+	if (state == 0) {
+		draw_str(menu[0], col_offset, row_offset, color);
+		draw_str(menu[1], col_offset, row_offset + 1, color);
+		draw_str(menu[0], col_offset, row_offset + 2, color);
+	} else {
+		draw_str(menu[2], col_offset, row_offset, color);
+		draw_str(menu[1], col_offset, row_offset + 1, color);
+		draw_str(menu[2], col_offset, row_offset + 2, color);
 	}
 }
