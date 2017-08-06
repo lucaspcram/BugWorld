@@ -16,6 +16,7 @@
 #define M_CYAN (4)
 #define M_MAGENTA (5)
 #define M_BLACK (6)
+#define M_BLUE (7)
 
 void init_graphics(void);
 void destroy_graphics(void);

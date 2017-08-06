@@ -10,6 +10,7 @@
 #define M_MENU_LEFT ('a')
 #define M_MENU_RIGHT ('d')
 #define M_MENU_SELECT ('\n') // <enter> key
+#define M_MENU_QUIT ('q')
 
 #define M_ACTION_UP ('w')
 #define M_ACTION_DOWN ('s')
