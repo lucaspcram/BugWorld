@@ -7,13 +7,6 @@
 
 #include <string.h>
 
-#define M_NUM_OPTIONS (3)
-#define M_OPTION_PLAY (0)
-#define M_OPTION_SCORES (1)
-#define M_OPTION_HELP (2)
-
-#define M_MENU_GRASS_LEN (5)
-
 /* Menu component defines */
 /***********************/
 
@@ -49,6 +42,11 @@ static char const * TITLE_TEXT_2[] =
 static const int TITLE_LEN = 11;
 static const int TITLE_ROW_OFFSET = 1;
 
+#define M_NUM_OPTIONS (3)
+#define M_OPTION_PLAY (0)
+#define M_OPTION_SCORES (1)
+#define M_OPTION_HELP (2)
+
 // Play selection
 static char const * MENU_PLAY[] =
 {
@@ -80,14 +78,11 @@ static char const * MENU_HELP[] =
 static int MENU_HELP_ROW_OFFSET;
 static int MENU_HELP_COL_OFFSET;
 
+// menu state vars
 static int menu_index;
 static int menu_anim_timer;
-
-// valid values are 0, 1
 static int menu_anim_state;
 static int title_anim_state;
-
-static struct grass * menu_grass[M_MENU_GRASS_LEN];
 
 /******END SECTION******/
 
@@ -117,12 +112,6 @@ int menu_state_init(void)
 	MENU_HELP_ROW_OFFSET = MENU_SCORES_ROW_OFFSET + 3;
 	MENU_HELP_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(MENU_HELP[0])) / 2);
 
-	menu_grass[0] = create_grass(0, 0, 10, 5);
-	menu_grass[1] = create_grass(0, 20, 10, 5);
-	menu_grass[2] = create_grass(20, 10, 10, 5);
-	menu_grass[3] = create_grass(4, 4, 10, 10);
-	menu_grass[4] = create_grass(0, 0, 5, 1);
-
 	return 0;
 }
 
@@ -143,21 +132,15 @@ int menu_state_resume(void)
 
 void menu_state_update(void)
 {
-	int i;
-
 	menu_anim_timer++;
 	if (menu_anim_timer == 30) {
 		menu_anim_timer = 0;
 		menu_anim_state = !menu_anim_state;
 		title_anim_state = !title_anim_state;
 	}
-
-	for (i = 0; i < M_MENU_GRASS_LEN; i++) {
-		update_grass(menu_grass[i]);
-	}
 }
 
-void menu_state_handle_input(char input)
+void menu_state_handle_input(int input)
 {
 	if (input == M_MENU_SELECT) {
 		if (menu_index == M_OPTION_PLAY) {
@@ -191,13 +174,8 @@ void menu_state_handle_input(char input)
 void menu_state_render(void)
 {
 	int i;
-	char const * help_hint = "WASD to navigate, ENTER to select, ESC to quit";
+	char const * help_hint = "Arrows to navigate, ENTER to select, Q to quit";
 	int hint_len = strlen(help_hint);
-
-	// render the grass behind the other components
-	for (i = 0; i < M_MENU_GRASS_LEN; i++) {
-		render_grass(menu_grass[i]);
-	}
 
 	// render the title text
 	for (i = 0; i < TITLE_LEN; i++) {

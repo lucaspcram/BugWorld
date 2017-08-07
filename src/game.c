@@ -21,7 +21,7 @@ void init_game(void)
 
 void input_loop(void)
 {
-	char ch;
+	int ch;
 
 	// keep running while state manager exit not set
 	while (!exit_flag) {

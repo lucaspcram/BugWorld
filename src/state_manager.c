@@ -37,7 +37,7 @@ void destroy_state_manager()
 
 }
 
-void handle_input(char input)
+void handle_input(int input)
 {
 	state_tab[cur_state].handle_input(input);
 }

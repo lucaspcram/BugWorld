@@ -8,6 +8,7 @@ void init_graphics()
 	initscr();
 	cbreak();
 	noecho();
+	keypad(stdscr, 0);
 	curs_set(0);
 	start_color();
 
