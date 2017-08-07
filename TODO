@@ -1,5 +1,6 @@
 TODO LIST FOR BUGWORLD
 ______________________
 
-+ start coding up the main menu
-+ get some basic game logic coded
++ overhaul the makefile so it supports source subfolders
++ start coding the play state
+	- code the individual game components (player, ants, water, etc)

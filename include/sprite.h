@@ -1,0 +1,29 @@
+#ifndef SPRITE_H
+#define SPRITE_H
+
+/*
+ * Sprites are NxM rectangles made of animated ASCII characters.
+ */
+
+struct sprite {
+	int col;
+	int row;
+	int width;
+	int height;
+	int anim_state;
+	int anim_timer;
+	int timer_reset;
+
+	char * frames;
+	int frames_len;
+};
+
+struct sprite * create_sprite(int col, int row, int width, int height);
+void destroy_sprite(struct sprite * s);
+
+void update_sprite(struct sprite * s);
+void render_sprite(struct sprite * s);
+void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int timer_reset);
+void set_frames(struct sprite * s, char const * frames);
+
+#endif

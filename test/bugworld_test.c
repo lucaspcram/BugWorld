@@ -1,5 +1,6 @@
 #include "util.h"
 #include "scores.h"
+#include "sprite.h"
 
 #include <stdio.h>
 #include <time.h>
@@ -12,6 +13,7 @@
 
 void test_rand();
 void test_score_io();
+void test_sprites();
 
 int main(int argc, char * argv[])
 {
@@ -22,7 +24,10 @@ int main(int argc, char * argv[])
 
 	// Test the highscore file IO functionality
 	test_score_io();
-	
+
+	// Test the sprites
+	test_sprites();
+
 	return 0;
 }
 
@@ -128,4 +133,17 @@ void test_score_io()
 
 	free_scorelist(scores); 
 	free(scorepath);
+}
+
+void test_sprites()
+{
+	struct sprite * sprite1;
+
+	printf("\n### SPRITE LIFECYCLE TEST ###\n");
+
+	sprite1 = create_sprite(0, 0, 0, 0);
+	set_frames(sprite1, "\\|/|");
+	destroy_sprite(sprite1);
+
+	printf("Sprite lifecycle OK\n");
 }
