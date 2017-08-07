@@ -1,6 +1,6 @@
 TODO LIST FOR BUGWORLD
 ______________________
 
-+ overhaul the makefile so it supports source subfolders
 + start coding the play state
 	- code the individual game components (player, ants, water, etc)
++ refactor the sprite code to allow for custom sprite palettes 
