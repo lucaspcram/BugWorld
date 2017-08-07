@@ -16,6 +16,7 @@ SRCDIR=src
 SRCEXT=c
 OBJEXT=o
 BUILDDIR=build
+BUILDSUBDIRS=$(addprefix $(BUILDDIR)/, $(shell find $(SRCDIR)/* -type d -printf '%f\n'))
 BINDIR=bin
 
 # test sources #
@@ -50,22 +51,19 @@ OBJECTSNOMAIN=$(filter-out $(BUILDDIR)/main.$(OBJEXT), $(OBJECTS))
 $(TARGET): $(OBJECTS)
 	@echo "Linking..."
 	@mkdir -p $(BINDIR)
-	$(CC) $^ -o $(TARGET) $(LIB) $(LDFLAGS)
+	@$(CC) $^ -o $(TARGET) $(LIB) $(LDFLAGS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	@echo "Building project..."
-# this is the line that fails
-# the mkdir command doesn't recieve the full path
-# to the source file, so gcc fails out
 	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(BUILDSUBDIRS)
 	$(CC) $(CFLAGS) $(INCDIR) -c -o $@ $<
 
 # Tests
 .PHONY: test
 test: $(TARGET)
 	@echo "Building tests..."
-	$(CC) $(CFLAGS) -c -o $(TESTOBJ) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(INCDIR) $(LDFLAGS)
-	$(CC) $(CFLAGS) -o $(TESTEXEC) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(TESTDEPEND) $(INCDIR) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -c -o $(TESTOBJ) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(INCDIR) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -o $(TESTEXEC) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(TESTDEPEND) $(INCDIR) $(LDFLAGS)
 
 # Perform a clean and full rebuild of project and tests
 all: clean $(TARGET) test
@@ -73,14 +71,14 @@ all: clean $(TARGET) test
 # Clean
 clean:
 	@echo "Cleaning...";
-	$(RM) -r $(BUILDDIR) $(BINDIR)
+	@$(RM) -r $(BUILDDIR) $(BINDIR)
 
 # Run executable
 run:
 	@echo "Running..."
-	./$(TARGET)
+	@./$(TARGET)
 
 # Run tests
 runtest:
 	@echo "Running tests..."
-	./$(TESTEXEC)
+	@./$(TESTEXEC)
