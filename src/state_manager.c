@@ -60,7 +60,8 @@ static void set_cur_state(int code)
 	cur_state = code;
 }
 
-/* Functions declared in state_codes.h */
+/* Services declared in state_codes.h */
+/**************************************/
 void init_state(int code)
 {
 	state_tab[cur_state].pause();
@@ -75,7 +76,13 @@ void resume_state(int code)
 	state_tab[code].resume();
 }
 
+/*
+ * Exit flag picked up by game.c. Exits the game
+ * with cleanup, compared to abort_game which
+ * immediately aborts.
+ */
 void force_exit()
 {
 	exit_flag = true;
 }
+/******END SECTION******/

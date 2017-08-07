@@ -2,6 +2,8 @@
 #include "state_codes.h"
 #include "view.h"
 #include "key_bindings.h"
+#include "grass.h"
+#include "util.h"
 
 #include <string.h>
 
@@ -10,7 +12,12 @@
 #define M_OPTION_SCORES (1)
 #define M_OPTION_HELP (2)
 
-/* Title text definitions */
+#define M_MENU_GRASS_LEN (5)
+
+/* Menu component defines */
+/***********************/
+
+// Title text definitions
 static char const * TITLE_TEXT[] =
 {
 " /+++++++                                                        /++       /++",
@@ -42,7 +49,7 @@ static char const * TITLE_TEXT_2[] =
 static const int TITLE_LEN = 11;
 static const int TITLE_ROW_OFFSET = 1;
 
-/* Play selection */
+// Play selection
 static char const * MENU_PLAY[] =
 {
 "+-+-+-+-+-+-+", // animated border frame 1
@@ -50,9 +57,10 @@ static char const * MENU_PLAY[] =
 "x-x-x-x-x-x-x" // animated border frame 2
 };
 static int MENU_PLAY_ROW_OFFSET;
+// TODO does each menu option need its own COL offset?
 static int MENU_PLAY_COL_OFFSET;
 
-/* Scores selection */
+// Scores selection
 static char const * MENU_SCORES[] =
 {
 "+-+-+-+-+-+-+", // animated border frame 1
@@ -62,7 +70,7 @@ static char const * MENU_SCORES[] =
 static int MENU_SCORES_ROW_OFFSET;
 static int MENU_SCORES_COL_OFFSET;
 
-/* Help selection */
+// Help selection
 static char const * MENU_HELP[] =
 {
 "+-+-+-+-+-+-+", // animated border frame 1
@@ -72,13 +80,16 @@ static char const * MENU_HELP[] =
 static int MENU_HELP_ROW_OFFSET;
 static int MENU_HELP_COL_OFFSET;
 
-/* state globals */
 static int menu_index;
 static int menu_anim_timer;
 
 // valid values are 0, 1
 static int menu_anim_state;
 static int title_anim_state;
+
+static struct grass * menu_grass[M_MENU_GRASS_LEN];
+
+/******END SECTION******/
 
 static void draw_menu_option(
 	char const ** menu,
@@ -90,13 +101,14 @@ static void draw_menu_option(
 
 int menu_state_init(void)
 {
+	// init state vars
 	menu_index = M_OPTION_PLAY;
 	menu_anim_timer = 0;
 	menu_anim_state = 0;
 	title_anim_state = 0;
 
-	/* compute offsets for menu options */
-	MENU_PLAY_ROW_OFFSET = TITLE_LEN - 1;
+	// compute offsets for menu options
+	MENU_PLAY_ROW_OFFSET = TITLE_LEN - 0;
 	MENU_PLAY_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(MENU_PLAY[0])) / 2);
 	
 	MENU_SCORES_ROW_OFFSET = MENU_PLAY_ROW_OFFSET + 3;
@@ -104,6 +116,12 @@ int menu_state_init(void)
 
 	MENU_HELP_ROW_OFFSET = MENU_SCORES_ROW_OFFSET + 3;
 	MENU_HELP_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(MENU_HELP[0])) / 2);
+
+	menu_grass[0] = create_grass(0, 0, 10, 5);
+	menu_grass[1] = create_grass(0, 20, 10, 5);
+	menu_grass[2] = create_grass(20, 10, 10, 5);
+	menu_grass[3] = create_grass(4, 4, 10, 10);
+	menu_grass[4] = create_grass(0, 0, 5, 1);
 
 	return 0;
 }
@@ -125,11 +143,17 @@ int menu_state_resume(void)
 
 void menu_state_update(void)
 {
+	int i;
+
 	menu_anim_timer++;
 	if (menu_anim_timer == 30) {
 		menu_anim_timer = 0;
 		menu_anim_state = !menu_anim_state;
 		title_anim_state = !title_anim_state;
+	}
+
+	for (i = 0; i < M_MENU_GRASS_LEN; i++) {
+		update_grass(menu_grass[i]);
 	}
 }
 
@@ -167,8 +191,13 @@ void menu_state_handle_input(char input)
 void menu_state_render(void)
 {
 	int i;
-	char const * help_hint = "WASD to navigate, ENTER to select, Q to quit";
+	char const * help_hint = "WASD to navigate, ENTER to select, ESC to quit";
 	int hint_len = strlen(help_hint);
+
+	// render the grass behind the other components
+	for (i = 0; i < M_MENU_GRASS_LEN; i++) {
+		render_grass(menu_grass[i]);
+	}
 
 	// render the title text
 	for (i = 0; i < TITLE_LEN; i++) {
