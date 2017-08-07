@@ -158,23 +158,21 @@ void menu_state_handle_input(int input)
 		force_exit();
 
 	if (input == M_MENU_UP) {
-		menu_index--;
+		if (menu_index > 0)
+			menu_index--;
 		menu_anim_state = 0;
-		if (menu_index < 0)
-			menu_index = M_NUM_OPTIONS - 1;
 	}
 	if (input == M_MENU_DOWN) {
-		menu_index++;
+		if (menu_index < M_NUM_OPTIONS - 1)
+			menu_index++;
 		menu_anim_state = 0;
-		if (menu_index >= M_NUM_OPTIONS)
-			menu_index = 0;
 	}
 }
 
 void menu_state_render(void)
 {
 	int i;
-	char const * help_hint = "Arrows to navigate, ENTER to select, Q to quit";
+	char const * help_hint = "WASD to navigate, ENTER to select, Q to quit";
 	int hint_len = strlen(help_hint);
 
 	// render the title text
