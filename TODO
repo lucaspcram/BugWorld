@@ -16,4 +16,7 @@ ______________________
 + look into backtraces for the abort_game() function
 	- https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
 
-+ add good comments to .h and .c files 
++ add good comments to .h and .c files
+
++ restructure code into subfolders
+	- get rid of seperate include folder? 
