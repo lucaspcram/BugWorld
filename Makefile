@@ -16,7 +16,11 @@ SRCDIR=src
 SRCEXT=c
 OBJEXT=o
 BUILDDIR=build
+SUBDIRS=$(shell find $(SRCDIR)/* -type d -printf '%f\n')
 BUILDSUBDIRS=$(addprefix $(BUILDDIR)/, $(shell find $(SRCDIR)/* -type d -printf '%f\n'))
+ifeq ($(SUBDIRS),)
+BUILDSUBDIRS=$(BUILDDIR)
+endif
 BINDIR=bin
 
 # test sources #
@@ -48,8 +52,7 @@ $(TARGET): $(OBJECTS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
-# uncomment this line if the src folder has code in subdirs
-#@mkdir -p $(BUILDSUBDIRS)
+	@mkdir -p $(BUILDSUBDIRS)
 	$(CC) $(CFLAGS) $(INCDIR) -c -o $@ $<
 
 .PHONY: test all clean run runtest
