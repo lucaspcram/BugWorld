@@ -7,5 +7,5 @@ then
 fi
 
 tag=$1
-grep -rnw './src' './include' -e "$tag"
+grep -rnw './src' './include' './test' -e "$tag"
 
