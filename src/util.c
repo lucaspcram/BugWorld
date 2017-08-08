@@ -6,7 +6,7 @@
 #include <math.h>
 #include <ncurses.h>
 
-#define M_EPSILON 0.00000001
+#define M_EPSILON (0.00000001)
 
 char const * G_FATAL_MSG = "BugWorld FATAL ERROR\n";
 

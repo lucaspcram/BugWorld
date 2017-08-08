@@ -1,6 +1,19 @@
 TODO LIST FOR BUGWORLD
 ______________________
 
-+ start coding the play state
++ the play state
 	- code the individual game components (player, ants, water, etc)
-+ refactor the sprite code to allow for custom sprite palettes 
+
++ the scores state
+	- scrolling vs. static display of high scores
+
++ the help state
+	- best way to explain the game/controls?
+
++ refactor the sprite code to allow for custom sprite palettes
+	- char * frames needs to be a multi array
+
++ look into backtraces for the abort_game() function
+	- https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
+
++ add good comments to .h and .c files 

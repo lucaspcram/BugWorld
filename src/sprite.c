@@ -74,6 +74,8 @@ void set_frames(struct sprite * s, char const * frames)
 
 	len = strlen(frames);
 	new_frames = (char *) malloc(sizeof(*(s->frames) * len));
+	if (new_frames == NULL)
+		abort_game("malloc failed in function \'set_frames\'");
 	strncpy(new_frames, frames, len);
 
 	s->frames = new_frames;
