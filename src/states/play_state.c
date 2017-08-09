@@ -1,4 +1,4 @@
-#include "play_state.h"
+#include "states/play_state.h"
 
 int play_state_init(void)
 {

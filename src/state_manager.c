@@ -1,6 +1,7 @@
 #include "state_manager.h"
 #include "state_codes.h"
-#include "menu_state.h"
+#include "states/menu_state.h"
+#include "states/play_state.h"
 #include "view.h"
 
 #include <stdlib.h>

@@ -1,4 +1,4 @@
-#include "menu_state.h"
+#include "states/menu_state.h"
 #include "state_codes.h"
 #include "view.h"
 #include "key_bindings.h"
