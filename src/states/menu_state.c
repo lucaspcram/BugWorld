@@ -139,13 +139,13 @@ void menu_state_handle_input(int input)
 {
 	if (input == M_MENU_SELECT) {
 		if (menu_index == M_OPTION_PLAY) {
-
+			abort_game("User aborted");
 		}
 		if (menu_index == M_OPTION_SCORES) {
-
+			abort_game("User aborted");
 		}
 		if (menu_index == M_OPTION_HELP) {
-
+			abort_game("User aborted");
 		}
 	}
 

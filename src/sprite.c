@@ -31,6 +31,9 @@ struct sprite * create_sprite(int col, int row, int width, int height)
 
 void destroy_sprite(struct sprite * s)
 {
+	if (s == NULL)
+		return;
+
 	free(s->frames);
 	free(s);
 }
@@ -38,6 +41,9 @@ void destroy_sprite(struct sprite * s)
 
 void update_sprite(struct sprite * s)
 {
+	if (s == NULL)
+		return;
+
 	s->anim_timer++;
 	if (s->anim_timer >= s->timer_reset) {
 		s->anim_timer = 0;
@@ -62,6 +68,9 @@ void render_sprite(struct sprite * s)
 
 void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int timer_reset)
 {
+	if (s == NULL)
+		return;
+
 	s->anim_state = anim_state;
 	s->anim_timer = anim_timer;
 	s->timer_reset = timer_reset;
@@ -71,6 +80,9 @@ void set_frames(struct sprite * s, char const * frames)
 {
 	size_t len;
 	char * new_frames;
+
+	if (s == NULL)
+		return;
 
 	len = strlen(frames);
 	new_frames = (char *) malloc(sizeof(*(s->frames) * len));
@@ -83,6 +95,9 @@ void set_frames(struct sprite * s, char const * frames)
 
 static void advance_state(struct sprite * s)
 {
+	if (s == NULL)
+		return;
+
 	s->anim_state++;
 	if (s->anim_state >= s->frames_len)
 		s->anim_state = 0;

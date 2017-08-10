@@ -11,7 +11,7 @@
 #define M_MENU_DOWN ('s')
 #define M_MENU_LEFT ('a')
 #define M_MENU_RIGHT ('d')
-#define M_MENU_SELECT (KEY_ENTER)
+#define M_MENU_SELECT ('\n') // ENTER key
 #define M_MENU_QUIT ('q')
 
 #define M_ACTION_UP ('w')

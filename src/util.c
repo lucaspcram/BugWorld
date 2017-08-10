@@ -1,12 +1,15 @@
 #include "util.h"
+#include "view.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
 #include <ncurses.h>
+#include <execinfo.h>
 
 #define M_EPSILON (0.00000001)
+#define MAX_FRAMES (128)
 
 char const * G_FATAL_MSG = "BugWorld FATAL ERROR\n";
 
@@ -57,8 +60,25 @@ bool percentage_chance(double rate)
  */
 void abort_game(char const * msg)
 {
-	nocbreak();
-	endwin();
+	//void * frames[MAX_FRAMES];
+	//char ** trace;
+	//size_t size;
+	//size_t i;
+
+	destroy_graphics();
+
+	// print a stack trace
+	// based on sample from
+	// https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
+	// FIXME periodically breaks ncurses cleanup for some reason
+	/*
+	size = backtrace(frames, MAX_FRAMES);
+	trace = backtrace_symbols(frames, size);
+	for (i = 0; i < size; i++)
+		fprintf (stderr, "%s\n", trace[i]);
+	free(trace);
+	//*/
+
 	fprintf(stderr, "BugWorld FATAL: %s\n", msg);
 	fprintf(stderr, "Aborting.\n");
 	exit(1);

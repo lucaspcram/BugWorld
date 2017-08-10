@@ -24,6 +24,8 @@ void init_graphics()
 void destroy_graphics()
 {
 	nocbreak();
+	echo();
+	curs_set(1);
 	endwin();
 }
 
