@@ -5,25 +5,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <signal.h>
 
 void display_help();
+void display_version();
+void sigterm_handler(int sig);
+
+char const * VERSION_TEXT = "Bugworld v0.1, 2017\nLicense MIT\nWritten by Lucas Cram";
 
 int main(int argc, char * argv[])
 {
 	int c;
 
-	while ((c = getopt(argc, argv, "h")) != -1) {
+	signal(SIGTERM, sigterm_handler);
+
+	while ((c = getopt(argc, argv, "hv")) != -1) {
 		switch (c) {
 			case 'h':
 				display_help();
+				exit(0);
 			break;
-			
+
+			case 'v':
+				display_version();
+				exit(0);
+			break;
+
 			case '?':
 				fprintf(stderr, 
 					"Unknown option -%c. Use \'-h\' for help.\n", optopt);
-				return 1;
-			
+				exit(1);
+			break;
+
 			default:
+				fprintf(stderr, "Option error. Use \'-h\' for help.\n");
 				exit(1);
 		}
 	}
@@ -34,4 +49,14 @@ int main(int argc, char * argv[])
 void display_help()
 {
 	printf("TODO: Bugworld help screen.\n");
+}
+
+void display_version()
+{
+	printf("%s\n", VERSION_TEXT);
+}
+
+void sigterm_handler(int sig)
+{
+	destroy_graphics();
 }
