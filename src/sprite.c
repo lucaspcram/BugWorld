@@ -51,7 +51,7 @@ void update_sprite(struct sprite * s)
 	}
 }
 
-void render_sprite(struct sprite * s)
+void render_sprite(struct sprite * s, int color)
 {
 	int i;
 	int j;
@@ -59,10 +59,9 @@ void render_sprite(struct sprite * s)
 	if (s == NULL)
 		return;
 
-	for (i = s->row; i < s->row + s->height; i++) {
-		for (j = s->col; j < s->col + s->width; j++) {
-			// TODO fix for new frames code
-			draw(s->frames[s->anim_state][(i * s->width) + j], j, i, M_GREEN);
+	for (i = 0; i < s->height; i++) {
+		for (j = 0; j < s->width; j++) {
+			draw(s->frames[s->anim_state][(i * s->width) + j], j + s->col, i + s->row, color);
 		}
 	}
 }
