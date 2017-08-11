@@ -14,7 +14,7 @@ struct sprite {
 	int anim_timer;
 	int timer_reset;
 
-	char * frames;
+	char ** frames;
 	int frames_len;
 };
 
@@ -24,6 +24,8 @@ void destroy_sprite(struct sprite * s);
 void update_sprite(struct sprite * s);
 void render_sprite(struct sprite * s);
 void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int timer_reset);
-void set_frames(struct sprite * s, char const * frames);
+
+// see comment in sprite.c for format of 'frames' array
+void set_frames(struct sprite * s, char const ** frames, int frames_len);
 
 #endif

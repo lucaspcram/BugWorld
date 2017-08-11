@@ -137,13 +137,6 @@ void test_score_io()
 
 void test_sprites()
 {
-	struct sprite * sprite1;
-
 	printf("\n### SPRITE LIFECYCLE TEST ###\n");
-
-	sprite1 = create_sprite(0, 0, 0, 0);
-	set_frames(sprite1, "\\|/|");
-	destroy_sprite(sprite1);
-
-	printf("Sprite lifecycle OK\n");
+	printf("Did nothing. TODO add this test.\n");
 }

@@ -59,9 +59,10 @@ void render_sprite(struct sprite * s)
 	if (s == NULL)
 		return;
 
-	for (i = s->col; i < s->col + s->width; i++) {
-		for (j = s->row; j < s->row + s->height; j++) {
-			draw(s->frames[s->anim_state], i, j, M_GREEN);
+	for (i = s->row; i < s->row + s->height; i++) {
+		for (j = s->col; j < s->col + s->width; j++) {
+			// TODO fix for new frames code
+			draw(s->frames[s->anim_state][(i * s->width) + j], j, i, M_GREEN);
 		}
 	}
 }
@@ -76,21 +77,52 @@ void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int time
 	s->timer_reset = timer_reset;
 }
 
-void set_frames(struct sprite * s, char const * frames)
+/*
+ * Each element in the 'frames' string array is a 1D representation
+ * of 1 frame of a 2D sprite.
+ *
+ * For example, the sprite animation:
+ *
+ *     a b a    b a b    a b a
+ *     c d c -> d c d -> c d c
+ *     e f e    f e f    e f e
+ *
+ * would be encoded as:
+ *
+ *    char const * MY_SPRITE[] = 
+ *    {
+ *    "abacdcefe",
+ *    "babdcdfef",
+ *    "abacdcefe"
+ *    };
+ *
+ *
+ */
+void set_frames(struct sprite * s, char const ** frames, int frames_len)
 {
 	size_t len;
-	char * new_frames;
+	int i;
+	char ** new_frames;
 
 	if (s == NULL)
 		return;
 
-	len = strlen(frames);
-	new_frames = (char *) malloc(sizeof(*(s->frames) * len));
+	new_frames = (char **) malloc(sizeof(*new_frames) * frames_len);
 	if (new_frames == NULL)
 		abort_game("malloc failed in function \'set_frames\'");
-	strncpy(new_frames, frames, len);
+
+	for (i = 0; i < frames_len; i++) {
+		len = strlen(frames[i]);
+		new_frames[i] = (char *) malloc(sizeof(*new_frames[i]) * len);
+
+		if (new_frames[i] == NULL)
+			abort_game("malloc failed in function \'set_frames\'");
+
+		strncpy(new_frames[i], frames[i], len);
+	}
 
 	s->frames = new_frames;
+	s->frames_len = frames_len;
 }
 
 static void advance_state(struct sprite * s)

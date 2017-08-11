@@ -3,6 +3,7 @@
 #include "view.h"
 #include "key_bindings.h"
 #include "util.h"
+#include "sprite.h"
 
 #include <string.h>
 
@@ -84,6 +85,17 @@ static int menu_anim_timer;
 static int menu_anim_state;
 static int title_anim_state;
 
+// TODO testing sprite, remove later
+static struct sprite * test_sprite;
+static char const * test_sprite_frames[] = 
+{
+"abacdcefe",
+"babdcdfef",
+"abacdcefe"
+};
+
+static const int test_sprite_len = 3;
+
 static void draw_menu_option(
 	char const ** menu,
 	int col_offset,
@@ -106,6 +118,9 @@ int menu_state_init(void)
 	MENU_HELP_ROW_OFFSET = MENU_SCORES_ROW_OFFSET + 3;
 
 	MENU_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(MENU_PLAY[0])) / 2);
+
+	test_sprite = create_sprite(2, 15, 3, 3);
+	set_frames(test_sprite, test_sprite_frames, test_sprite_len);
 
 	return 0;
 }
@@ -201,6 +216,8 @@ void menu_state_render(void)
 
 	// render control hints
 	draw_str(help_hint, (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1, M_CYAN);
+
+	render_sprite(test_sprite);
 }
 
 static void draw_menu_option(

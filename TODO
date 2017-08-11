@@ -18,6 +18,7 @@ ______________________
 	- DRY principle
 	- 80ish column limit
 	- comments
+	- clean up includes (type, lexicographical ordering)
 
 
 BUGWORLD BUGS (hah)
