@@ -10,9 +10,6 @@ ______________________
 + the help state
 	- best way to explain the game/controls?
 
-+ refactor the sprite code to allow for custom sprite palettes
-	- char * frames needs to be a multi array
-
 + misc. refactoring and cleanup
 	- NULL/sanity checks
 	- DRY principle
