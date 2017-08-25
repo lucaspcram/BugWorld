@@ -3,7 +3,7 @@
 #include "view.h"
 #include "key_bindings.h"
 #include "util.h"
-#include "sprite.h"
+#include "gameobj/sprite.h"
 
 #include <string.h>
 
@@ -140,13 +140,13 @@ void menu_state_handle_input(int input)
 {
 	if (input == M_MENU_SELECT) {
 		if (menu_index == M_OPTION_PLAY) {
-			abort_game("User aborted");
+			init_state(STATE_PLAY);
 		}
 		if (menu_index == M_OPTION_SCORES) {
-			abort_game("User aborted");
+
 		}
 		if (menu_index == M_OPTION_HELP) {
-			abort_game("User aborted");
+
 		}
 	}
 

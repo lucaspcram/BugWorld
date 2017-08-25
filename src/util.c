@@ -9,7 +9,7 @@
 #include <execinfo.h>
 
 #define M_EPSILON (0.00000001)
-#define MAX_FRAMES (128)
+#define M_MAX_FRAMES (128)
 
 char const * G_FATAL_MSG = "BugWorld FATAL ERROR\n";
 
@@ -60,7 +60,7 @@ bool percentage_chance(double rate)
  */
 void abort_game(char const * msg)
 {
-	//void * frames[MAX_FRAMES];
+	//void * frames[M_MAX_FRAMES];
 	//char ** trace;
 	//size_t size;
 	//size_t i;
@@ -72,7 +72,7 @@ void abort_game(char const * msg)
 	// https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
 	// FIXME periodically breaks ncurses cleanup for some reason
 	/*
-	size = backtrace(frames, MAX_FRAMES);
+	size = backtrace(frames, M_MAX_FRAMES);
 	trace = backtrace_symbols(frames, size);
 	for (i = 0; i < size; i++)
 		fprintf (stderr, "%s\n", trace[i]);

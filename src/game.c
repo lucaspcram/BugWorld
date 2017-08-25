@@ -46,9 +46,9 @@ void set_sigalarm()
 	struct itimerval timer;
 	struct sigaction action;
 	timer.it_value.tv_sec = 0;
-	timer.it_value.tv_usec = 1000000 / FPS;
+	timer.it_value.tv_usec = 1000000 / M_FPS;
 	timer.it_interval.tv_sec = 0;
-	timer.it_interval.tv_usec = 1000000 / FPS;
+	timer.it_interval.tv_usec = 1000000 / M_FPS;
 	setitimer(ITIMER_REAL, &timer, NULL);
 	
 	action.sa_handler = &tick;

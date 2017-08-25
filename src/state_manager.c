@@ -29,6 +29,15 @@ void init_state_manager()
 	state_tab[STATE_MENU].handle_input = &menu_state_handle_input;
 	state_tab[STATE_MENU].render = &menu_state_render;
 
+	// init play state
+	state_tab[STATE_PLAY].init = &play_state_init;
+	state_tab[STATE_PLAY].destroy = &play_state_destroy;
+	state_tab[STATE_PLAY].pause = &play_state_pause;
+	state_tab[STATE_PLAY].resume = &play_state_resume;
+	state_tab[STATE_PLAY].update = &play_state_update;
+	state_tab[STATE_PLAY].handle_input = &play_state_handle_input;
+	state_tab[STATE_PLAY].render = &play_state_render;
+
 	cur_state = STATE_MENU;
 	state_tab[cur_state].init();
 }

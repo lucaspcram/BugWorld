@@ -12,7 +12,7 @@
 
 /* Define all states below */
 #define STATE_MENU (0)
-#define STATE_LEVEL (1)
+#define STATE_PLAY (1)
 #define STATE_PAUSE (2)
 #define STATE_SCORES (3)
 

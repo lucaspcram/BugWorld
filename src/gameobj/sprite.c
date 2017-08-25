@@ -1,4 +1,4 @@
-#include "sprite.h"
+#include "gameobj/sprite.h"
 #include "util.h"
 #include "view.h"
 
@@ -26,14 +26,21 @@ struct sprite * create_sprite(int col, int row, int width, int height)
 	new_sprite->anim_timer = 0;
 	new_sprite->timer_reset = DEFAULT_TIMER_RESET;
 
+	new_sprite->frames = NULL;
+
 	return new_sprite;
 }
 
 void destroy_sprite(struct sprite * s)
 {
+	int i;
+
 	if (s == NULL)
 		return;
 
+	for (i = 0; i < s->frames_len; i++) {
+		free(s->frames[i]);
+	}
 	free(s->frames);
 	free(s);
 }

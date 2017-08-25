@@ -1,11 +1,13 @@
-#include "util.h"
+
+#include "gameobj/sprite.h"
+#include "gameobj/player.h"
 #include "scores.h"
-#include "sprite.h"
+#include "util.h"
 
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define M_MAX_TRIALS (10000000)
 #define M_MAX_BIN (10)
@@ -13,20 +15,20 @@
 
 void test_rand();
 void test_score_io();
-void test_sprites();
+void test_gameobj();
 
 int main(int argc, char * argv[])
 {
 	printf("BugWorld Unit Tests\n");
 	
 	// Test the robustness of the random number generator.
-	test_rand();
+	//test_rand();
 
 	// Test the highscore file IO functionality
-	test_score_io();
+	//test_score_io();
 
-	// Test the sprites
-	test_sprites();
+	// Test gameobj code
+	test_gameobj();
 
 	return 0;
 }
@@ -135,8 +137,14 @@ void test_score_io()
 	free(scorepath);
 }
 
-void test_sprites()
+void test_gameobj()
 {
+	struct player * p;
+
 	printf("\n### SPRITE LIFECYCLE TEST ###\n");
-	printf("Did nothing. TODO add this test.\n");
+
+	printf("Creating player struct...\n");
+	p = create_player(0, 0);
+	printf("Destroying player struct...\n");
+	destroy_player(p);
 }
