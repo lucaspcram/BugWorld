@@ -9,10 +9,7 @@
 
 struct player {
 	struct sprite *psprite;
-
 	int decoys;
-	int score;
-	int lives;
 };
 
 struct player * create_player(int row, int col);

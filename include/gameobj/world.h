@@ -7,4 +7,15 @@
  * The world also manages generating new levels.
  */
 
+struct world {
+	struct player * player;
+};
+
+struct world * init_world();
+void destroy_world(struct world * w);
+
+void update_world();
+void handle_input_world(struct world * world, int input);
+void render_world();
+
 #endif
