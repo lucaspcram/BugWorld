@@ -22,7 +22,7 @@ void init_graphics(void);
 void destroy_graphics(void);
 void draw(char ch, int col, int row, int color);
 void draw_str(char const * str, int col, int row, int color);
-void refresh_view();
-void clear_view();
+void refresh_view(void);
+void clear_view(void);
 
 #endif

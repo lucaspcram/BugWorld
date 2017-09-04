@@ -7,7 +7,7 @@
 
 static struct player * player;
 
-struct world * init_world(struct world * w)
+struct world * init_world(void)
 {
 	player = create_player(0, 0);
 

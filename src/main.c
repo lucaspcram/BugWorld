@@ -7,8 +7,8 @@
 #include <getopt.h>
 #include <signal.h>
 
-void display_help();
-void display_version();
+void display_help(void);
+void display_version(void);
 void sigterm_handler(int sig);
 
 char const * VERSION_TEXT = "Bugworld v0.1, 2017\nLicense MIT\nWritten by Lucas Cram";
@@ -46,12 +46,12 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void display_help()
+void display_help(void)
 {
 	printf("TODO: Bugworld help screen.\n");
 }
 
-void display_version()
+void display_version(void)
 {
 	printf("%s\n", VERSION_TEXT);
 }

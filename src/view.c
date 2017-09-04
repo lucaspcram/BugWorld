@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <ncurses.h>
 
-void init_graphics()
+void init_graphics(void)
 {
 	initscr();
 	cbreak();
@@ -21,7 +21,7 @@ void init_graphics()
 	init_pair(M_BLUE, COLOR_BLUE, COLOR_BLACK);
 }
 
-void destroy_graphics()
+void destroy_graphics(void)
 {
 	nocbreak();
 	echo();
@@ -52,12 +52,12 @@ void draw_str(char const * str, int col, int row, int color)
 	attroff(COLOR_PAIR(color));
 }
 
-void refresh_view()
+void refresh_view(void)
 {
 	refresh();
 }
 
-void clear_view()
+void clear_view(void)
 {
 	clear();
 }

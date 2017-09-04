@@ -16,7 +16,7 @@ static struct state state_tab[NUM_STATES];
 
 static void set_cur_state(int code);
 
-void init_state_manager()
+void init_state_manager(void)
 {
 	exit_flag = false;
 
@@ -42,7 +42,7 @@ void init_state_manager()
 	state_tab[cur_state].init();
 }
 
-void destroy_state_manager()
+void destroy_state_manager(void)
 {
 
 }
@@ -52,7 +52,7 @@ void handle_input(int input)
 	state_tab[cur_state].handle_input(input);
 }
 
-void update_render()
+void update_render(void)
 {
 	state_tab[cur_state].update();
 
@@ -91,7 +91,7 @@ void resume_state(int code)
  * with cleanup, compared to abort_game which
  * immediately aborts.
  */
-void force_exit()
+void force_exit(void)
 {
 	exit_flag = true;
 }

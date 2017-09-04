@@ -41,7 +41,7 @@ void tick(int sig)
  * Sets a SIGALRM to call the 'tick()' function
  * approx. FPS times per second
  */
-void set_sigalarm()
+void set_sigalarm(void)
 {
 	struct itimerval timer;
 	struct sigaction action;

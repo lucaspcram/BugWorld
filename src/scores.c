@@ -14,7 +14,7 @@ static char const * G_SCOREFILE = ".bugworldscore";
  * Attempts to create the scorefile in the user's home directory.
  * Returns the path to the file on success.
  */
-char * create_scorefile()
+char * create_scorefile(void)
 {
 	char * homedir;
 	char * scorepath;

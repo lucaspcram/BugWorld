@@ -23,9 +23,9 @@ struct state {
 	void (*render)(void);
 };
 
-void init_state_manager();
-void destroy_state_manager();
+void init_state_manager(void);
+void destroy_state_manager(void);
 void handle_input(int input);
-void update_render();
+void update_render(void);
 
 #endif
