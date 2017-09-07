@@ -8,6 +8,17 @@
 #include <string.h>
 #include <ncurses.h>
 
+#define M_INIT_STATE(ST, st)                                           \
+do {                                                                   \
+	state_tab[STATE_ ## ST].init = &st ## _state_init;                 \
+	state_tab[STATE_ ## ST].destroy = &st ## _state_destroy;           \
+	state_tab[STATE_ ## ST].pause = &st ## _state_pause;               \
+	state_tab[STATE_ ## ST].resume = &st ## _state_resume;             \
+	state_tab[STATE_ ## ST].update = &st ## _state_update;             \
+	state_tab[STATE_ ## ST].handle_input = &st ## _state_handle_input; \
+	state_tab[STATE_ ## ST].render = &st ## _state_render;             \
+} while(0)
+
 // index into the state table
 static int cur_state;
 
@@ -21,22 +32,8 @@ void init_state_manager(void)
 	exit_flag = false;
 
 	// init menu state
-	state_tab[STATE_MENU].init = &menu_state_init;
-	state_tab[STATE_MENU].destroy = &menu_state_destroy;
-	state_tab[STATE_MENU].pause = &menu_state_pause;
-	state_tab[STATE_MENU].resume = &menu_state_resume;
-	state_tab[STATE_MENU].update = &menu_state_update;
-	state_tab[STATE_MENU].handle_input = &menu_state_handle_input;
-	state_tab[STATE_MENU].render = &menu_state_render;
-
-	// init play state
-	state_tab[STATE_PLAY].init = &play_state_init;
-	state_tab[STATE_PLAY].destroy = &play_state_destroy;
-	state_tab[STATE_PLAY].pause = &play_state_pause;
-	state_tab[STATE_PLAY].resume = &play_state_resume;
-	state_tab[STATE_PLAY].update = &play_state_update;
-	state_tab[STATE_PLAY].handle_input = &play_state_handle_input;
-	state_tab[STATE_PLAY].render = &play_state_render;
+	M_INIT_STATE(MENU, menu);
+	M_INIT_STATE(PLAY, play);
 
 	cur_state = STATE_MENU;
 	state_tab[cur_state].init();
