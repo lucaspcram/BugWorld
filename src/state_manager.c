@@ -8,15 +8,15 @@
 #include <string.h>
 #include <ncurses.h>
 
-#define M_INIT_STATE(ST, st)                                           \
-do {                                                                   \
-	state_tab[STATE_ ## ST].init = &st ## _state_init;                 \
-	state_tab[STATE_ ## ST].destroy = &st ## _state_destroy;           \
-	state_tab[STATE_ ## ST].pause = &st ## _state_pause;               \
-	state_tab[STATE_ ## ST].resume = &st ## _state_resume;             \
-	state_tab[STATE_ ## ST].update = &st ## _state_update;             \
-	state_tab[STATE_ ## ST].handle_input = &st ## _state_handle_input; \
-	state_tab[STATE_ ## ST].render = &st ## _state_render;             \
+#define M_INIT_STATE(ST, st)                                       \
+do {                                                               \
+state_tab[STATE_ ## ST].init = &st ## _state_init;                 \
+state_tab[STATE_ ## ST].destroy = &st ## _state_destroy;           \
+state_tab[STATE_ ## ST].pause = &st ## _state_pause;               \
+state_tab[STATE_ ## ST].resume = &st ## _state_resume;             \
+state_tab[STATE_ ## ST].update = &st ## _state_update;             \
+state_tab[STATE_ ## ST].handle_input = &st ## _state_handle_input; \
+state_tab[STATE_ ## ST].render = &st ## _state_render;             \
 } while(0)
 
 // index into the state table
