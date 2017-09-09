@@ -66,11 +66,10 @@ void render_sprite(struct sprite * s, int color)
 	if (s == NULL)
 		return;
 
-	for (i = 0; i < s->height; i++) {
-		for (j = 0; j < s->width; j++) {
-			draw(s->frames[s->anim_state][(i * s->width) + j], j + s->col, i + s->row, color);
-		}
-	}
+	for (i = 0; i < s->height; i++)
+		for (j = 0; j < s->width; j++)
+			draw(s->frames[s->anim_state][(i * s->width) + j],
+			         j + s->col, i + s->row, color);
 }
 
 void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int timer_reset)
