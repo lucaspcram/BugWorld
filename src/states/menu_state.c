@@ -7,11 +7,11 @@
 
 #include <string.h>
 
-#define M_DRAW_MENU(type, color, anim)                          \
-do {                                                            \
-draw_menu_option(G_MENU_ ## type,                                 \
+#define M_DRAW_MENU(type, color, anim)                              \
+do {                                                                \
+draw_menu_option(G_MENU_ ## type,                                   \
                  G_MENU_COL_OFFSET, G_MENU_ ## type ## _ROW_OFFSET, \
-                 color, anim);                                  \
+                 color, anim);                                      \
 } while(0)
 
 /* Menu component defines */
