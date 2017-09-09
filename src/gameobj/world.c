@@ -5,12 +5,8 @@
 
 #include <stdlib.h>
 
-static struct player * player;
-
 struct world * init_world(void)
 {
-	player = create_player(0, 0);
-
 	// TODO actually allocate the world
 	return NULL;
 }

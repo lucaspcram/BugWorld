@@ -10,20 +10,20 @@
 
 #define M_INIT_STATE(ST, st)                                       \
 do {                                                               \
-state_tab[STATE_ ## ST].init = &st ## _state_init;                 \
-state_tab[STATE_ ## ST].destroy = &st ## _state_destroy;           \
-state_tab[STATE_ ## ST].pause = &st ## _state_pause;               \
-state_tab[STATE_ ## ST].resume = &st ## _state_resume;             \
-state_tab[STATE_ ## ST].update = &st ## _state_update;             \
-state_tab[STATE_ ## ST].handle_input = &st ## _state_handle_input; \
-state_tab[STATE_ ## ST].render = &st ## _state_render;             \
+state_tab[M_STATE_ ## ST].init = &st ## _state_init;                 \
+state_tab[M_STATE_ ## ST].destroy = &st ## _state_destroy;           \
+state_tab[M_STATE_ ## ST].pause = &st ## _state_pause;               \
+state_tab[M_STATE_ ## ST].resume = &st ## _state_resume;             \
+state_tab[M_STATE_ ## ST].update = &st ## _state_update;             \
+state_tab[M_STATE_ ## ST].handle_input = &st ## _state_handle_input; \
+state_tab[M_STATE_ ## ST].render = &st ## _state_render;             \
 } while(0)
 
 // index into the state table
 static int cur_state;
 
 // each possible game state
-static struct state state_tab[NUM_STATES];
+static struct state state_tab[M_NUM_STATES];
 
 static void set_cur_state(int code);
 
@@ -35,7 +35,7 @@ void init_state_manager(void)
 	M_INIT_STATE(MENU, menu);
 	M_INIT_STATE(PLAY, play);
 
-	cur_state = STATE_MENU;
+	cur_state = M_STATE_MENU;
 	state_tab[cur_state].init();
 }
 
@@ -62,7 +62,7 @@ void update_render(void)
 static void set_cur_state(int code)
 {
 	// return immediately on bad state code
-	if (code < 0 || code >= NUM_STATES)
+	if (code < 0 || code >= M_NUM_STATES)
 		return;
 	cur_state = code;
 }

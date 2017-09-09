@@ -22,10 +22,10 @@ int main(int argc, char * argv[])
 	printf("BugWorld Unit Tests\n");
 	
 	// Test the robustness of the random number generator.
-	//test_rand();
+	test_rand();
 
 	// Test the highscore file IO functionality
-	//test_score_io();
+	test_score_io();
 
 	// Test gameobj code
 	test_gameobj();

@@ -14,9 +14,7 @@ struct sprite * create_sprite(int col, int row, int width, int height)
 	struct sprite * new_sprite;
 	const int DEFAULT_TIMER_RESET = 45;
 
-	new_sprite = (struct sprite *) malloc(sizeof(*new_sprite));
-	if (new_sprite == NULL)
-		abort_game("malloc failed in function \'create_sprite\'");
+	new_sprite = M_SAFEMALLOC(sizeof(*new_sprite));
 
 	new_sprite->col = col;
 	new_sprite->row = row;
@@ -112,17 +110,11 @@ void set_frames(struct sprite * s, char const ** frames, int frames_len)
 	if (s == NULL)
 		return;
 
-	new_frames = (char **) malloc(sizeof(*new_frames) * frames_len);
-	if (new_frames == NULL)
-		abort_game("malloc failed in function \'set_frames\'");
+	new_frames = M_SAFEMALLOC(sizeof(*new_frames) * frames_len);
 
 	for (i = 0; i < frames_len; i++) {
 		len = strlen(frames[i]);
-		new_frames[i] = (char *) malloc(sizeof(*new_frames[i]) * len);
-
-		if (new_frames[i] == NULL)
-			abort_game("malloc failed in function \'set_frames\'");
-
+		new_frames[i] = M_SAFEMALLOC(sizeof(*new_frames[i]) * len);
 		strncpy(new_frames[i], frames[i], len);
 	}
 

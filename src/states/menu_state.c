@@ -7,11 +7,18 @@
 
 #include <string.h>
 
+#define M_DRAW_MENU(type, color, anim)                          \
+do {                                                            \
+draw_menu_option(G_MENU_ ## type,                                 \
+                 G_MENU_COL_OFFSET, G_MENU_ ## type ## _ROW_OFFSET, \
+                 color, anim);                                  \
+} while(0)
+
 /* Menu component defines */
 /**************************/
 
 // Title text definitions
-static char const * TITLE_TEXT[] =
+static char const * G_TITLE_FRAME1[] =
 {
 " /+++++++                                                        /++       /++",
 "| ++__  ++                                                      | ++      | ++",
@@ -25,7 +32,7 @@ static char const * TITLE_TEXT[] =
 "                    |  ++++++/                                                ",
 "                     \\______/                                                 "
 };
-static char const * TITLE_TEXT_2[] =
+static char const * G_TITLE_FRAME2[] =
 {
 " /xxxxxxx                                                        /xx       /xx",
 "| xx__  xx                                                      | xx      | xx",
@@ -39,8 +46,8 @@ static char const * TITLE_TEXT_2[] =
 "                    |  xxxxxx/                                                ",
 "                     \\______/                                                 "
 };
-static const int TITLE_LEN = 11;
-static const int TITLE_ROW_OFFSET = 1;
+static const int G_TITLE_LEN = 11;
+static const int G_TITLE_ROW_OFFSET = 1;
 
 #define M_NUM_OPTIONS (3)
 #define M_OPTION_PLAY (0)
@@ -48,65 +55,61 @@ static const int TITLE_ROW_OFFSET = 1;
 #define M_OPTION_HELP (2)
 
 // Play selection
-static char const * MENU_PLAY[] =
+static char const * G_MENU_PLAY[] =
 {
 "+-+-+-+-+-+-+", // animated border frame 1
 "| |P|L|A|Y| |",
 "x-x-x-x-x-x-x" // animated border frame 2
 };
-static int MENU_PLAY_ROW_OFFSET;
+static int G_MENU_PLAY_ROW_OFFSET;
 
 // Scores selection
-static char const * MENU_SCORES[] =
+static char const * G_MENU_SCORES[] =
 {
 "+-+-+-+-+-+-+", // animated border frame 1
 "|S|C|O|R|E|S|",
 "x-x-x-x-x-x-x" // animated border frame 2
 };
-static int MENU_SCORES_ROW_OFFSET;
+static int G_MENU_SCORES_ROW_OFFSET;
 
 // Help selection
-static char const * MENU_HELP[] =
+static char const * G_MENU_HELP[] =
 {
 "+-+-+-+-+-+-+", // animated border frame 1
 "| |H|E|L|P| |",
 "x-x-x-x-x-x-x" // animated border frame 2
 };
-static int MENU_HELP_ROW_OFFSET;
+static int G_MENU_HELP_ROW_OFFSET;
 
 // Only need one since each menu option has equal width
-static int MENU_COL_OFFSET;
+static int G_MENU_COL_OFFSET;
 
 /******END SECTION******/
 
 // menu state vars
-static int menu_index;
-static int menu_anim_timer;
-static int menu_anim_state;
-static int title_anim_state;
+static int g_menu_index;
+static int g_menu_anim_timer;
+static int g_menu_anim_state;
+static int g_title_anime_state;
 
-static void draw_menu_option(
-	char const ** menu,
-	int col_offset,
-	int row_offset,
-	int color,
-	int state
-);
+static void draw_menu_option(char const ** menu,
+                             int col_offset, int row_offset,
+                             int color, int state);
 
 int menu_state_init(void)
 {
 	// init state vars
-	menu_index = M_OPTION_PLAY;
-	menu_anim_timer = 0;
-	menu_anim_state = 0;
-	title_anim_state = 0;
+	g_menu_index = M_OPTION_PLAY;
+	g_menu_anim_timer = 0;
+	g_menu_anim_state = 0;
+	g_title_anime_state = 0;
 
 	// compute offsets for menu options
-	MENU_PLAY_ROW_OFFSET = TITLE_LEN - 0;
-	MENU_SCORES_ROW_OFFSET = MENU_PLAY_ROW_OFFSET + 3;
-	MENU_HELP_ROW_OFFSET = MENU_SCORES_ROW_OFFSET + 3;
+	G_MENU_PLAY_ROW_OFFSET = G_TITLE_LEN - 0;
+	G_MENU_SCORES_ROW_OFFSET = G_MENU_PLAY_ROW_OFFSET + 3;
+	G_MENU_HELP_ROW_OFFSET = G_MENU_SCORES_ROW_OFFSET + 3;
 
-	MENU_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(MENU_PLAY[0])) / 2);
+	G_MENU_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(G_MENU_PLAY[0])) / 2);
 
 	return 0;
 }
@@ -128,24 +131,24 @@ int menu_state_resume(void)
 
 void menu_state_update(void)
 {
-	menu_anim_timer++;
-	if (menu_anim_timer == 30) {
-		menu_anim_timer = 0;
-		menu_anim_state = !menu_anim_state;
-		title_anim_state = !title_anim_state;
+	g_menu_anim_timer++;
+	if (g_menu_anim_timer == 30) {
+		g_menu_anim_timer = 0;
+		g_menu_anim_state = !g_menu_anim_state;
+		g_title_anime_state = !g_title_anime_state;
 	}
 }
 
 void menu_state_handle_input(int input)
 {
 	if (input == M_MENU_SELECT) {
-		if (menu_index == M_OPTION_PLAY) {
-			init_state(STATE_PLAY);
+		if (g_menu_index == M_OPTION_PLAY) {
+			init_state(M_STATE_PLAY);
 		}
-		if (menu_index == M_OPTION_SCORES) {
+		if (g_menu_index == M_OPTION_SCORES) {
 
 		}
-		if (menu_index == M_OPTION_HELP) {
+		if (g_menu_index == M_OPTION_HELP) {
 
 		}
 	}
@@ -154,14 +157,14 @@ void menu_state_handle_input(int input)
 		force_exit();
 
 	if (input == M_MENU_UP) {
-		if (menu_index > 0)
-			menu_index--;
-		menu_anim_state = 0;
+		if (g_menu_index > 0)
+			g_menu_index--;
+		g_menu_anim_state = 0;
 	}
 	if (input == M_MENU_DOWN) {
-		if (menu_index < M_NUM_OPTIONS - 1)
-			menu_index++;
-		menu_anim_state = 0;
+		if (g_menu_index < M_NUM_OPTIONS - 1)
+			g_menu_index++;
+		g_menu_anim_state = 0;
 	}
 }
 
@@ -172,31 +175,31 @@ void menu_state_render(void)
 	int hint_len = strlen(help_hint);
 
 	// render the title text
-	for (i = 0; i < TITLE_LEN; i++) {
-		if (title_anim_state == 0)
-			draw_str(TITLE_TEXT[i], 0, TITLE_ROW_OFFSET + i, M_CYAN);
+	for (i = 0; i < G_TITLE_LEN; i++) {
+		if (g_title_anime_state == 0)
+			draw_str(G_TITLE_FRAME1[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
 		else
-			draw_str(TITLE_TEXT_2[i], 0, TITLE_ROW_OFFSET + i, M_CYAN);
+			draw_str(G_TITLE_FRAME2[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
 	}
 
 	// render the menu
-	switch (menu_index) {
+	switch (g_menu_index) {
 		case M_OPTION_PLAY:
-			draw_menu_option(MENU_PLAY, MENU_COL_OFFSET, MENU_PLAY_ROW_OFFSET, M_RED, menu_anim_state);
-			draw_menu_option(MENU_SCORES, MENU_COL_OFFSET, MENU_SCORES_ROW_OFFSET, M_MAGENTA, 0);
-			draw_menu_option(MENU_HELP, MENU_COL_OFFSET, MENU_HELP_ROW_OFFSET, M_MAGENTA, 0);
+			M_DRAW_MENU(PLAY, M_RED, g_menu_anim_state);
+			M_DRAW_MENU(SCORES, M_MAGENTA, 0);
+			M_DRAW_MENU(HELP, M_MAGENTA, 0);
 			break;
 		
 		case M_OPTION_SCORES:
-			draw_menu_option(MENU_PLAY, MENU_COL_OFFSET, MENU_PLAY_ROW_OFFSET, M_MAGENTA, 0);
-			draw_menu_option(MENU_SCORES, MENU_COL_OFFSET, MENU_SCORES_ROW_OFFSET, M_RED, menu_anim_state);
-			draw_menu_option(MENU_HELP, MENU_COL_OFFSET, MENU_HELP_ROW_OFFSET, M_MAGENTA, 0);
+			M_DRAW_MENU(PLAY, M_MAGENTA, 0);
+			M_DRAW_MENU(SCORES, M_RED, g_menu_anim_state);
+			M_DRAW_MENU(HELP, M_MAGENTA, 0);
 			break;
 
 		case M_OPTION_HELP:
-			draw_menu_option(MENU_PLAY, MENU_COL_OFFSET, MENU_PLAY_ROW_OFFSET, M_MAGENTA, 0);
-			draw_menu_option(MENU_SCORES, MENU_COL_OFFSET, MENU_SCORES_ROW_OFFSET, M_MAGENTA, 0);
-			draw_menu_option(MENU_HELP, MENU_COL_OFFSET, MENU_HELP_ROW_OFFSET, M_RED, menu_anim_state);
+			M_DRAW_MENU(PLAY, M_MAGENTA, 0);
+			M_DRAW_MENU(SCORES, M_MAGENTA, 0);
+			M_DRAW_MENU(HELP, M_RED, g_menu_anim_state);
 			break;
 	}
 
@@ -204,13 +207,9 @@ void menu_state_render(void)
 	draw_str(help_hint, (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1, M_CYAN);
 }
 
-static void draw_menu_option(
-	char const ** menu,
-	int col_offset,
-	int row_offset,
-	int color,
-	int state
-)
+static void draw_menu_option(char const ** menu,
+                             int col_offset, int row_offset,
+                             int color, int state)
 {
 	if (state == 0) {
 		draw_str(menu[0], col_offset, row_offset, color);

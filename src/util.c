@@ -1,17 +1,15 @@
 #include "util.h"
 #include "view.h"
 
+#include <execinfo.h>
+#include <math.h>
+#include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <math.h>
-#include <ncurses.h>
-#include <execinfo.h>
 
 #define M_EPSILON (0.00000001)
 #define M_MAX_FRAMES (128)
-
-char const * G_FATAL_MSG = "BugWorld FATAL ERROR\n";
 
 /*
  * This function is plagued with various *potential* problems.
@@ -58,7 +56,7 @@ bool percentage_chance(double rate)
  * Aborts the game, closes ncurses, and prints an abort message to stderr.
  * Note that this function does not free any heap-allocated objects.
  */
-void abort_game(char const * msg)
+void abort_game(char const * msg, char const * file, unsigned long line)
 {
 	//void * frames[M_MAX_FRAMES];
 	//char ** trace;
@@ -80,6 +78,23 @@ void abort_game(char const * msg)
 	//*/
 
 	fprintf(stderr, "BugWorld FATAL: %s\n", msg);
+	fprintf(stderr, "Error from %s on line %lu\n", file, line);
 	fprintf(stderr, "Aborting.\n");
 	exit(1);
+}
+
+/*
+ * Special wrapper for the stdlib malloc. Aborts with a
+ * message if malloc fails. Should be called using
+ * M_SAFEMALLOC macro.
+ */
+void * malloc_safe(size_t size, char const * file, unsigned long line)
+{
+	void * ptr;
+
+	ptr = malloc(size);
+	if (ptr == NULL) {
+		abort_game("malloc call failed", file, line);
+	}
+	return ptr;
 }

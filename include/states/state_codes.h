@@ -8,13 +8,13 @@
  */
 
 // Manually set this to the number of defined states
-#define NUM_STATES (4)
+#define M_NUM_STATES (4)
 
 /* Define all states below */
-#define STATE_MENU (0)
-#define STATE_PLAY (1)
-#define STATE_PAUSE (2)
-#define STATE_SCORES (3)
+#define M_STATE_MENU (0)
+#define M_STATE_PLAY (1)
+#define M_STATE_PAUSE (2)
+#define M_STATE_SCORES (3)
 
 /*
  * Functions that allow game states to

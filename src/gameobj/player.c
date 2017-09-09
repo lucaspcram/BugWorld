@@ -22,9 +22,7 @@ static const int G_FRAMES_LEN = 2;
 struct player * create_player(int row, int col)
 {
 	struct player * new_player;
-	new_player = (struct player *) malloc(sizeof(*new_player));
-	if (new_player == NULL)
-		abort_game("malloc failed in function \'create_player\'");
+	new_player = M_SAFEMALLOC(sizeof(*new_player));
 
 	new_player->psprite = create_sprite(row, col, M_PLAYER_WIDTH, M_PLAYER_HEIGHT);
 	set_anim_params(new_player->psprite, 0, 0, M_ANIM_TIMER_RESET);
