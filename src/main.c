@@ -1,11 +1,10 @@
-#include "view.h"
 #include "game.h"
+#include "view.h"
 
-#include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <getopt.h>
 #include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void display_help(void);
 void display_version(void);
@@ -60,4 +59,5 @@ void display_version(void)
 void sigterm_handler(int sig)
 {
 	destroy_graphics();
+	exit(0);
 }

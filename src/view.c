@@ -1,7 +1,7 @@
 #include "view.h"
 
-#include <stdio.h>
 #include <ncurses.h>
+#include <stdio.h>
 
 void init_graphics(void)
 {

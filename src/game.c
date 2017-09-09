@@ -1,11 +1,11 @@
 #include "game.h"
-#include "view.h"
 #include "state_manager.h"
+#include "view.h"
 
-#include <sys/time.h>
-#include <signal.h>
-#include <unistd.h>
 #include <ncurses.h>
+#include <signal.h>
+#include <sys/time.h>
+#include <unistd.h>
 
 void init_game(void)
 {

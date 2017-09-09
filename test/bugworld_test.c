@@ -1,8 +1,8 @@
 
+#include "common.h"
 #include "gameobj/sprite.h"
 #include "gameobj/player.h"
 #include "scores.h"
-#include "util.h"
 
 #include <stdio.h>
 #include <stdlib.h>

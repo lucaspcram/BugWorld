@@ -6,7 +6,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <ncurses.h>
 
 #define M_INIT_STATE(ST, st)                                       \
 do {                                                               \

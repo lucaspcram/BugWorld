@@ -1,9 +1,9 @@
+#include "common.h"
+#include "gameobj/sprite.h"
+#include "key_bindings.h"
 #include "states/menu_state.h"
 #include "states/state_codes.h"
 #include "view.h"
-#include "key_bindings.h"
-#include "util.h"
-#include "gameobj/sprite.h"
 
 #include <string.h>
 
