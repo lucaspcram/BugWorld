@@ -129,7 +129,7 @@ int menu_state_resume(void)
 	return menu_state_init();
 }
 
-void menu_state_update(void)
+void menu_state_tick(void)
 {
 	g_menu_anim_timer++;
 	if (g_menu_anim_timer == 30) {

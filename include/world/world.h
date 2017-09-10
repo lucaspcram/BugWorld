@@ -11,11 +11,9 @@ struct world {
 	struct player * player;
 };
 
-struct world * init_world(void);
+struct world * create_world(void);
 void destroy_world(struct world * w);
 
-void update_world(struct world * w);
 void handle_input_world(struct world * world, int input);
-void render_world(struct world * w);
 
 #endif

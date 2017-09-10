@@ -45,7 +45,7 @@ void update_player(struct player * p)
 	if (p == NULL)
 		return;
 
-	update_sprite(p->psprite);
+	tick_sprite(p->psprite);
 }
 
 void render_player(struct player * p)

@@ -18,7 +18,7 @@ struct state {
 	int (*resume)(void);
 	
 	/* State functions */
-	void (*update)(void);
+	void (*tick)(void);
 	void (*handle_input)(int);
 	void (*render)(void);
 };
@@ -26,6 +26,6 @@ struct state {
 void init_state_manager(void);
 void destroy_state_manager(void);
 void handle_input(int input);
-void update_render(void);
+void tick_render(void);
 
 #endif

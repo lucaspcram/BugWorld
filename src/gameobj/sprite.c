@@ -44,7 +44,7 @@ void destroy_sprite(struct sprite * s)
 }
 /******END SECTION******/
 
-void update_sprite(struct sprite * s)
+void tick_sprite(struct sprite * s)
 {
 	if (s == NULL)
 		return;

@@ -1,14 +1,21 @@
-#include "gameobj/world.h"
+#include "world/world.h"
 
+#include "common.h"
 #include "gameobj/player.h"
 #include "key_bindings.h"
+#include "world/world_gen.h"
 
 #include <stdlib.h>
 
-struct world * init_world(void)
+struct world * create_world(void)
 {
 	// TODO actually allocate the world
-	return NULL;
+	struct world * new_world;
+
+	new_world = M_SAFEMALLOC(sizeof(struct world));
+	new_world->player = create_player(2, 2);
+
+	return new_world;
 }
 
 void destroy_world(struct world * w)
@@ -20,18 +27,7 @@ void destroy_world(struct world * w)
 	free(w);
 }
 
-void update_world(struct world * w)
-{
-
-}
-
 void handle_input_world(struct world * w, int input)
-{
-	if (w == NULL)
-		return;
-}
-
-void render_world(struct world * w)
 {
 	if (w == NULL)
 		return;

@@ -33,8 +33,8 @@ void input_loop(void)
 
 void tick(int sig)
 {
-	// call the state manager's update-render
-	update_render();
+	// call the state manager's update-render cycle
+	tick_render();
 }
 
 /*
