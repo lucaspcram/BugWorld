@@ -15,6 +15,7 @@ ______________________
 	- DRY principle
 	- 80ish column limit
 	- comments
+	- write more tests, test error codes
 
 
 BUGWORLD BUGS (hah)

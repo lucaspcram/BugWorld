@@ -3,7 +3,6 @@
 ## BEGIN Project specific variables ##
 
 # Compiler and options #
-CC=gcc
 WARN=-Wall
 OPT=#-O2 # no opts for now
 STD=#-std=c11 # seems to be breaking the build
