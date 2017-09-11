@@ -1,3 +1,5 @@
+[![Travis](https://travis-ci.org/lucaspcram/BugWorld.svg?branch=master)](https://travis-ci.org/lucaspcram/BugWorld)
+
 # BugWorld
 
 A simple ncurses-based puzzle game.
