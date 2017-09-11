@@ -1,0 +1,8 @@
+before_install:
+- sudo apt-get install libncurses5-dev
+
+compiler:
+- gcc
+
+script:
+- make all
