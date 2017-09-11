@@ -58,7 +58,7 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 .PHONY: test all clean run runtest
 test: $(TARGET)
 	@echo "Building tests..."
-	@$(CC) $(CFLAGS) -c -o $(TESTOBJ) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(INCDIR) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -c -o $(TESTOBJ) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(INCDIR)
 	@$(CC) $(CFLAGS) -o $(TESTEXEC) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(TESTDEPEND) $(INCDIR) $(LDFLAGS)
 
 all: clean $(TARGET) test
