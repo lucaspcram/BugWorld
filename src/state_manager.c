@@ -1,19 +1,19 @@
 #include "state_manager.h"
-#include "states/state_codes.h"
 #include "states/menu_state.h"
 #include "states/play_state.h"
+#include "states/state_codes.h"
 #include "view.h"
 
 #include <stdlib.h>
 #include <string.h>
 
-#define M_INIT_STATE(ST, st)                                       \
-do {                                                               \
+#define M_INIT_STATE(ST, st)                                           \
+do {                                                                   \
 g_state_tab[M_STATE_ ## ST].init = &st ## _state_init;                 \
 g_state_tab[M_STATE_ ## ST].destroy = &st ## _state_destroy;           \
 g_state_tab[M_STATE_ ## ST].pause = &st ## _state_pause;               \
 g_state_tab[M_STATE_ ## ST].resume = &st ## _state_resume;             \
-g_state_tab[M_STATE_ ## ST].tick = &st ## _state_tick;             \
+g_state_tab[M_STATE_ ## ST].tick = &st ## _state_tick;                 \
 g_state_tab[M_STATE_ ## ST].handle_input = &st ## _state_handle_input; \
 g_state_tab[M_STATE_ ## ST].render = &st ## _state_render;             \
 } while(0)

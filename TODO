@@ -14,8 +14,8 @@ ______________________
 	- NULL/sanity checks
 	- DRY principle
 	- 80ish column limit
-	- comments
-	- write more tests, test error codes
+	- fix comments
+	- write more robust tests
 
 
 BUGWORLD BUGS (hah)

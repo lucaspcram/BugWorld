@@ -3,9 +3,9 @@
 
 #include <execinfo.h>
 #include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #define M_EPSILON (0.00000001)
 #define M_MAX_FRAMES (128)

@@ -13,27 +13,32 @@
 #define M_MAX_BIN (10)
 #define M_RATE (0.5)
 
-void test_rand();
-void test_score_io();
-void test_gameobj();
+#define M_TRY_TEST(function) \
+do {                         \
+if(function()) return 1;     \
+} while(0)
+
+int test_rand();
+int test_score_io();
+int test_gameobj();
 
 int main(int argc, char * argv[])
 {
 	printf("BugWorld Unit Tests\n");
 	
 	// Test the robustness of the random number generator.
-	test_rand();
+	M_TRY_TEST(test_rand);
 
 	// Test the highscore file IO functionality
-	test_score_io();
+	M_TRY_TEST(test_score_io);
 
 	// Test gameobj code
-	test_gameobj();
+	M_TRY_TEST(test_gameobj);
 
 	return 0;
 }
 
-void test_rand()
+int test_rand()
 {
 	int i;
 	int num;
@@ -68,9 +73,11 @@ void test_rand()
 	}
 	printf("Percentage chance fraction: %lf\n", (double) counter / M_MAX_TRIALS);
 	printf("Expected fraction: %lf\n", (double) M_RATE);
+
+	return 0;
 }
 
-void test_score_io()
+int test_score_io()
 {
 	struct score score1;
 	struct score score2;
@@ -135,9 +142,11 @@ void test_score_io()
 
 	free_scorelist(scores); 
 	free(scorepath);
+
+	return 0;
 }
 
-void test_gameobj()
+int test_gameobj()
 {
 	struct player * p;
 
@@ -147,4 +156,6 @@ void test_gameobj()
 	p = create_player(0, 0);
 	printf("Destroying player struct...\n");
 	destroy_player(p);
+
+	return 0;
 }

@@ -1,12 +1,14 @@
 before_install:
 - sudo apt-get install libncurses5-dev
+- sudo apt-get install valgrind
 
 compiler:
 - gcc
 - clang
 
 script:
-- make all && make runtest
+- make all
+- valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./bin/bugworld_test
 
 language:
 - c

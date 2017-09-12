@@ -46,6 +46,6 @@ void play_state_render(void)
 {
 	if (g_world == NULL)
 		return;
-	struct sprite * p = g_world->player->psprite;
-	render_sprite(p, M_CYAN);
+
+	render_sprite(g_world->player->psprite, M_CYAN);
 }
