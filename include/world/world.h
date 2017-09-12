@@ -14,6 +14,6 @@ struct world {
 struct world * create_world(void);
 void destroy_world(struct world * w);
 
-void handle_input_world(struct world * world, int input);
+void handle_input_world(struct world * w, int input);
 
 #endif

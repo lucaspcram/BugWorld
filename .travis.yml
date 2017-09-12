@@ -8,7 +8,7 @@ compiler:
 
 script:
 - make all
-- valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./bin/bugworld_test
+- ./runtests.sh
 
 language:
 - c
