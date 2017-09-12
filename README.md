@@ -8,8 +8,9 @@ A simple ncurses-based puzzle game.
 Screenshots to come!
 
 ## Building
-BugWorld requires the ncurses development libraries to build.
-Tested and works with GCC 4.8.4 as well as clang 3.9.0.
+Tested with GCC 4.8.4 as well as Clang 3.9.0.
+
+Requires the ncurses development libraries to build.
 
 On Debian/Ubuntu
 ```
@@ -22,6 +23,8 @@ $ sudo yum install ncurses-devel
 ```
 Then just
 ```
+$ export CC=gcc
+# or export CC=clang
 $ make all
 $ ./bin/bugworld
 ```
