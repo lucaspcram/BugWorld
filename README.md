@@ -9,6 +9,8 @@ Screenshots to come!
 
 ## Building
 BugWorld requires the ncurses development libraries to build.
+Tested and works with GCC 4.8.4 as well as clang 3.9.0.
+
 On Debian/Ubuntu
 ```
 $ sudo apt-get install libncurses5-dev
