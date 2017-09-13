@@ -107,7 +107,7 @@ int test_score_io()
 	score3.turns_elapsed = 2;
 	score3.decoys_used = 2;
 
-	scores = (struct score **) malloc(sizeof(*scores) * 4);
+	scores = M_SAFEMALLOC(sizeof(*scores) * 4);
 	scores[0] = &score1;
 	scores[1] = &score2;
 	scores[2] = &score3;

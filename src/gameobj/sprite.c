@@ -144,7 +144,23 @@ static void advance_state(struct sprite * s)
 		s->anim_state = 0;
 }
 
-void set_row(struct sprite * s, int row)
+int sprite_row(struct sprite * s)
+{
+	if (s == NULL)
+		return -1;
+	
+	return s->row;
+}
+
+int sprite_col(struct sprite * s)
+{
+	if (s == NULL)
+		return -1;
+	
+	return s->col;
+}
+
+void sprite_set_row(struct sprite * s, int row)
 {
 	if (s == NULL)
 		return;
@@ -152,7 +168,7 @@ void set_row(struct sprite * s, int row)
 	s->row = row;
 }
 
-void set_col(struct sprite * s, int col)
+void sprite_set_col(struct sprite * s, int col)
 {
 	if (s == NULL)
 		return;

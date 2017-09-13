@@ -133,10 +133,10 @@ void render_map(struct map * m)
 		for (j = 0; j < m->cols; j++) {
 			// reset the sprite locations
 			// reuse the same 4 sprites
-			M_SET_SPRITE(m->grass_spr, i, j);
-			M_SET_SPRITE(m->water_spr, i, j);
-			M_SET_SPRITE(m->mound_spr, i, j);
-			M_SET_SPRITE(m->goal_spr, i, j);
+			M_SET_SPRITE_POS(m->grass_spr, i, j);
+			M_SET_SPRITE_POS(m->water_spr, i, j);
+			M_SET_SPRITE_POS(m->mound_spr, i, j);
+			M_SET_SPRITE_POS(m->goal_spr, i, j);
 			switch(m->tiles[i][j]) {
 				case EMPTY:
 					break;

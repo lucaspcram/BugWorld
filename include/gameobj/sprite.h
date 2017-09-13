@@ -5,10 +5,10 @@
  * Sprites are NxM rectangles made of animated ASCII characters.
  */
 
-#define M_SET_SPRITE(sprite, row, col) \
-do {                                   \
-set_row(sprite, row);                  \
-set_col(sprite, col);                  \
+#define M_SET_SPRITE_POS(sprite, row, col) \
+do {                                       \
+sprite_set_row(sprite, row);               \
+sprite_set_col(sprite, col);               \
 } while(0)
  
 struct sprite;
@@ -23,7 +23,10 @@ void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int time
 // see comment in sprite.c for format of 'frames' array
 void set_frames(struct sprite * s, char const ** frames, int frames_len);
 
-void set_row(struct sprite * s, int row);
-void set_col(struct sprite * s, int col);
+int sprite_row(struct sprite * s);
+int sprite_col(struct sprite * s);
+
+void sprite_set_row(struct sprite * s, int row);
+void sprite_set_col(struct sprite * s, int col);
 
 #endif
