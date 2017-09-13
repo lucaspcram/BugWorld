@@ -34,7 +34,7 @@ int play_state_resume(void)
 
 void play_state_tick(void)
 {
-	tick_sprite(g_world->player->psprite);
+	tick_world(g_world);
 }
 
 void play_state_handle_input(int input)
@@ -44,8 +44,5 @@ void play_state_handle_input(int input)
 
 void play_state_render(void)
 {
-	if (g_world == NULL)
-		return;
-
-	render_sprite(g_world->player->psprite, M_CYAN);
+	render_world(g_world);
 }

@@ -9,12 +9,7 @@ enum tile_type {
 	GOAL
 };
 
-struct map {
-	int rows;
-	int cols;
-
-	enum tile_type ** tiles;
-};
+struct map;
 
 struct map * create_map(int row, int col);
 void destroy_map(struct map * m);

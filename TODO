@@ -10,12 +10,16 @@ ______________________
 + the help state
 	- best way to explain the game/controls?
 
++ gameobjs
+	- should draw themselves
+
 + misc. refactoring and cleanup
 	- NULL/sanity checks
 	- DRY principle
 	- 80ish column limit
 	- fix comments
 	- write more robust tests
+	- use forward decl structs in headers
 
 
 BUGWORLD BUGS (hah)

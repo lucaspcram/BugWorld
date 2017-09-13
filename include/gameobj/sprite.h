@@ -5,18 +5,7 @@
  * Sprites are NxM rectangles made of animated ASCII characters.
  */
 
-struct sprite {
-	int col;
-	int row;
-	int width;
-	int height;
-	int anim_state;
-	int anim_timer;
-	int timer_reset;
-
-	char ** frames;
-	int frames_len;
-};
+struct sprite;
 
 struct sprite * create_sprite(int col, int row, int width, int height);
 void destroy_sprite(struct sprite * s);

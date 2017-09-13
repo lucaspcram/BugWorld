@@ -7,9 +7,12 @@
 
 #include <stdlib.h>
 
+struct world {
+	struct player * player;
+};
+
 struct world * create_world(void)
 {
-	// TODO actually allocate the world
 	struct world * new_world;
 
 	new_world = M_SAFEMALLOC(sizeof(struct world));
@@ -31,4 +34,28 @@ void handle_input_world(struct world * w, int input)
 {
 	if (w == NULL)
 		return;
+}
+
+void tick_world(struct world * w)
+{
+	if (w == NULL)
+		return;
+
+	tick_player(w->player);
+}
+
+void render_world(struct world * w)
+{
+	if (w == NULL)
+		return;
+
+	render_player(w->player);
+}
+
+struct player * get_player(struct world * w)
+{
+	if (w == NULL)
+		return NULL;
+
+	return w->player;
 }

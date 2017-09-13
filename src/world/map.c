@@ -2,6 +2,13 @@
 
 #include <stdlib.h>
 
+struct map {
+	int rows;
+	int cols;
+
+	enum tile_type ** tiles;
+};
+
 struct map * create_map(int row, int col)
 {
 	return NULL;

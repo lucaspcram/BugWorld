@@ -5,6 +5,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct sprite {
+	int col;
+	int row;
+	int width;
+	int height;
+	int anim_state;
+	int anim_timer;
+	int timer_reset;
+
+	char ** frames;
+	int frames_len;
+};
+
 static void advance_state(struct sprite * s);
 
 /* Lifecycle functions */
