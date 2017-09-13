@@ -14,4 +14,7 @@ struct map;
 struct map * create_map(int row, int col);
 void destroy_map(struct map * m);
 
+void tick_map(struct map * m);
+void render_map(struct map * m);
+
 #endif

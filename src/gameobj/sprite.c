@@ -49,9 +49,8 @@ void destroy_sprite(struct sprite * s)
 	if (s == NULL)
 		return;
 
-	for (i = 0; i < s->frames_len; i++) {
+	for (i = 0; i < s->frames_len; i++)
 		free(s->frames[i]);
-	}
 	free(s->frames);
 	free(s);
 }

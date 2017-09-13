@@ -3,12 +3,15 @@
 #include "common.h"
 #include "gameobj/player.h"
 #include "key_bindings.h"
+#include "world/map.h"
 #include "world/world_gen.h"
+#include "view.h"
 
 #include <stdlib.h>
 
 struct world {
 	struct player * player;
+	struct map * map;
 };
 
 struct world * create_world(void)
@@ -17,6 +20,7 @@ struct world * create_world(void)
 
 	new_world = M_SAFEMALLOC(sizeof(struct world));
 	new_world->player = create_player(2, 2);
+	new_world->map = create_map(M_SCRHEIGHT, M_SCRWIDTH);
 
 	return new_world;
 }
@@ -27,6 +31,7 @@ void destroy_world(struct world * w)
 		return;
 
 	destroy_player(w->player);
+	destroy_map(w->map);
 	free(w);
 }
 

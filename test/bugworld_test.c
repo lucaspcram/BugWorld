@@ -3,6 +3,7 @@
 #include "gameobj/sprite.h"
 #include "gameobj/player.h"
 #include "scores.h"
+#include "world/world.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -149,6 +150,7 @@ int test_score_io()
 int test_gameobj()
 {
 	struct player * p;
+	struct world * w;
 
 	printf("\n### SPRITE LIFECYCLE TEST ###\n");
 
@@ -156,6 +158,11 @@ int test_gameobj()
 	p = create_player(0, 0);
 	printf("Destroying player struct...\n");
 	destroy_player(p);
+
+	printf("Creating world...\n");
+	w = create_world();
+	printf("Destroying world...\n");
+	destroy_world(w);
 
 	return 0;
 }

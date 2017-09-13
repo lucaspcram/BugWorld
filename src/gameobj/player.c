@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 struct player {
-	struct sprite *psprite;
+	struct sprite * psprite;
 	int decoys;
 };
 
