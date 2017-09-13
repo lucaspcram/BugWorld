@@ -8,6 +8,7 @@
 
 struct player {
 	struct sprite * psprite;
+	int stamina;
 	int decoys;
 };
 
@@ -15,7 +16,7 @@ struct player {
 /***************/
 #define M_PLAYER_WIDTH (1)
 #define M_PLAYER_HEIGHT (1)
-#define M_ANIM_TIMER_RESET (35)
+#define M_ANIM_TIMER (35)
 
 static const char * G_FRAMES[] = {
 	"X",
@@ -30,7 +31,7 @@ struct player * create_player(int row, int col)
 	new_player = M_SAFEMALLOC(sizeof(*new_player));
 
 	new_player->psprite = create_sprite(row, col, M_PLAYER_WIDTH, M_PLAYER_HEIGHT);
-	set_anim_params(new_player->psprite, 0, 0, M_ANIM_TIMER_RESET);
+	set_anim_params(new_player->psprite, 0, 0, M_ANIM_TIMER);
 	set_frames(new_player->psprite, G_FRAMES, G_FRAMES_LEN);
 
 	return new_player;

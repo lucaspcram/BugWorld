@@ -2,6 +2,8 @@
 
 #include "gameobj/player.h"
 #include "gameobj/sprite.h"
+#include "key_bindings.h"
+#include "states/state_codes.h"
 #include "view.h"
 #include "world/world.h"
 
@@ -39,6 +41,9 @@ void play_state_tick(void)
 
 void play_state_handle_input(int input)
 {
+	if (input == M_MENU_QUIT)
+		force_exit();
+
 	handle_input_world(g_world, input);
 }
 

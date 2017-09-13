@@ -9,7 +9,12 @@
 
 #define M_TILE_WIDTH (1)
 #define M_TILE_HEIGHT (1)
-#define M_ANIM_TIMER_RESET (25)
+
+#define M_GRASS_TIMER (40)
+#define M_WATER_TIMER (21)
+#define M_MOUND_TIMER (80)
+#define M_GOAL_TIMER (100)
+
 
 static const char * G_GRASS_FRAMES[] = {
 	"\\",
@@ -68,19 +73,19 @@ struct map * create_map(int row, int col)
 
 	// initialize the dummy tile sprites
 	new_map->grass_spr = create_sprite(0, 0, M_TILE_WIDTH, M_TILE_HEIGHT);
-	set_anim_params(new_map->grass_spr, 0, 0, M_ANIM_TIMER_RESET);
+	set_anim_params(new_map->grass_spr, 0, 0, M_GRASS_TIMER);
 	set_frames(new_map->grass_spr, G_GRASS_FRAMES, G_GRASS_FRAMES_LEN);
 
 	new_map->water_spr = create_sprite(0, 0, M_TILE_WIDTH, M_TILE_HEIGHT);
-	set_anim_params(new_map->water_spr, 0, 0, M_ANIM_TIMER_RESET);
+	set_anim_params(new_map->water_spr, 0, 0, M_WATER_TIMER);
 	set_frames(new_map->water_spr, G_WATER_FRAMES, G_WATER_FRAMES_LEN);
 
 	new_map->mound_spr = create_sprite(0, 0, M_TILE_WIDTH, M_TILE_HEIGHT);
-	set_anim_params(new_map->mound_spr, 0, 0, M_ANIM_TIMER_RESET);
+	set_anim_params(new_map->mound_spr, 0, 0, M_MOUND_TIMER);
 	set_frames(new_map->mound_spr, G_MOUND_FRAMES, G_MOUND_FRAMES_LEN);
 
 	new_map->goal_spr = create_sprite(0, 0, M_TILE_WIDTH, M_TILE_HEIGHT);
-	set_anim_params(new_map->goal_spr, 0, 0, M_ANIM_TIMER_RESET);
+	set_anim_params(new_map->goal_spr, 0, 0, M_GOAL_TIMER);
 	set_frames(new_map->goal_spr, G_GOAL_FRAMES, G_GOAL_FRAMES_LEN);
 
 	return new_map;
