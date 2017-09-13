@@ -3,7 +3,7 @@
 ## BEGIN Project specific variables ##
 
 # Compiler and options #
-WARN=-Wall -pedantic
+WARN=-Wall -Wpedantic
 OPT=#-O2 # no opts for now
 STD=#-std=c11 # seems to be breaking the build
 CFLAGS=$(WARN) $(OPT) $(STD) -g

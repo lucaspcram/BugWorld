@@ -4,11 +4,15 @@
 
 #include <ncurses.h>
 #include <signal.h>
+#include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
+
 
 void init_game(void)
 {
+	srand(time(NULL));
 	init_graphics();
 	init_state_manager();
 
