@@ -45,4 +45,6 @@ void play_state_handle_input(int input)
 void play_state_render(void)
 {
 	render_world(g_world);
+	draw_str("UI Line 1", 0, M_SCRHEIGHT - 2, M_WHITE);
+	draw_str("UI Line 2", 0, M_SCRHEIGHT - 1, M_WHITE);
 }

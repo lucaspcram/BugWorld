@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "gameobj/sprite.h"
+#include "view.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,10 +107,69 @@ void destroy_map(struct map * m)
 
 void tick_map(struct map * m)
 {
-	
+	if (m == NULL)
+		return;
+
+	tick_sprite(m->grass_spr);
+	tick_sprite(m->water_spr);
+	tick_sprite(m->mound_spr);
+	tick_sprite(m->goal_spr);
 }
 
 void render_map(struct map * m)
 {
+	int i;
+	int j;
 	
+	if (m == NULL)
+		return;
+
+	for (i = 0; i < m->rows; i++) {
+		for (j = 0; j < m->cols; j++) {
+			// reset the sprite locations
+			// reuse the same 4 sprites
+			M_SET_SPRITE(m->grass_spr, i, j);
+			M_SET_SPRITE(m->water_spr, i, j);
+			M_SET_SPRITE(m->mound_spr, i, j);
+			M_SET_SPRITE(m->goal_spr, i, j);
+			switch(m->tiles[i][j]) {
+				case EMPTY:
+					break;
+				case GRASS:
+					render_sprite(m->grass_spr, M_GREEN);
+					break;
+				case WATER:
+					render_sprite(m->water_spr, M_CYAN);
+					break;
+				case MOUND:
+					render_sprite(m->mound_spr, M_YELLOW);
+					break;
+				case GOAL:
+					render_sprite(m->goal_spr, M_MAGENTA);
+					break;
+			}
+		}
+	}
+}
+
+int rows(struct map * m) {
+	if (m == NULL)
+		return -1;
+	
+	return m->rows;
+}
+
+int cols(struct map * m) {
+	if (m == NULL)
+		return -1;
+	
+	return m->cols;
+}
+
+void map_set(struct map * m, int i, int j, enum tile_type tile)
+{
+	if (m == NULL)
+		return;
+
+	m->tiles[i][j] = tile;
 }

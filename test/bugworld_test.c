@@ -28,10 +28,10 @@ int main(int argc, char * argv[])
 	printf("BugWorld Unit Tests\n");
 	
 	// Test the robustness of the random number generator.
-	M_TRY_TEST(test_rand);
+	//M_TRY_TEST(test_rand);
 
 	// Test the highscore file IO functionality
-	M_TRY_TEST(test_score_io);
+	//M_TRY_TEST(test_score_io);
 
 	// Test gameobj code
 	M_TRY_TEST(test_gameobj);
@@ -149,15 +149,9 @@ int test_score_io()
 
 int test_gameobj()
 {
-	struct player * p;
 	struct world * w;
 
 	printf("\n### SPRITE LIFECYCLE TEST ###\n");
-
-	printf("Creating player struct...\n");
-	p = create_player(0, 0);
-	printf("Destroying player struct...\n");
-	destroy_player(p);
 
 	printf("Creating world...\n");
 	w = create_world();

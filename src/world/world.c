@@ -20,7 +20,9 @@ struct world * create_world(void)
 
 	new_world = M_SAFEMALLOC(sizeof(struct world));
 	new_world->player = create_player(2, 2);
-	new_world->map = create_map(M_SCRHEIGHT, M_SCRWIDTH);
+	new_world->map = create_map(M_SCRHEIGHT - 2, M_SCRWIDTH);
+	
+	fill_map(new_world->map);
 
 	return new_world;
 }
@@ -47,6 +49,7 @@ void tick_world(struct world * w)
 		return;
 
 	tick_player(w->player);
+	tick_map(w->map);
 }
 
 void render_world(struct world * w)
@@ -54,6 +57,7 @@ void render_world(struct world * w)
 	if (w == NULL)
 		return;
 
+	render_map(w->map);
 	render_player(w->player);
 }
 

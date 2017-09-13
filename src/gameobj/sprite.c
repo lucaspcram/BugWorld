@@ -143,3 +143,19 @@ static void advance_state(struct sprite * s)
 	if (s->anim_state >= s->frames_len)
 		s->anim_state = 0;
 }
+
+void set_row(struct sprite * s, int row)
+{
+	if (s == NULL)
+		return;
+
+	s->row = row;
+}
+
+void set_col(struct sprite * s, int col)
+{
+	if (s == NULL)
+		return;
+
+	s->col = col;
+}

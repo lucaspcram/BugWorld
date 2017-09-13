@@ -19,6 +19,7 @@ void init_graphics(void)
 	init_pair(M_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
 	init_pair(M_BLACK, COLOR_BLACK, COLOR_BLACK);
 	init_pair(M_BLUE, COLOR_BLUE, COLOR_BLACK);
+	init_pair(M_WHITE, COLOR_WHITE, COLOR_BLACK);
 }
 
 void destroy_graphics(void)
