@@ -42,6 +42,11 @@ struct map {
 	int rows;
 	int cols;
 
+	/* 
+	Reuse the same 4 sprite objects across the map.
+	Keeps the code simpler, but loses the ability to
+	have decoupled animations across map surface.
+	*/
 	struct sprite * grass_spr;
 	struct sprite * water_spr;
 	struct sprite * mound_spr;
@@ -71,7 +76,7 @@ struct map * create_map(int row, int col)
 
 	new_map->tiles = new_tiles;	
 
-	// initialize the dummy tile sprites
+	// initialize the tile sprites
 	new_map->grass_spr = create_sprite(0, 0, M_TILE_WIDTH, M_TILE_HEIGHT);
 	set_anim_params(new_map->grass_spr, 0, 0, M_GRASS_TIMER);
 	set_frames(new_map->grass_spr, G_GRASS_FRAMES, G_GRASS_FRAMES_LEN);
@@ -131,25 +136,23 @@ void render_map(struct map * m)
 
 	for (i = 0; i < m->rows; i++) {
 		for (j = 0; j < m->cols; j++) {
-			// reset the sprite locations
-			// reuse the same 4 sprites
-			M_SET_SPRITE_POS(m->grass_spr, i, j);
-			M_SET_SPRITE_POS(m->water_spr, i, j);
-			M_SET_SPRITE_POS(m->mound_spr, i, j);
-			M_SET_SPRITE_POS(m->goal_spr, i, j);
 			switch(m->tiles[i][j]) {
 				case EMPTY:
 					break;
 				case GRASS:
+					M_SET_SPRITE_POS(m->grass_spr, i, j);
 					render_sprite(m->grass_spr, M_GREEN);
 					break;
 				case WATER:
+					M_SET_SPRITE_POS(m->water_spr, i, j);
 					render_sprite(m->water_spr, M_CYAN);
 					break;
 				case MOUND:
+					M_SET_SPRITE_POS(m->mound_spr, i, j);
 					render_sprite(m->mound_spr, M_YELLOW);
 					break;
 				case GOAL:
+					M_SET_SPRITE_POS(m->goal_spr, i, j);
 					render_sprite(m->goal_spr, M_MAGENTA);
 					break;
 			}
