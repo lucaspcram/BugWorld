@@ -11,6 +11,9 @@ ______________________
 	- best way to explain the game/controls?
 
 + gameobjs
+	- nothing for now
+
++ migrate from SIGALRM to pthreads
 
 + misc. refactoring and cleanup
 	- NULL/sanity checks
