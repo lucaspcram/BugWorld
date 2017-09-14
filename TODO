@@ -2,26 +2,33 @@ TODO LIST FOR BUGWORLD
 ______________________
 
 + the play state
-	- code the individual game components (player, ants, water, etc)
+	- code the individual game components/logic (player, ants, water, etc)
 
 + the scores state
-	- scrolling vs. static display of high scores
+	- how to actually display the scores in a nice way (UX)
 
 + the help state
 	- best way to explain the game/controls?
+	- good UX?
 
 + gameobjs
 	- nothing for now
+	
++ 2D Perlin noise world generation
+	- implement the Perlin noise alg in perlin.c
 
-+ migrate from SIGALRM to pthreads
++ SIGALRM - pthreads migration
+	- pthreads + ncurses is realllly buggy, they are not compat,
+	  ncurses is not threadsafe, different terminals do crazy things
+	- perhaps implement a way to optionally compile to use
+	  pthreads/nanosleep OR the SIGALRM solution
+	- or maybe make it a runtime configurable setting?
 
 + misc. refactoring and cleanup
-	- NULL/sanity checks
-	- DRY principle
-	- 80ish column limit
-	- fix comments
+	- defense/DRY design
+	- 80 column soft limit (with tabstop=4)
+	- readable, useful comments
 	- write more robust tests
-	- use forward decl structs in headers
 
 
 BUGWORLD BUGS (hah)
@@ -29,3 +36,5 @@ ___________________
 
 + sometimes the abort_game() function screws up the terminal
 	- it has something to do with the stacktrace code
++ pthreads + ncurses interaction is buggy as all hell
+	- perhaps the SIGALRM solution is better?
