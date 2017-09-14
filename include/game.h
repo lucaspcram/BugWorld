@@ -6,11 +6,8 @@
  * updates, initializes the game, etc.
  */
 
-#define M_FPS (60)
-
 void init_game(void);
 void input_loop(void);
-void tick(int sig);
-void set_sigalarm(void);
+void * tick(void * arg);
 
 #endif

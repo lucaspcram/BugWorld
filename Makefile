@@ -32,10 +32,12 @@ TESTDEPEND=$(OBJECTSNOMAIN)
 # library information #
 LMATH=-lm
 LNCURSES=-lncurses
-LDFLAGS=$(LNCURSES) $(LMATH)
+LRT=-lrt
+LDFLAGS=$(LNCURSES) $(LMATH) $(LRT)
 
 # misc #
 RM=rm -f
+PTHREAD=-pthread # use -pthread instead of -lpthread for proper macros
 
 ## END Project specific variables ##
 
@@ -47,20 +49,22 @@ OBJECTSNOMAIN=$(filter-out $(BUILDDIR)/main.$(OBJEXT), $(OBJECTS))
 $(TARGET): $(OBJECTS)
 	@echo "Linking..."
 	@mkdir -p $(BINDIR)
-	@$(CC) $^ -o $(TARGET) $(LIB) $(LDFLAGS)
+	@$(CC) $^ -o $(TARGET) $(LIB) $(LDFLAGS) $(PTHREAD)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	@mkdir -p $(BUILDSUBDIRS)
-	$(CC) $(CFLAGS) $(INCDIR) -c -o $@ $<
+	@echo "Compiling $<..."
+	@$(CC) $(CFLAGS) $(PTHREAD) $(INCDIR) -c -o $@ $<
 
 .PHONY: test all clean run runtest
 test: $(TARGET)
 	@echo "Building tests..."
-	@$(CC) $(CFLAGS) -c -o $(TESTOBJ) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(INCDIR)
-	@$(CC) $(CFLAGS) -o $(TESTEXEC) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(TESTDEPEND) $(INCDIR) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(PTHREAD) -c -o $(TESTOBJ) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(INCDIR)
+	@$(CC) $(CFLAGS) $(PTHREAD) -o $(TESTEXEC) $(TESTDIR)/$(TESTSRC).$(SRCEXT) $(TESTDEPEND) $(INCDIR) $(LDFLAGS)
 
 all: clean $(TARGET) test
+	@echo "Done!"
 
 clean:
 	@echo "Cleaning...";
