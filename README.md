@@ -3,12 +3,17 @@
 # BugWorld
 
 A simple ncurses-based puzzle game.
+* animated ncurses graphics
+* map generation based on 2D Perlin noise
+* high score tracking
 
 ## Screenshots
 Screenshots to come!
 
 ## Building
-Tested with GCC 4.8.4 as well as Clang 3.9.0.
+Tested with GCC 4.8.4 as well as Clang 3.9.0. Uses sigaction
+code and so will break if compiled with C99. Use compiler
+options specified in the Makefile for best results.
 
 Requires the ncurses development libraries to build.
 
