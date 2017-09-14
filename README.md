@@ -2,7 +2,7 @@
 
 # BugWorld
 
-A simple ncurses-based puzzle game.
+A simple ncurses-based action-puzzle game.
 
 ## Features
 * animated ncurses graphics
