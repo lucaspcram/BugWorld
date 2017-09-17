@@ -4,7 +4,7 @@
 #include <ncurses.h>
 
 /*
- * Global definitions for in game key bindings.
+ * Global definitions for in-game key bindings.
  */
 
 #define M_MENU_UP ('w')

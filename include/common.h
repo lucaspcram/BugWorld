@@ -11,7 +11,6 @@
 
 #define M_SAFEMALLOC(size) malloc_safe(size, __FILE__, __LINE__)
 
-extern char const * G_FATAL_MSG;
 extern pthread_mutex_t g_ncurses_mut;
 
 int get_rand_int(int low_inc, int high_ex);

@@ -2,7 +2,8 @@
 #define PERLIN_H
 
 /*
- * A simple 2D Perlin noise implementation.
+ * A 2D Perlin noise implementation.
+ * Hopefully this is correct (or close enough).
  */
 
 #endif

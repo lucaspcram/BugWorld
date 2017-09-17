@@ -10,10 +10,10 @@ void fill_map(struct map * m)
 	int i;
 	int j;
 	int r;
-	
+
 	if (m == NULL)
 		return;
-	
+
 	for (i = 0; i < rows(m); i++) {
 		for (j = 0; j < cols(m); j++) {
 			r = get_rand_int(0, 5);

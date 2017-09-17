@@ -3,15 +3,15 @@
 
 #include "gameobj/sprite.h"
 
+/*
+ * The player code controlling animations and scoring logic.
+ */
+
 #define M_SET_PLAYER_POS(player, row, col) \
 do {                                       \
 player_set_row(player, row);               \
 player_set_col(player, col);               \
 } while(0)
-
-/*
- * The player code controlling animations and scoring logic.
- */
 
 struct player;
 

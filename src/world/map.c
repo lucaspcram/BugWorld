@@ -111,7 +111,7 @@ void destroy_map(struct map * m)
 	destroy_sprite(m->water_spr);
 	destroy_sprite(m->mound_spr);
 	destroy_sprite(m->goal_spr);
-	
+
 	free(m);
 }
 
@@ -163,14 +163,14 @@ void render_map(struct map * m)
 int rows(struct map * m) {
 	if (m == NULL)
 		return -1;
-	
+
 	return m->rows;
 }
 
 int cols(struct map * m) {
 	if (m == NULL)
 		return -1;
-	
+
 	return m->cols;
 }
 

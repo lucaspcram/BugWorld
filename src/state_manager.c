@@ -43,7 +43,7 @@ void init_state_manager(void)
 
 void destroy_state_manager(void)
 {
-
+	// nothing to do
 }
 
 void handle_input(int input)

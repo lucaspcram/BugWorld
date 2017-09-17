@@ -18,14 +18,11 @@ ______________________
 	- implement the Perlin noise alg in perlin.c
 
 + SIGALRM - pthreads migration
-	- pthreads + ncurses is realllly buggy, they are not compat,
-	  ncurses is not threadsafe, different terminals do crazy things
-	- perhaps implement a way to optionally compile to use
-	  pthreads/nanosleep OR the SIGALRM solution
-	- or maybe make it a runtime configurable setting?
+	- track down reason for flickering,
+	  may be something unavoidable, mutexes as tmp solution
 
 + misc. refactoring and cleanup
-	- defense/DRY design
+	- defensive/DRY design
 	- 80 column soft limit (with tabstop=4)
 	- readable, useful comments
 	- write more robust tests

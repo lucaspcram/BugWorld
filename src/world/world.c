@@ -42,7 +42,7 @@ void handle_input_world(struct world * w, int input)
 {
 	int p_row;
 	int p_col;
-	
+
 	if (w == NULL)
 		return;
 
