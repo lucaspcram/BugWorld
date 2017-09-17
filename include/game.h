@@ -7,7 +7,7 @@
  */
 
 void init_game(void);
-void input_loop(void);
-void * tick(void * arg);
+void * input_loop(void * arg);
+void tick(void);
 
 #endif

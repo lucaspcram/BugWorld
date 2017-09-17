@@ -13,7 +13,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define M_FPS (60)
+#define M_FPS (30)
 #define M_NSEC_PER_SEC (1000000000)
 
 /*
@@ -38,40 +38,50 @@ void init_game(void)
 	init_graphics();
 	init_state_manager();
 
-	err = pthread_create(&tick_thread, NULL, tick, NULL);
+	pthread_mutex_init(&g_ncurses_mut, NULL);
+	err = pthread_create(&tick_thread, NULL, input_loop, NULL);
 	if (err)
 		abort_game("pthread_create failed", __FILE__, __LINE__);
-	input_loop();
-	
+	tick();
+
 	destroy_state_manager();
 	destroy_graphics();
 }
 
-void input_loop(void)
+void * input_loop(void * arg)
 {
 	int ch;
 
 	// keep running while state manager exit not set
-	while (!exit_flag) {
+	while (1) {
+		pthread_mutex_lock(&g_ncurses_mut);
+		timeout(0);
 		ch = getch();
+		if (ch == ERR) {
+			pthread_mutex_unlock(&g_ncurses_mut);
+			continue;
+		}
+		pthread_mutex_unlock(&g_ncurses_mut);
 		// send input to the state manager
 		handle_input(ch);
 	}
 }
 
-void * tick(void * arg)
+void tick(void)
 {
 	struct timespec req, rem;
 	struct timespec start, end;
 	uint64_t nsec_elapsed;
 	uint64_t const nsec_perframe = M_NSEC_PER_SEC / M_FPS;
 	
-	while (1) {
+	while (!exit_flag) {
 		// time the state manager's update-render cycle
+		pthread_mutex_lock(&g_ncurses_mut);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 		tick_render();
 		clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-		
+		pthread_mutex_unlock(&g_ncurses_mut);
+
 		// NOTE: all of this code relies on the elapsed time
 		// being < the value of nsec_perframe, this should be
 		// the case on any non-potato system

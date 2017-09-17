@@ -1,4 +1,7 @@
 #include "state_manager.h"
+
+#include "common.h"
+#include "pthread.h"
 #include "states/menu_state.h"
 #include "states/play_state.h"
 #include "states/state_codes.h"

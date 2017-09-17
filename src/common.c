@@ -3,12 +3,15 @@
 
 #include <execinfo.h>
 #include <math.h>
+#include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #define M_EPSILON (0.00000001)
 #define M_MAX_FRAMES (128)
+
+pthread_mutex_t g_ncurses_mut;
 
 /*
  * This function is plagued with various *potential* problems.
