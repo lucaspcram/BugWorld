@@ -13,10 +13,11 @@
 #include <time.h>
 #include <unistd.h>
 
-#define M_FPS (60)
+#define U_SEC_PER_SEC (1000000)
 #define M_NSEC_PER_SEC (1000000000)
 
 enum concurrency_backend g_backend;
+int g_fps;
 
 /*
  * Combines POSIX threads with ncurses to achieve animated graphical
@@ -32,24 +33,32 @@ enum concurrency_backend g_backend;
  */
 void init_game(void)
 {
-	pthread_t tick_thread;
+	pthread_t thread;
 	int err;
 
 	srand(time(NULL));
 	init_graphics();
 	init_state_manager();
 
-	pthread_mutex_init(&g_ncurses_mut, NULL);
-	err = pthread_create(&tick_thread, NULL, tick, NULL);
-	if (err)
-		abort_game("pthread_create failed", __FILE__, __LINE__);
-	input_loop();
+	if (g_backend == E_PTHREAD) {
+		pthread_mutex_init(&g_ncurses_mut, NULL);
+		err = pthread_create(&thread, NULL, tick_pthread, NULL);
+		if (err)
+			abort_game("pthread_create failed", __FILE__, __LINE__);
+		input_loop_pthread();
+	} else if (g_backend == E_SIGALRM) {
+		set_sigalrm();
+		input_loop_sigalrm();
+	} else {
+		// this should not happen
+		abort_game("invalid backend setting", __FILE__, __LINE__);
+	}
 
 	destroy_state_manager();
 	destroy_graphics();
 }
 
-void input_loop(void)
+void input_loop_pthread(void)
 {
 	int ch;
 
@@ -68,12 +77,24 @@ void input_loop(void)
 	}
 }
 
-void * tick(void * arg)
+void input_loop_sigalrm(void)
+{
+	int ch;
+
+	while (!exit_flag) {
+		ch = getch();
+
+		// send input to the state manager
+		handle_input(ch);
+	}
+}
+
+void * tick_pthread(void * arg)
 {
 	struct timespec req, rem;
 	struct timespec start, end;
 	uint64_t nsec_elapsed;
-	uint64_t const nsec_perframe = M_NSEC_PER_SEC / M_FPS;
+	uint64_t const nsec_perframe = M_NSEC_PER_SEC / g_fps;
 
 	while (1) {
 		pthread_mutex_lock(&g_ncurses_mut);
@@ -92,4 +113,24 @@ void * tick(void * arg)
 			req.tv_nsec = 0;
 		nanosleep(&req, &rem);
 	}
+}
+
+void tick_sigalrm(int sig)
+{
+	tick_render();
+}
+
+void set_sigalrm(void)
+{
+	struct itimerval timer;
+	struct sigaction action;
+	timer.it_value.tv_sec = 0;
+	timer.it_value.tv_usec = U_SEC_PER_SEC / g_fps;
+	timer.it_interval.tv_sec = 0;
+	timer.it_interval.tv_usec = U_SEC_PER_SEC / g_fps;
+	setitimer(ITIMER_REAL, &timer, NULL);
+
+	action.sa_handler = &tick_sigalrm;
+	action.sa_flags = SA_RESTART;
+	sigaction(SIGALRM, &action, NULL);
 }
