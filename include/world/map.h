@@ -2,11 +2,11 @@
 #define MAP_H
 
 enum tile_type {
-	EMPTY,
-	GRASS,
-	WATER,
-	MOUND,
-	GOAL
+	E_EMPTY,
+	E_GRASS,
+	E_WATER,
+	E_MOUND,
+	E_GOAL
 };
 
 struct map;

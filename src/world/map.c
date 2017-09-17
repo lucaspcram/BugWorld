@@ -72,9 +72,9 @@ struct map * create_map(int row, int col)
 
 	for (i = 0; i < row; i++)
 		for (j = 0; j < col; j++)
-			new_tiles[i][j] = EMPTY;
+			new_tiles[i][j] = E_EMPTY;
 
-	new_map->tiles = new_tiles;	
+	new_map->tiles = new_tiles;
 
 	// initialize the tile sprites
 	new_map->grass_spr = create_sprite(0, 0, M_TILE_WIDTH, M_TILE_HEIGHT);
@@ -137,21 +137,21 @@ void render_map(struct map * m)
 	for (i = 0; i < m->rows; i++) {
 		for (j = 0; j < m->cols; j++) {
 			switch(m->tiles[i][j]) {
-				case EMPTY:
+				case E_EMPTY:
 					break;
-				case GRASS:
+				case E_GRASS:
 					M_SET_SPRITE_POS(m->grass_spr, i, j);
 					render_sprite(m->grass_spr, M_GREEN);
 					break;
-				case WATER:
+				case E_WATER:
 					M_SET_SPRITE_POS(m->water_spr, i, j);
 					render_sprite(m->water_spr, M_CYAN);
 					break;
-				case MOUND:
+				case E_MOUND:
 					M_SET_SPRITE_POS(m->mound_spr, i, j);
 					render_sprite(m->mound_spr, M_YELLOW);
 					break;
-				case GOAL:
+				case E_GOAL:
 					M_SET_SPRITE_POS(m->goal_spr, i, j);
 					render_sprite(m->goal_spr, M_MAGENTA);
 					break;

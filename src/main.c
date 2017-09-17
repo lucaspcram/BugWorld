@@ -1,3 +1,4 @@
+
 #include "game.h"
 #include "view.h"
 
@@ -5,10 +6,11 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void display_help(void);
 void display_version(void);
-void sigterm_handler(int sig);
+void sig_handler(int sig);
 
 char const * VERSION_TEXT =
      "Bugworld v0.1, 2017\nLicense MIT\nWritten by Lucas Cram";
@@ -16,8 +18,11 @@ char const * VERSION_TEXT =
 int main(int argc, char * argv[])
 {
 	int c;
+	struct sigaction sa;
 
-	signal(SIGTERM, sigterm_handler);
+	sa.sa_handler = &sig_handler;
+	sa.sa_flags = SA_RESTART;
+	sigfillset(&sa.sa_mask);
 
 	while ((c = getopt(argc, argv, "hv")) != -1) {
 		switch (c) {
@@ -42,6 +47,7 @@ int main(int argc, char * argv[])
 				exit(1);
 		}
 	}
+	g_backend = E_PTHREAD;
 	init_game();
 	return 0;
 }
@@ -56,8 +62,16 @@ void display_version(void)
 	printf("%s\n", VERSION_TEXT);
 }
 
-void sigterm_handler(int sig)
+void sig_handler(int sig)
 {
-	destroy_graphics();
+	switch(sig) {
+		case SIGINT:
+			// fallthru to SIGTERM
+		case SIGTERM:
+			destroy_graphics();
+			break;
+		default:
+			return;
+	}
 	exit(0);
 }

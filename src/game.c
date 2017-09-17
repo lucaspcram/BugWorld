@@ -13,8 +13,10 @@
 #include <time.h>
 #include <unistd.h>
 
-#define M_FPS (30)
+#define M_FPS (60)
 #define M_NSEC_PER_SEC (1000000000)
+
+enum concurrency_backend g_backend;
 
 /*
  * Combines POSIX threads with ncurses to achieve animated graphical
@@ -28,7 +30,6 @@
  * Note that ncurses is not technically thread-safe, but the thread
  * task delegation is handled such that it *should* work.
  */
-
 void init_game(void)
 {
 	pthread_t tick_thread;
@@ -39,21 +40,20 @@ void init_game(void)
 	init_state_manager();
 
 	pthread_mutex_init(&g_ncurses_mut, NULL);
-	err = pthread_create(&tick_thread, NULL, input_loop, NULL);
+	err = pthread_create(&tick_thread, NULL, tick, NULL);
 	if (err)
 		abort_game("pthread_create failed", __FILE__, __LINE__);
-	tick();
+	input_loop();
 
 	destroy_state_manager();
 	destroy_graphics();
 }
 
-void * input_loop(void * arg)
+void input_loop(void)
 {
 	int ch;
 
-	// keep running while state manager exit not set
-	while (1) {
+	while (!exit_flag) {
 		pthread_mutex_lock(&g_ncurses_mut);
 		timeout(0);
 		ch = getch();
@@ -62,20 +62,20 @@ void * input_loop(void * arg)
 			continue;
 		}
 		pthread_mutex_unlock(&g_ncurses_mut);
+
 		// send input to the state manager
 		handle_input(ch);
 	}
 }
 
-void tick(void)
+void * tick(void * arg)
 {
 	struct timespec req, rem;
 	struct timespec start, end;
 	uint64_t nsec_elapsed;
 	uint64_t const nsec_perframe = M_NSEC_PER_SEC / M_FPS;
-	
-	while (!exit_flag) {
-		// time the state manager's update-render cycle
+
+	while (1) {
 		pthread_mutex_lock(&g_ncurses_mut);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 		tick_render();
