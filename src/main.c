@@ -26,7 +26,8 @@ int main(int argc, char * argv[])
 		{"backend", required_argument, 0, 'b'},
 		{"fps", required_argument, 0, 'f'},
 		{"help", no_argument, 0, 'h'},
-		{"version", no_argument, 0, 'v'}
+		{"version", no_argument, 0, 'v'},
+		{NULL, 0, NULL, 0}
 	};
 
 	sa.sa_handler = &sig_handler;
