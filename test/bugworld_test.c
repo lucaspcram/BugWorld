@@ -2,6 +2,7 @@
 #include "common.h"
 #include "gameobj/sprite.h"
 #include "gameobj/player.h"
+#include "perlin.h"
 #include "scores.h"
 #include "world/world.h"
 
@@ -22,6 +23,7 @@ if(function()) return 1;     \
 int test_rand();
 int test_score_io();
 int test_gameobj();
+int test_perlin();
 
 int main(int argc, char * argv[])
 {
@@ -35,6 +37,9 @@ int main(int argc, char * argv[])
 
 	// Test gameobj code
 	M_TRY_TEST(test_gameobj);
+
+	// Test Perlin noise impl
+	M_TRY_TEST(test_perlin);
 
 	return 0;
 }
@@ -151,12 +156,17 @@ int test_gameobj()
 {
 	struct world * w;
 
-	printf("\n### SPRITE LIFECYCLE TEST ###\n");
+	printf("\n### GAMEOBJ LIFECYCLE TEST ###\n");
 
 	printf("Creating world...\n");
 	w = create_world();
 	printf("Destroying world...\n");
 	destroy_world(w);
 
+	return 0;
+}
+
+int test_perlin()
+{
 	return 0;
 }
