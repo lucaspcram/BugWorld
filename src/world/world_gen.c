@@ -14,6 +14,13 @@ void fill_map(struct map * m)
 	int rows, cols;
 	double x, y, n;
 
+	// Perlin generation parameters
+	double const freq = 80;
+	double const ampl = 100.0;
+	double const water_thresh = 35;
+	double const grass_thresh = 57;
+	int const scale = 255;
+
 	if (m == NULL)
 		return;
 
@@ -24,12 +31,12 @@ void fill_map(struct map * m)
 	for (i = 0; i < rows; i++) {
 		for (j = 0; j < cols; j++) {
 			map_set(m, i, j, E_EMPTY);
-			x = (j / (double) cols) * 255;
-			y = (i / (double) rows) * 255;
-			n = p_noise(x / 64.0, y / 64.0) * 100;
-			if (n < 40) {
+			x = (j / (double) cols) * scale;
+			y = (i / (double) rows) * scale;
+			n = p_noise(x / freq, y / freq) * ampl;
+			if (n < water_thresh) {
 				map_set(m, i, j, E_WATER);
-			} else if (n > 55) {
+			} else if (n > grass_thresh) {
 				map_set(m, i, j, E_GRASS);
 			}
 		}

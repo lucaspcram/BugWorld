@@ -3,6 +3,7 @@ ______________________
 
 + the play state
 	- code the individual game components/logic (player, ants, water, etc)
+	- tweak map generation as we go (Perlin params)
 
 + the scores state
 	- how to actually display the scores in a nice way (UX)
@@ -11,15 +12,10 @@ ______________________
 	- best way to explain the game/controls?
 	- good UX?
 
-+ gameobjs
-	- nothing for now
-	
-+ 2D Perlin noise world generation
-	- implement the Perlin noise alg in perlin.c
-
-+ SIGALRM - pthreads migration
++ SIGALRM - pthreads backend
 	- track down reason for flickering,
 	  may be something unavoidable, mutexes as tmp solution
+	- decouple animation update timings from framerate
 
 + misc. refactoring and cleanup
 	- defensive/DRY design
@@ -34,4 +30,3 @@ ___________________
 + sometimes the abort_game() function screws up the terminal
 	- it has something to do with the stacktrace code
 + pthreads + ncurses interaction is buggy as all hell
-	- perhaps the SIGALRM solution is better?

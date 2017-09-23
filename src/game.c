@@ -54,6 +54,9 @@ void init_game(void)
 		abort_game("invalid backend setting", __FILE__, __LINE__);
 	}
 
+	if (g_backend == E_PTHREAD) {
+		pthread_join(thread, NULL);
+	}
 	destroy_state_manager();
 	destroy_graphics();
 }
@@ -97,11 +100,11 @@ void * tick_pthread(void * arg)
 	uint64_t const nsec_perframe = M_NSEC_PER_SEC / g_fps;
 
 	while (1) {
-		pthread_mutex_lock(&g_ncurses_mut);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+		pthread_mutex_lock(&g_ncurses_mut);
 		tick_render();
-		clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 		pthread_mutex_unlock(&g_ncurses_mut);
+		clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 
 		// NOTE: all of this code relies on the elapsed time
 		// being < the value of nsec_perframe, this should be
@@ -112,7 +115,11 @@ void * tick_pthread(void * arg)
 		if (req.tv_nsec < 0)
 			req.tv_nsec = 0;
 		nanosleep(&req, &rem);
+		if (exit_flag)
+			break;
 	}
+
+	return NULL;
 }
 
 void tick_sigalrm(int sig)
