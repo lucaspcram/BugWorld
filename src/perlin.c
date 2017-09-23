@@ -15,7 +15,7 @@ struct vec2d {
  * Values taken from Ken Perlin's improved reference implementation.
  * http://mrl.nyu.edu/~perlin/noise/
  */
-static int p[] = {
+static int p_master[] = {
 	151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,
 	8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,
 	35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,
@@ -29,6 +29,7 @@ static int p[] = {
 	107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,
 	138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
 };
+static int p[256];
 
 // the array to hold the final permutation of p
 // repeated once to prevent index-out-of-bounds during calculations
@@ -65,6 +66,11 @@ static double dot(struct vec2d * v1, struct vec2d * v2);
 void init_perlin(bool shuffle)
 {
 	size_t i;
+
+	// reset the p array
+	for (i = 0; i < M_ARRAY_SIZE(p); i++) {
+		p[i] = p_master[i];
+	}
 
 	if (shuffle) {
 		shuffle_p();
@@ -148,7 +154,7 @@ static void shuffle_p(void)
 	size_t swap_idx;
 	int tmp;
 
-	len = sizeof(p);
+	len = M_ARRAY_SIZE(p);
 
 	// assumes perm has size > 1
 	for (i = len - 1; i > 0; i--) {

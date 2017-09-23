@@ -22,7 +22,7 @@ struct world * create_world(void)
 	new_world = M_SAFEMALLOC(sizeof(struct world));
 	new_world->player = create_player(2, 2);
 	new_world->map = create_map(M_SCRHEIGHT - 2, M_SCRWIDTH);
-	
+
 	fill_map(new_world->map);
 
 	return new_world;
@@ -46,9 +46,9 @@ void handle_input_world(struct world * w, int input)
 	if (w == NULL)
 		return;
 
-
 	p_row = player_row(w->player);
 	p_col = player_col(w->player);
+	
 	if (input == M_ACTION_UP) {
 		M_SET_PLAYER_POS(w->player, p_row - 1, p_col);
 	}
@@ -60,6 +60,12 @@ void handle_input_world(struct world * w, int input)
 	}
 	if (input == M_ACTION_RIGHT) {
 		M_SET_PLAYER_POS(w->player, p_row, p_col + 1);
+	}
+
+	// generate a new world
+	// TODO remove this, just for testing
+	if (input == M_MENU_SELECT) {
+		fill_map(w->map);
 	}
 }
 

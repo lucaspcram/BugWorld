@@ -160,14 +160,14 @@ void render_map(struct map * m)
 	}
 }
 
-int rows(struct map * m) {
+int map_rows(struct map * m) {
 	if (m == NULL)
 		return -1;
 
 	return m->rows;
 }
 
-int cols(struct map * m) {
+int map_cols(struct map * m) {
 	if (m == NULL)
 		return -1;
 

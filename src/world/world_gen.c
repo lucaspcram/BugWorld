@@ -4,36 +4,33 @@
 #include "perlin.h"
 #include "world/map.h"
 
+#include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 void fill_map(struct map * m)
 {
-	int i;
-	int j;
-	int r;
+	int i, j;
+	int rows, cols;
+	double x, y, n;
 
 	if (m == NULL)
 		return;
 
-	for (i = 0; i < rows(m); i++) {
-		for (j = 0; j < cols(m); j++) {
-			r = get_rand_int(0, 5);
-			switch(r) {
-				case 0:
-					map_set(m, i, j, E_EMPTY);
-					break;
-				case 1:
-					map_set(m, i, j, E_GRASS);
-					break;
-				case 2:
-					map_set(m, i, j, E_WATER);
-					break;
-				case 3:
-					map_set(m, i, j, E_MOUND);
-					break;
-				case 4:
-					map_set(m, i, j, E_GOAL);
-					break;
+	init_perlin(true);
+	rows = map_rows(m);
+	cols = map_cols(m);
+
+	for (i = 0; i < rows; i++) {
+		for (j = 0; j < cols; j++) {
+			map_set(m, i, j, E_EMPTY);
+			x = (j / (double) cols) * 255;
+			y = (i / (double) rows) * 255;
+			n = p_noise(x / 64.0, y / 64.0) * 100;
+			if (n < 40) {
+				map_set(m, i, j, E_WATER);
+			} else if (n > 55) {
+				map_set(m, i, j, E_GRASS);
 			}
 		}
 	}
