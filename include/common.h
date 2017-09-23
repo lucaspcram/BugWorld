@@ -10,6 +10,7 @@
  */
 
 #define M_SAFEMALLOC(size) malloc_safe(size, __FILE__, __LINE__)
+#define M_ARRAY_SIZE(array) (sizeof(array) / sizeof((array)[0]))
 
 extern pthread_mutex_t g_ncurses_mut;
 

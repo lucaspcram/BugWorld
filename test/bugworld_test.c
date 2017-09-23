@@ -6,6 +6,7 @@
 #include "scores.h"
 #include "world/world.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +40,7 @@ int main(int argc, char * argv[])
 	M_TRY_TEST(test_gameobj);
 
 	// Test Perlin noise impl
-	M_TRY_TEST(test_perlin);
+	//M_TRY_TEST(test_perlin);
 
 	return 0;
 }
@@ -168,5 +169,20 @@ int test_gameobj()
 
 int test_perlin()
 {
+	int i, j;
+	double d, x, y;
+
+	printf("\n### PERLIN NOISE TEST ###\n");
+	init_perlin(false);
+
+	for (i = 0; i < 10; i++) {
+		for (j = 0; j < 10; j++) {
+			x = ((double) i) + 0.5;
+			y = ((double) j) + 0.5;
+			d = p_noise(x, y);
+			printf("noise: %lf\n", d);
+		}
+	}
+
 	return 0;
 }

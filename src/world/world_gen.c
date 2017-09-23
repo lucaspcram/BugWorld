@@ -1,6 +1,7 @@
 #include "world/world_gen.h"
 
 #include "common.h"
+#include "perlin.h"
 #include "world/map.h"
 
 #include <stdlib.h>

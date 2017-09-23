@@ -2,7 +2,14 @@
 
 #include "common.h"
 
+#include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
+
+struct vec2d {
+	double x;
+	double y;
+};
 
 /*
  * Values taken from Ken Perlin's improved reference implementation.
@@ -23,11 +30,37 @@ static int p[] = {
 	138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
 };
 
+// the array to hold the final permutation of p
+// repeated once to prevent index-out-of-bounds during calculations
 static int perm[512];
+
+/*
+ * Gradient unit vectors around the unit circle spaced 22.5deg apart.
+ */
+static struct vec2d grad_table[] = {
+	{1, 0},
+	{0.92387953, 0.38268343},
+	{0.70710678, 0.70710678},
+	{0.38268343, 0.92387953},
+	{0, 1},
+	{-0.38268343, 0.92387953},
+	{-0.70710678, 0.70710678},
+	{-0.92387953, 0.38268343},
+	{-1, 0},
+	{-0.92387953, -0.38268343},
+	{-0.70710678, -0.70710678},
+	{-0.38268343, -0.92387953},
+	{0, -1},
+	{0.92387953, -0.38268343},
+	{0.70710678, -0.70710678},
+	{0.38268343, -0.92387953}
+};
 
 static void shuffle_p(void);
 static double fade(double t);
 static double lerp(double t, double a, double b);
+static void get_grad(int hash, struct vec2d * out);
+static double dot(struct vec2d * v1, struct vec2d * v2);
 
 void init_perlin(bool shuffle)
 {
@@ -37,15 +70,73 @@ void init_perlin(bool shuffle)
 		shuffle_p();
 	}
 
-	for (i = 0; i < sizeof(perm); i++) {
-		perm[i] = p[i % sizeof(p)];
+	for (i = 0; i < M_ARRAY_SIZE(perm); i++) {
+		perm[i] = p[i % M_ARRAY_SIZE(p)];
 	}
 }
 
-double noise(double x, double y, double z)
+double p_noise(double x, double y)
 {
-	// TODO compute this for real
-	return 0;
+	int x_int, y_int;
+	int c00, c01, c10, c11;
+	double u, v;
+	double p0p1, p2p3;
+	double result;
+	struct vec2d p, p_rel, p0, p1, p2, p3;
+	struct vec2d p0d, p1d, p2d, p3d;
+	struct vec2d g0, g1, g2, g3;
+
+	// get the relative location in the unit square
+	// compute the square corner vectors
+	p.x = x;
+	p.y = y;
+	p_rel.x = p.x - floor(p.x);
+	p_rel.y = p.y - floor(p.y);
+	p0.x = floor(p.x);
+	p0.y = floor(p.y);
+	p1.x = p0.x + 1;
+	p1.y = p0.y;
+	p2.x = p0.x;
+	p2.y = p0.y + 1;
+	p3.x = p0.x + 1;
+	p3.y = p0.y + 1;
+
+	// compute the fades
+	u = fade(p_rel.x);
+	v = fade(p_rel.y);
+
+	// clamp the coordinates to range [0, 255]
+	// compute hashes of unit square corners
+	x_int = ((int) p0.x) & 0xFF;
+	y_int = ((int) p0.y) & 0xFF;
+	c00 = perm[perm[x_int] + y_int];
+	c01 = perm[perm[x_int] + (y_int + 1)];
+	c10 = perm[perm[(x_int + 1)] + y_int];
+	c11 = perm[perm[(x_int + 1)] + (y_int + 1)];
+
+	// get the gradients at the corners
+	get_grad(c00, &g0);
+	get_grad(c01, &g1);
+	get_grad(c10, &g2);
+	get_grad(c11, &g3);
+
+	// compute difference vectors
+	p0d.x = p.x - p0.x;
+	p0d.y = p.y - p0.y;
+	p1d.x = p.x - p1.x;
+	p1d.y = p.y - p1.y;
+	p2d.x = p.x - p2.x;
+	p2d.y = p.y - p2.y;
+	p3d.x = p.x - p3.x;
+	p3d.y = p.y - p3.y;
+
+	// perform interpolations
+	p0p1 = lerp(u, dot(&g0, &p0d), dot(&g1, &p1d));
+	p2p3 = lerp(u, dot(&g2, &p2d), dot(&g3, &p3d));
+	result = lerp(v, p0p1, p2p3);
+
+	// normalize result to range [0, 1]
+	return (result + 1) / 2.0;
 }
 
 // uses Fisher-Yates shuffle to randomly reorder the permutations
@@ -80,4 +171,21 @@ static double fade(double t)
 static double lerp(double t, double a, double b)
 {
 	return ((1 - t) * a) + (t * b);
+}
+
+static void get_grad(int hash, struct vec2d * out)
+{
+	if (out == NULL) {
+		return;
+	}
+	out->x = grad_table[hash & 0xF].x;
+	out->y = grad_table[hash & 0xF].y;
+}
+
+static double dot(struct vec2d * v1, struct vec2d * v2)
+{
+	if (v1 == NULL || v2 == NULL)
+		return 0;
+
+	return v1->x * v2->x + v1->y * v2->y;
 }

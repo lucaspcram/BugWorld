@@ -10,6 +10,6 @@
 
 void init_perlin(bool shuffle);
 
-double noise(double x, double y, double z);
+double p_noise(double x, double y);
 
 #endif
