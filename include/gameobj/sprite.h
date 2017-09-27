@@ -20,7 +20,7 @@ void tick_sprite(struct sprite * s);
 void render_sprite(struct sprite * s, int color);
 void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int timer_reset);
 
-// see comment in sprite.c for format of 'frames' array
+/* see comment in sprite.c for format of 'frames' array */
 void set_frames(struct sprite * s, char const ** frames, int frames_len);
 
 int sprite_row(struct sprite * s);

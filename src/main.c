@@ -34,7 +34,7 @@ int main(int argc, char * argv[])
 	sa.sa_flags = SA_RESTART;
 	sigfillset(&sa.sa_mask);
 
-	// DEFAULTS
+	/* DEFAULTS */
 	g_backend = E_PTHREAD;
 	g_fps = M_DEFAULT_FPS;
 
@@ -110,7 +110,7 @@ void sig_handler(int sig)
 {
 	switch(sig) {
 		case SIGINT:
-			// fallthru to SIGTERM
+			/* fallthru to SIGTERM */
 		case SIGTERM:
 			destroy_graphics();
 			break;

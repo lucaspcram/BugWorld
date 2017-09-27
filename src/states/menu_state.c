@@ -18,7 +18,7 @@ draw_menu_option(G_MENU_ ## type,                                   \
 /* Menu component defines */
 /**************************/
 
-// Title text definitions
+/* Title text definitions */
 static char const * G_TITLE_FRAME1[] =
 {
 " /+++++++                                                        /++       /++",
@@ -55,39 +55,38 @@ static const int G_TITLE_ROW_OFFSET = 1;
 #define M_OPTION_SCORES (1)
 #define M_OPTION_HELP (2)
 
-// Play selection
+/* Play selection */
 static char const * G_MENU_PLAY[] =
 {
-"+-+-+-+-+-+-+", // animated border frame 1
+"+-+-+-+-+-+-+",
 "| |P|L|A|Y| |",
-"x-x-x-x-x-x-x" // animated border frame 2
+"x-x-x-x-x-x-x"
 };
 static int G_MENU_PLAY_ROW_OFFSET;
 
-// Scores selection
+/* Scores selection */
 static char const * G_MENU_SCORES[] =
 {
-"+-+-+-+-+-+-+", // animated border frame 1
+"+-+-+-+-+-+-+",
 "|S|C|O|R|E|S|",
-"x-x-x-x-x-x-x" // animated border frame 2
+"x-x-x-x-x-x-x"
 };
 static int G_MENU_SCORES_ROW_OFFSET;
 
-// Help selection
+/* Help selection */
 static char const * G_MENU_HELP[] =
 {
-"+-+-+-+-+-+-+", // animated border frame 1
+"+-+-+-+-+-+-+",
 "| |H|E|L|P| |",
-"x-x-x-x-x-x-x" // animated border frame 2
+"x-x-x-x-x-x-x"
 };
 static int G_MENU_HELP_ROW_OFFSET;
 
-// Only need one since each menu option has equal width
+/* Only need one since each menu option has equal width */
 static int G_MENU_COL_OFFSET;
 
 /******END SECTION******/
 
-// menu state vars
 static int g_menu_index;
 static int g_menu_anim_timer;
 static int g_menu_anim_state;
@@ -99,13 +98,12 @@ static void draw_menu_option(char const ** menu,
 
 int menu_state_init(void)
 {
-	// init state vars
 	g_menu_index = M_OPTION_PLAY;
 	g_menu_anim_timer = 0;
 	g_menu_anim_state = 0;
 	g_title_anime_state = 0;
 
-	// compute offsets for menu options
+	/* compute offsets for menu options */
 	G_MENU_PLAY_ROW_OFFSET = G_TITLE_LEN - 0;
 	G_MENU_SCORES_ROW_OFFSET = G_MENU_PLAY_ROW_OFFSET + 3;
 	G_MENU_HELP_ROW_OFFSET = G_MENU_SCORES_ROW_OFFSET + 3;
@@ -175,7 +173,6 @@ void menu_state_render(void)
 	char const * help_hint = "WASD to navigate, ENTER to select, Q to quit";
 	int hint_len = strlen(help_hint);
 
-	// render the title text
 	for (i = 0; i < G_TITLE_LEN; i++) {
 		if (g_title_anime_state == 0)
 			draw_str(G_TITLE_FRAME1[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
@@ -183,7 +180,6 @@ void menu_state_render(void)
 			draw_str(G_TITLE_FRAME2[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
 	}
 
-	// render the menu
 	switch (g_menu_index) {
 		case M_OPTION_PLAY:
 			M_DRAW_MENU(PLAY, M_RED, g_menu_anim_state);
@@ -204,7 +200,6 @@ void menu_state_render(void)
 			break;
 	}
 
-	// render control hints
 	draw_str(help_hint, (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1, M_CYAN);
 }
 

@@ -7,7 +7,7 @@
  * for functions that states use to hook into the manager.
  */
 
-// Manually set this to the number of defined states
+/* Manually set this to the number of defined states */
 #define M_NUM_STATES (4)
 
 /* Define all states below */

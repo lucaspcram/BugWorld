@@ -23,15 +23,17 @@ char * create_scorefile(void)
 	size_t len_total;
 	FILE * score_file;
 
-	// gets the user's home directory by trying GETENV
-	// and then checking the passwd file if that fails
+	/* 
+	gets the user's home directory by trying GETENV
+	and then checking the passwd file if that fails
+	*/
 	homedir = getenv("home");
 	if (homedir == NULL)
 		homedir = getpwuid(getuid())->pw_dir;
 	
 	len_homedir = strlen(homedir);
 	len_scorefile = strlen(G_SCOREFILE);
-	// the +1 is to account for extra '/' between homedir and scorefile
+	/* the +1 is to account for extra '/' between homedir and scorefile */
 	len_total = len_homedir + 1 + len_scorefile;
 
 	scorepath = M_SAFEMALLOC(sizeof(*scorepath) * (len_total + 1));
@@ -39,8 +41,10 @@ char * create_scorefile(void)
 	strcat(scorepath, "/");
 	strcat(scorepath, G_SCOREFILE);
 
-	// NOTE access() is vulnerable to race condition if the file
-	// is created between calling access() and fopen()-ing the file
+	/*
+	NOTE access() is vulnerable to race condition if the file
+	is created between calling access() and fopen()-ing the file
+	*/
 	if (access(scorepath, F_OK) == -1) {
 		score_file = fopen(scorepath, "w");
 		fclose(score_file);
@@ -66,7 +70,7 @@ void write_scorefile(struct score ** scores, char * scorepath)
 	len = len_scorelist(scores);
 	tmp = scores;
 
-	// first byte of file stores array len
+	/* first byte of file stores array len */
 	fwrite(&len, sizeof(size_t), 1, file);
 	
 	while (*tmp != NULL) {
@@ -93,7 +97,7 @@ struct score ** read_scorefile(char * scorepath)
 	if (file == NULL)
 		return NULL;
 
-	// first byte of file stores array len
+	/* first byte of file stores array len */
 	fread(&len, sizeof(size_t), 1, file);
 	scores = M_SAFEMALLOC(sizeof(*scores) * (len + 1));
 

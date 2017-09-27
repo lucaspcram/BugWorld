@@ -31,8 +31,10 @@ static int p_master[] = {
 };
 static int p[256];
 
-// the array to hold the final permutation of p
-// repeated once to prevent index-out-of-bounds during calculations
+/*
+the array to hold the final permutation of p
+repeated once to prevent index-out-of-bounds during calculations
+*/
 static int perm[512];
 
 /*
@@ -67,7 +69,7 @@ void init_perlin(bool shuffle)
 {
 	size_t i;
 
-	// reset the p array
+	/* reset the p array */
 	for (i = 0; i < M_ARRAY_SIZE(p); i++) {
 		p[i] = p_master[i];
 	}
@@ -92,8 +94,10 @@ double p_noise(double x, double y)
 	struct vec2d p0d, p1d, p2d, p3d;
 	struct vec2d g0, g1, g2, g3;
 
-	// get the relative location in the unit square
-	// compute the square corner vectors
+	/* 
+	get the relative location in the unit square
+	compute the square corner vectors
+	*/
 	p.x = x;
 	p.y = y;
 	p_rel.x = p.x - floor(p.x);
@@ -107,12 +111,14 @@ double p_noise(double x, double y)
 	p3.x = p0.x + 1;
 	p3.y = p0.y + 1;
 
-	// compute the fades
+	/* compute the fades */
 	u = fade(p_rel.x);
 	v = fade(p_rel.y);
 
-	// clamp the coordinates to range [0, 255]
-	// compute hashes of unit square corners
+	/* 
+	clamp the coordinates to range [0, 255]
+	compute hashes of unit square corners
+	*/
 	x_int = ((int) p0.x) & 0xFF;
 	y_int = ((int) p0.y) & 0xFF;
 	c00 = perm[perm[x_int] + y_int];
@@ -120,13 +126,13 @@ double p_noise(double x, double y)
 	c10 = perm[perm[(x_int + 1)] + y_int];
 	c11 = perm[perm[(x_int + 1)] + (y_int + 1)];
 
-	// get the gradients at the corners
+	/* get the gradients at the corners */
 	get_grad(c00, &g0);
 	get_grad(c01, &g1);
 	get_grad(c10, &g2);
 	get_grad(c11, &g3);
 
-	// compute difference vectors
+	/* compute difference vectors */
 	p0d.x = p.x - p0.x;
 	p0d.y = p.y - p0.y;
 	p1d.x = p.x - p1.x;
@@ -136,17 +142,19 @@ double p_noise(double x, double y)
 	p3d.x = p.x - p3.x;
 	p3d.y = p.y - p3.y;
 
-	// perform interpolations
+	/* perform interpolations */
 	p0p1 = lerp(u, dot(&g0, &p0d), dot(&g1, &p1d));
 	p2p3 = lerp(u, dot(&g2, &p2d), dot(&g3, &p3d));
 	result = lerp(v, p0p1, p2p3);
 
-	// normalize result to range [0, 1]
+	/* normalize result to range [0, 1] */
 	return (result + 1) / 2.0;
 }
 
-// uses Fisher-Yates shuffle to randomly reorder the permutations
-// assumes the rand() function has already been seeded
+/* 
+uses Fisher-Yates shuffle to randomly reorder the permutations
+assumes the rand() function has already been seeded
+*/
 static void shuffle_p(void)
 {
 	size_t len;
@@ -156,10 +164,12 @@ static void shuffle_p(void)
 
 	len = M_ARRAY_SIZE(p);
 
-	// assumes perm has size > 1
+	/* assumes perm has size > 1 */
 	for (i = len - 1; i > 0; i--) {
-		// this rand function introduces bias
-		// see note in 'common.c'
+		/* 
+		this rand function introduces bias
+		see note in 'common.c'
+		*/
 		swap_idx = get_rand_int(0, i + 1);
 		tmp = p[swap_idx];
 		p[swap_idx] = p[i];
@@ -173,7 +183,7 @@ static double fade(double t)
 	return t_cubed * (t * ((t * 6) - 15) + 10);
 }
 
-// linear interpolation between 'a' and 'b'
+/* linear interpolation between 'a' and 'b' */
 static double lerp(double t, double a, double b)
 {
 	return ((1 - t) * a) + (t * b);

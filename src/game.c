@@ -50,7 +50,7 @@ void init_game(void)
 		set_sigalrm();
 		input_loop_sigalrm();
 	} else {
-		// this should not happen
+		/* this should not happen */
 		abort_game("invalid backend setting", __FILE__, __LINE__);
 	}
 
@@ -75,7 +75,7 @@ void input_loop_pthread(void)
 		}
 		pthread_mutex_unlock(&g_ncurses_mut);
 
-		// send input to the state manager
+		/* send input to the state manager */
 		handle_input(ch);
 	}
 }
@@ -87,7 +87,7 @@ void input_loop_sigalrm(void)
 	while (!exit_flag) {
 		ch = getch();
 
-		// send input to the state manager
+		/* send input to the state manager */
 		handle_input(ch);
 	}
 }
@@ -106,9 +106,11 @@ void * tick_pthread(void * arg)
 		pthread_mutex_unlock(&g_ncurses_mut);
 		clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 
-		// NOTE: all of this code relies on the elapsed time
-		// being < the value of nsec_perframe, this should be
-		// the case on any non-potato system
+		/*
+		NOTE: all of this code relies on the elapsed time
+		being < the value of nsec_perframe, this should be
+		the case on any non-potato system
+		*/
 		nsec_elapsed = end.tv_nsec - start.tv_nsec;
 		req.tv_sec = 0;
 		req.tv_nsec = nsec_perframe - nsec_elapsed;
