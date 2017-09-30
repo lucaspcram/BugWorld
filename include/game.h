@@ -6,7 +6,7 @@
  * updates, initializes the game, etc.
  */
 
-#define M_DEFAULT_FPS (60)
+#define M_DEFAULT_FPS (30)
 
 enum concurrency_backend {
 	E_PTHREAD,

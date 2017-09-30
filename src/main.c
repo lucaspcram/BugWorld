@@ -96,7 +96,7 @@ void display_help(void)
 	printf("                          the thread-unsafe nature of the ncurses library.\n");
 	printf("                          Use whichever works best. Defaults to \'pthread\'.\n\n");
 	printf("  -f, --fps=FPS           Specify the FPS at which to run. Try setting to different\n");
-	printf("                          values if excessive flickering occurs. Defaults to 60.\n\n");
+	printf("                          values if excessive flickering occurs. Defaults to 30.\n\n");
 	printf("  -h, --help              Display this help message and exit.\n\n");
 	printf("  -v, --version           Display the version and exit.\n");
 }

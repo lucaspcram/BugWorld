@@ -104,6 +104,12 @@ void * tick_pthread(void * arg)
 	clock_gettime(CLOCK_MONOTONIC_RAW, &cur);
 	while (1) {
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+		/* 
+		FIXME this calculation breaks when start.nsec and cur.nsec
+		occur across inter-second transitions -> causes the unsigned subtraction
+		to fail and report a massively huge number (since cur.nsec > start.nsec)
+		Currently this breaks the animations when using the pthread backend
+		*/
 		frame_time = start.tv_nsec - cur.tv_nsec;
 		cur.tv_nsec = start.tv_nsec;
 

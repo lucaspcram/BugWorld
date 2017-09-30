@@ -56,6 +56,8 @@ static const int G_TITLE_ROW_OFFSET = 1;
 #define M_OPTION_SCORES (1)
 #define M_OPTION_HELP (2)
 
+#define M_MS_UPDATETIMER (500)
+
 /* Play selection */
 static char const * G_MENU_PLAY[] =
 {
@@ -132,7 +134,7 @@ int menu_state_resume(void)
 void menu_state_tick(uint64_t elapsed)
 {
 	g_menu_anim_timer += elapsed;
-	if (g_menu_anim_timer >= ms2ns(500)) {
+	if (g_menu_anim_timer >= ms2ns(M_MS_UPDATETIMER)) {
 		g_menu_anim_timer = 0;
 		g_menu_anim_state = !g_menu_anim_state;
 		g_title_anime_state = !g_title_anime_state;

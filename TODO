@@ -27,3 +27,5 @@ ___________________
 + pthreads + ncurses interaction is buggy as all hell
 	- animation timings on pthreads backend are really buggy,
 	  see the player sprite updates vs the environ updates
+		+ turns out this is due to unsigned subtraction errors
+		  in the frame_time calculation, see FIXMEs

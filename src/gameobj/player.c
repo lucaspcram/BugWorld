@@ -17,7 +17,7 @@ struct player {
 /***************/
 #define M_PLAYER_WIDTH (1)
 #define M_PLAYER_HEIGHT (1)
-#define M_ANIM_TIMER (1000)
+#define M_ANIM_TIMER (500)
 
 static const char * G_FRAMES[] = {
 	"X",
