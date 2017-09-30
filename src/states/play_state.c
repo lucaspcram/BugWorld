@@ -7,6 +7,7 @@
 #include "view.h"
 #include "world/world.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 
 static struct world * g_world = NULL;
@@ -34,9 +35,9 @@ int play_state_resume(void)
 	return 0;
 }
 
-void play_state_tick(void)
+void play_state_tick(uint64_t elapsed)
 {
-	tick_world(g_world);
+	tick_world(g_world, elapsed);
 }
 
 void play_state_handle_input(int input)

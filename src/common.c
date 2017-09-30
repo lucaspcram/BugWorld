@@ -5,6 +5,7 @@
 #include <math.h>
 #include <pthread.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -104,4 +105,14 @@ void * malloc_safe(size_t size, char const * file, unsigned long line)
 		abort_game("malloc call failed", file, line);
 	}
 	return ptr;
+}
+
+/*
+ * Takes a millisecond value and converts
+ * it to the closest possible nanosecond value.
+ */
+uint64_t ms2ns(uint64_t msec)
+{
+	uint64_t const ns = msec * 1000000;
+	return ns;
 }

@@ -6,6 +6,7 @@
 #include "states/state_codes.h"
 #include "view.h"
 
+#include <stdint.h>
 #include <string.h>
 
 #define M_DRAW_MENU(type, color, anim)                              \
@@ -128,10 +129,10 @@ int menu_state_resume(void)
 	return menu_state_init();
 }
 
-void menu_state_tick(void)
+void menu_state_tick(uint64_t elapsed)
 {
-	g_menu_anim_timer++;
-	if (g_menu_anim_timer == 30) {
+	g_menu_anim_timer += elapsed;
+	if (g_menu_anim_timer >= ms2ns(500)) {
 		g_menu_anim_timer = 0;
 		g_menu_anim_state = !g_menu_anim_state;
 		g_title_anime_state = !g_title_anime_state;

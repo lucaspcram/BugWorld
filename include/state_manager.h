@@ -7,6 +7,7 @@
  */
 
 #include <stdbool.h>
+#include <stdint.h>
 
 bool exit_flag;
 
@@ -18,7 +19,7 @@ struct state {
 	int (*resume)(void);
 	
 	/* State functions */
-	void (*tick)(void);
+	void (*tick)(uint64_t elapsed);
 	void (*handle_input)(int);
 	void (*render)(void);
 };
@@ -26,6 +27,6 @@ struct state {
 void init_state_manager(void);
 void destroy_state_manager(void);
 void handle_input(int input);
-void tick_render(void);
+void tick_render(uint64_t elapsed);
 
 #endif

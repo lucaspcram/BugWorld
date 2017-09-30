@@ -13,8 +13,9 @@
 #include <time.h>
 #include <unistd.h>
 
-#define U_SEC_PER_SEC (1000000)
+#define M_USEC_PER_SEC (1000000)
 #define M_NSEC_PER_SEC (1000000000)
+#define M_NSEC_PER_USEC (1000)
 
 enum concurrency_backend g_backend;
 int g_fps;
@@ -95,15 +96,21 @@ void input_loop_sigalrm(void)
 void * tick_pthread(void * arg)
 {
 	struct timespec req, rem;
-	struct timespec start, end;
+	struct timespec start, end, cur;
+	uint64_t frame_time;
 	uint64_t nsec_elapsed;
 	uint64_t const nsec_perframe = M_NSEC_PER_SEC / g_fps;
 
+	clock_gettime(CLOCK_MONOTONIC_RAW, &cur);
 	while (1) {
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+		frame_time = start.tv_nsec - cur.tv_nsec;
+		cur.tv_nsec = start.tv_nsec;
+
 		pthread_mutex_lock(&g_ncurses_mut);
-		tick_render();
+		tick_render(frame_time);
 		pthread_mutex_unlock(&g_ncurses_mut);
+
 		clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 
 		/*
@@ -126,7 +133,9 @@ void * tick_pthread(void * arg)
 
 void tick_sigalrm(int sig)
 {
-	tick_render();
+	/* assumes that SIGALRM interrupts are accurate */
+	uint64_t const frame_time = (M_USEC_PER_SEC / g_fps) * M_NSEC_PER_USEC;
+	tick_render(frame_time);
 }
 
 void set_sigalrm(void)
@@ -134,9 +143,9 @@ void set_sigalrm(void)
 	struct itimerval timer;
 	struct sigaction action;
 	timer.it_value.tv_sec = 0;
-	timer.it_value.tv_usec = U_SEC_PER_SEC / g_fps;
+	timer.it_value.tv_usec = M_USEC_PER_SEC / g_fps;
 	timer.it_interval.tv_sec = 0;
-	timer.it_interval.tv_usec = U_SEC_PER_SEC / g_fps;
+	timer.it_interval.tv_usec = M_USEC_PER_SEC / g_fps;
 	setitimer(ITIMER_REAL, &timer, NULL);
 
 	action.sa_handler = &tick_sigalrm;

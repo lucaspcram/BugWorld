@@ -4,6 +4,7 @@
 #include "gameobj/sprite.h"
 #include "view.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 
 struct player {
@@ -16,7 +17,7 @@ struct player {
 /***************/
 #define M_PLAYER_WIDTH (1)
 #define M_PLAYER_HEIGHT (1)
-#define M_ANIM_TIMER (35)
+#define M_ANIM_TIMER (1000)
 
 static const char * G_FRAMES[] = {
 	"X",
@@ -46,12 +47,12 @@ void destroy_player(struct player * p)
 	free(p);
 }
 
-void tick_player(struct player * p)
+void tick_player(struct player * p, uint64_t elapsed)
 {
 	if (p == NULL)
 		return;
 
-	tick_sprite(p->psprite);
+	tick_sprite(p->psprite, elapsed);
 }
 
 void render_player(struct player * p)

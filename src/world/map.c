@@ -4,16 +4,17 @@
 #include "gameobj/sprite.h"
 #include "view.h"
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #define M_TILE_WIDTH (1)
 #define M_TILE_HEIGHT (1)
 
-#define M_GRASS_TIMER (40)
-#define M_WATER_TIMER (21)
-#define M_MOUND_TIMER (80)
-#define M_GOAL_TIMER (100)
+#define M_GRASS_TIMER (500)
+#define M_WATER_TIMER (500)
+#define M_MOUND_TIMER (800)
+#define M_GOAL_TIMER (1000)
 
 
 static const char * G_GRASS_FRAMES[] = {
@@ -115,15 +116,15 @@ void destroy_map(struct map * m)
 	free(m);
 }
 
-void tick_map(struct map * m)
+void tick_map(struct map * m, uint64_t elapsed)
 {
 	if (m == NULL)
 		return;
 
-	tick_sprite(m->grass_spr);
-	tick_sprite(m->water_spr);
-	tick_sprite(m->mound_spr);
-	tick_sprite(m->goal_spr);
+	tick_sprite(m->grass_spr, elapsed);
+	tick_sprite(m->water_spr, elapsed);
+	tick_sprite(m->mound_spr, elapsed);
+	tick_sprite(m->goal_spr, elapsed);
 }
 
 void render_map(struct map * m)

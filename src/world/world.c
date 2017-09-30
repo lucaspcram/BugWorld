@@ -8,6 +8,7 @@
 #include "world/world_gen.h"
 #include "view.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 
 struct world {
@@ -69,13 +70,13 @@ void handle_input_world(struct world * w, int input)
 	}
 }
 
-void tick_world(struct world * w)
+void tick_world(struct world * w, uint64_t elapsed)
 {
 	if (w == NULL)
 		return;
 
-	tick_player(w->player);
-	tick_map(w->map);
+	tick_player(w->player, elapsed);
+	tick_map(w->map, elapsed);
 }
 
 void render_world(struct world * w)

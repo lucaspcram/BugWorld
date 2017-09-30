@@ -2,6 +2,7 @@
 #include "gameobj/sprite.h"
 #include "view.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -11,8 +12,8 @@ struct sprite {
 	int width;
 	int height;
 	int anim_state;
-	int anim_timer;
-	int timer_reset;
+	uint64_t anim_timer;
+	uint64_t timer_reset;
 
 	char ** frames;
 	int frames_len;
@@ -56,13 +57,13 @@ void destroy_sprite(struct sprite * s)
 }
 /******END SECTION******/
 
-void tick_sprite(struct sprite * s)
+void tick_sprite(struct sprite * s, uint64_t elapsed)
 {
 	if (s == NULL)
 		return;
 
-	s->anim_timer++;
-	if (s->anim_timer >= s->timer_reset) {
+	s->anim_timer += elapsed;
+	if (s->anim_timer >= ms2ns(s->timer_reset)) {
 		s->anim_timer = 0;
 		advance_state(s);
 	}
@@ -82,7 +83,7 @@ void render_sprite(struct sprite * s, int color)
 			         j + s->col, i + s->row, color);
 }
 
-void set_anim_params(struct sprite * s, int anim_state, int anim_timer, int timer_reset)
+void set_anim_params(struct sprite * s, int anim_state, uint64_t anim_timer, uint64_t timer_reset)
 {
 	if (s == NULL)
 		return;

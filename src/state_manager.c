@@ -7,6 +7,7 @@
 #include "states/state_codes.h"
 #include "view.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -50,9 +51,9 @@ void handle_input(int input)
 	g_state_tab[g_cur_state].handle_input(input);
 }
 
-void tick_render(void)
+void tick_render(uint64_t elapsed)
 {
-	g_state_tab[g_cur_state].tick();
+	g_state_tab[g_cur_state].tick(elapsed);
 
 	clear_view();
 	g_state_tab[g_cur_state].render();

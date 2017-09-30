@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 /*
  * Collection of unrelated utility functions/definitions.
@@ -21,5 +22,7 @@ bool percentage_chance(double rate);
 void abort_game(char const * msg, char const * file, unsigned long line);
 
 void * malloc_safe(size_t size, char const * file, unsigned long line);
+
+uint64_t ms2ns(uint64_t msec);
 
 #endif
