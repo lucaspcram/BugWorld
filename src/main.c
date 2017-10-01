@@ -14,7 +14,7 @@ void display_version(void);
 void sig_handler(int sig);
 
 static char const * G_VERSION_TEXT =
-     "Bugworld v0.1, 2017\nLicense MIT\nWritten by Lucas Cram";
+     "Bugworld v0.1, 2017\nLicensed under the MIT License\nWritten by Lucas Cram";
 
 int main(int argc, char * argv[])
 {
@@ -61,7 +61,7 @@ int main(int argc, char * argv[])
 
 			case 'f':
 				g_fps = atoi(optarg);
-				if (g_fps == 0) {
+				if (g_fps < 5 || g_fps > 60) {
 					fprintf(stderr, "Invalid argument \'%s\' to option \'--fps\'\n", optarg);
 					fprintf(stderr, "Try \'bugworld --help\' for info.\n");
 					return 1;
@@ -96,7 +96,8 @@ void display_help(void)
 	printf("                          the thread-unsafe nature of the ncurses library.\n");
 	printf("                          Use whichever works best. Defaults to \'pthread\'.\n\n");
 	printf("  -f, --fps=FPS           Specify the FPS at which to run. Try setting to different\n");
-	printf("                          values if excessive flickering occurs. Defaults to 30.\n\n");
+	printf("                          values if excessive flickering occurs. Defaults to 30.\n");
+	printf("                          Valid settings range is [5, 60].\n\n");
 	printf("  -h, --help              Display this help message and exit.\n\n");
 	printf("  -v, --version           Display the version and exit.\n");
 }
