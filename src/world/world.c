@@ -47,8 +47,8 @@ void handle_input_world(struct world * w, int input)
 	if (w == NULL)
 		return;
 
-	p_row = player_row(w->player);
-	p_col = player_col(w->player);
+	p_row = M_GET_PLAYER_ROW(w->player);
+	p_col = M_GET_PLAYER_COL(w->player);
 	
 	if (input == M_ACTION_UP) {
 		M_SET_PLAYER_POS(w->player, p_row - 1, p_col);

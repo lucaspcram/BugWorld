@@ -63,34 +63,10 @@ void render_player(struct player * p)
 	render_sprite(p->psprite, M_MAGENTA);
 }
 
-int player_row(struct player * p)
+struct sprite * player_get_sprite(struct player * p)
 {
 	if (p == NULL)
-		return -1;
-	
-	return sprite_row(p->psprite);
-}
+		return NULL;
 
-int player_col(struct player * p)
-{
-	if (p == NULL)
-		return -1;
-	
-	return sprite_col(p->psprite);
-}
-
-void player_set_row(struct player * p, int row)
-{
-	if (p == NULL)
-		return;
-	
-	sprite_set_row(p->psprite, row);
-}
-
-void player_set_col(struct player * p, int col)
-{
-	if (p == NULL)
-		return;
-	
-	sprite_set_col(p->psprite, col);
+	return p->psprite;
 }
