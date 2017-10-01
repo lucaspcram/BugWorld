@@ -5,7 +5,6 @@
 
 /*
  * A 2D Perlin noise implementation.
- * Hopefully this is correct (or close enough).
  */
 
 void init_perlin(bool shuffle);

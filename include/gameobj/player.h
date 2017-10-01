@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 /*
- * The player code controlling animations and scoring logic.
+ * Controls player animations and game actions.
  */
 
 #define M_SET_PLAYER_POS(player, row, col) \
@@ -23,6 +23,7 @@ void destroy_player(struct player * p);
 void tick_player(struct player * p, uint64_t elapsed);
 void render_player(struct player * p);
 
+/* TODO move these routines to the sprite module? */
 int player_row(struct player * p);
 int player_col(struct player * p);
 

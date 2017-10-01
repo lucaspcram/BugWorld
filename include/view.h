@@ -6,7 +6,7 @@
  * Things like initializing the screen, closing the screen, etc.
  */
 
-// NOTE Runs in a standard 24x80 terminal
+/* NOTE Runs in a standard 24x80 terminal */
 #define M_SCRWIDTH (80)
 #define M_SCRHEIGHT (24)
 

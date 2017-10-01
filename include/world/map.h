@@ -3,6 +3,10 @@
 
 #include <stdint.h>
 
+/*
+ * Container object for the game map. Also defines custom tile types.
+ */
+
 enum tile_type {
 	E_EMPTY,
 	E_GRASS,

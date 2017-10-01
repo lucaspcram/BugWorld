@@ -2,7 +2,7 @@
 #define GAME_H
 
 /*
- * The core game code. Sets up the SIGALRM for dynamic
+ * The core game code. Sets up the thread backend for dynamic
  * updates, initializes the game, etc.
  */
 
