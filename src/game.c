@@ -101,16 +101,24 @@ void * tick_pthread(void * arg)
 	uint64_t nsec_elapsed;
 	uint64_t const nsec_perframe = M_NSEC_PER_SEC / g_fps;
 
+	/*
+	 * NOTE: Two calculations are happening in this loop.
+	 * 1) the elapsed time since the previous tick_render cycle,
+	 *    which is passed into the next tick_render as frame_time
+	 * 2) the time spent in just the tick_render call, so the thread
+	 *    can sleep for an appropriate amount of time to hit g_fps
+	 */
+
 	clock_gettime(CLOCK_MONOTONIC_RAW, &cur);
 	while (1) {
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-		/* 
-		FIXME this calculation breaks when start.nsec and cur.nsec
-		occur across inter-second transitions -> causes the unsigned subtraction
-		to fail and report a massively huge number (since cur.nsec > start.nsec)
-		Currently this breaks the animations when using the pthread backend
-		*/
-		frame_time = start.tv_nsec - cur.tv_nsec;
+		if (start.tv_sec > cur.tv_sec) {
+			frame_time = (M_NSEC_PER_SEC * start.tv_sec + start.tv_nsec)
+			             - (M_NSEC_PER_SEC * cur.tv_sec + cur.tv_nsec);
+		} else {
+			frame_time = start.tv_nsec - cur.tv_nsec;
+		}
+		cur.tv_sec = start.tv_sec;
 		cur.tv_nsec = start.tv_nsec;
 
 		pthread_mutex_lock(&g_ncurses_mut);

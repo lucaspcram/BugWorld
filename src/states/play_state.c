@@ -12,9 +12,6 @@
 
 static struct world * g_world = NULL;
 
-/* TODO debugging remove */
-static uint64_t g_test = 0;
-
 int play_state_init(void)
 {
 	if (g_world == NULL)
@@ -40,10 +37,7 @@ int play_state_resume(void)
 
 void play_state_tick(uint64_t elapsed)
 {
-	//g_test++;
-	//if (elapsed > 900000000)
-		g_test = elapsed;
-	tick_world(g_world, 1);
+	tick_world(g_world, elapsed);
 }
 
 void play_state_handle_input(int input)
@@ -56,12 +50,6 @@ void play_state_handle_input(int input)
 
 void play_state_render(void)
 {
-	/* TODO remove debug code below */
-	char buf[32];
-	sprintf(buf, "%lu", g_test);
-	draw_str(buf, 30, M_SCRHEIGHT - 1, M_WHITE);
-
-
 	render_world(g_world);
 	draw_str("UI Line 1", 0, M_SCRHEIGHT - 2, M_WHITE);
 	draw_str("UI Line 2", 0, M_SCRHEIGHT - 1, M_WHITE);
