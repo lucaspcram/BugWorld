@@ -15,8 +15,10 @@ ______________________
 + misc. refactoring and cleanup
 	- defensive/DRY design
 	- 80 column soft limit (with tabstop=4)
-	- readable, useful comments
+	- useful comments (C style, header explanation, impl WHY not WHAT)
 	- write more robust tests
+	- const pointers to functions that don't change fields
+	- order local variables
 
 
 BUGWORLD BUGS (hah)

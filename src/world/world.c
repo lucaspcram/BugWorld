@@ -71,16 +71,17 @@ void handle_input_world(struct world * w, int input)
 		player_inc_stamina(w->player);
 	}
 
-	if (map_point_ingrass(w->map, M_GET_PLAYER_ROW(w->player), M_GET_PLAYER_COL(w->player)))
+	if (map_point_ingrass(w->map, 
+		                  M_GET_PLAYER_ROW(w->player),
+		                  M_GET_PLAYER_COL(w->player)))
 	{
 		player_reset_stamina(w->player);
 	}
 
 	// generate a new world
 	// TODO remove this, just for testing
-	if (input == M_MENU_SELECT) {
+	if (input == M_MENU_SELECT)
 		fill_map(w->map);
-	}
 }
 
 void tick_world(struct world * w, uint64_t elapsed)
