@@ -4,6 +4,7 @@
 #include "gameobj/sprite.h"
 #include "view.h"
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -32,6 +33,8 @@ struct player * create_player(int row, int col)
 	new_player = M_SAFEMALLOC(sizeof(*new_player));
 
 	new_player->psprite = create_sprite(row, col, M_PLAYER_WIDTH, M_PLAYER_HEIGHT);
+	new_player->stamina = M_MAX_STAMINA;
+	new_player->decoys = M_MAX_DECOYS;
 	set_anim_params(new_player->psprite, 0, 0, M_ANIM_TIMER);
 	set_frames(new_player->psprite, G_FRAMES, G_FRAMES_LEN);
 
@@ -69,4 +72,58 @@ struct sprite * player_get_sprite(struct player * p)
 		return NULL;
 
 	return p->psprite;
+}
+
+int player_get_stamina(struct player const * p) {
+	if (p == NULL) {
+		return -1;
+	}
+
+	return p->stamina;
+}
+
+int player_get_decoys(struct player const * p) {
+	if (p == NULL) {
+		return -1;
+	}
+
+	return p->decoys;
+}
+
+void player_deplete_stamina(struct player * p)
+{
+	if (p == NULL)
+		return;
+
+	if (p->stamina <= 0)
+		return;
+
+	p->stamina = p->stamina - 1;
+}
+
+bool player_has_stamina(struct player * p)
+{
+	if (p == NULL)
+		return false;
+
+	return p->stamina != 0;
+}
+
+void player_reset_stamina(struct player * p)
+{
+	if (p == NULL)
+		return;
+
+	p->stamina = M_MAX_STAMINA;
+}
+
+void player_inc_stamina(struct player * p)
+{
+	if (p == NULL)
+		return;
+
+	if (p->stamina >= M_MAX_STAMINA)
+		return;
+
+	p->stamina = p->stamina + 1;
 }

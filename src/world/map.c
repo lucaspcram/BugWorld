@@ -4,6 +4,7 @@
 #include "gameobj/sprite.h"
 #include "view.h"
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -127,7 +128,7 @@ void tick_map(struct map * m, uint64_t elapsed)
 	tick_sprite(m->goal_spr, elapsed);
 }
 
-void render_map(struct map * m)
+void render_map(struct map const * m)
 {
 	int i;
 	int j;
@@ -161,14 +162,14 @@ void render_map(struct map * m)
 	}
 }
 
-int map_rows(struct map * m) {
+int map_rows(struct map const * m) {
 	if (m == NULL)
 		return -1;
 
 	return m->rows;
 }
 
-int map_cols(struct map * m) {
+int map_cols(struct map const * m) {
 	if (m == NULL)
 		return -1;
 
@@ -181,4 +182,9 @@ void map_set(struct map * m, int i, int j, enum tile_type tile)
 		return;
 
 	m->tiles[i][j] = tile;
+}
+
+bool map_point_ingrass(struct map const * m, int row, int col)
+{
+	return m->tiles[row][col] == E_GRASS;
 }

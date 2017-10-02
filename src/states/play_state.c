@@ -50,7 +50,26 @@ void play_state_handle_input(int input)
 
 void play_state_render(void)
 {
+	int i;
+
+	struct player const * p = get_player(g_world);
+	int const p_decoys = player_get_decoys(p);
+	int const p_stamina = player_get_stamina(p);
+	int const s_offset = (M_SCRWIDTH / 2)- 6;
+
 	render_world(g_world);
-	draw_str("UI Line 1", 0, M_SCRHEIGHT - 2, M_WHITE);
-	draw_str("UI Line 2", 0, M_SCRHEIGHT - 1, M_WHITE);
+
+	/* Draw the stamina bar */
+	draw_str("STAMINA", 0, M_SCRHEIGHT - 2, M_MAGENTA);
+	draw_str("<", s_offset, M_SCRHEIGHT - 2, M_MAGENTA);
+	for (i = 0; i < p_stamina; i++) {
+		draw_str("=", s_offset + i + 1, M_SCRHEIGHT - 2, M_MAGENTA);
+	}
+	for (i = p_stamina; i < M_MAX_STAMINA; i++) {
+		draw_str(" ", s_offset + i + 1, M_SCRHEIGHT - 2, M_MAGENTA);
+	}
+	draw_str(">", s_offset + i + 1, M_SCRHEIGHT - 2, M_MAGENTA);
+
+	/* Draw the decoy bar */
+	draw_str("DECOYS", 0, M_SCRHEIGHT - 1, M_MAGENTA);
 }

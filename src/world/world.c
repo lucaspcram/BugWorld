@@ -50,17 +50,30 @@ void handle_input_world(struct world * w, int input)
 	p_row = M_GET_PLAYER_ROW(w->player);
 	p_col = M_GET_PLAYER_COL(w->player);
 	
-	if (input == M_ACTION_UP) {
+	if (input == M_ACTION_UP && player_has_stamina(w->player)) {
 		M_SET_PLAYER_POS(w->player, p_row - 1, p_col);
+		player_deplete_stamina(w->player);
 	}
-	if (input == M_ACTION_DOWN) {
+	if (input == M_ACTION_DOWN && player_has_stamina(w->player)) {
 		M_SET_PLAYER_POS(w->player, p_row + 1, p_col);
+		player_deplete_stamina(w->player);
 	}
-	if (input == M_ACTION_LEFT) {
+	if (input == M_ACTION_LEFT && player_has_stamina(w->player)) {
 		M_SET_PLAYER_POS(w->player, p_row, p_col - 1);
+		player_deplete_stamina(w->player);
 	}
-	if (input == M_ACTION_RIGHT) {
+	if (input == M_ACTION_RIGHT && player_has_stamina(w->player)) {
 		M_SET_PLAYER_POS(w->player, p_row, p_col + 1);
+		player_deplete_stamina(w->player);
+	}
+
+	if (input == M_ACTION_REST) {
+		player_inc_stamina(w->player);
+	}
+
+	if (map_point_ingrass(w->map, M_GET_PLAYER_ROW(w->player), M_GET_PLAYER_COL(w->player)))
+	{
+		player_reset_stamina(w->player);
 	}
 
 	// generate a new world
