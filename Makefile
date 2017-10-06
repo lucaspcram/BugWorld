@@ -54,7 +54,7 @@ $(TARGET): $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	@mkdir -p $(BUILDSUBDIRS)
-	@echo "Compiling $<..."
+	@echo "Compiling ($(CC)) $<..."
 	@$(CC) $(CFLAGS) $(PTHREAD) $(INCDIR) -c -o $@ $<
 
 .PHONY: test all clean run runtest
