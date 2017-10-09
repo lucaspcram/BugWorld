@@ -37,6 +37,7 @@ void draw(char ch, int col, int row, int color)
 	if (col >= M_SCRWIDTH || col < 0 || row >= M_SCRHEIGHT || row < 0)
 		return;
 
+	/* FIXME does this break with multibyte chars? */
 	sprintf(buf, "%c", ch);
 	attron(COLOR_PAIR(color));
 	mvprintw(row, col, buf);

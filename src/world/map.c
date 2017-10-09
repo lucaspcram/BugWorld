@@ -27,7 +27,7 @@ static const char * G_GRASS_FRAMES[] = {
 static const int G_GRASS_FRAMES_LEN = 4;
 static const char * G_WATER_FRAMES[] = {
 	"~",
-	"-"
+	"="
 };
 static const int G_WATER_FRAMES_LEN = 2;
 static const char * G_MOUND_FRAMES[] = {
@@ -140,6 +140,7 @@ void render_map(struct map const * m)
 		for (j = 0; j < m->cols; j++) {
 			switch(m->tiles[i][j]) {
 				case E_EMPTY:
+					draw('.', j, i, M_YELLOW);
 					break;
 				case E_GRASS:
 					M_SET_SPRITE_POS(m->grass_spr, i, j);
