@@ -60,5 +60,13 @@ void refresh_view(void)
 
 void clear_view(void)
 {
+	int i;
+	int j;
+
 	clear();
+	attron(COLOR_PAIR(M_BLACK));
+	for (i = 0; i < M_SCRHEIGHT; i++)
+		for (j = 0; j < M_SCRWIDTH; j++)
+			mvprintw(i, j, " ");
+	attroff(COLOR_PAIR(M_BLACK));
 }
