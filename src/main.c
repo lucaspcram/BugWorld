@@ -9,7 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 
-void display_help(void);
+void display_help(char * progname);
 void display_version(void);
 void sig_handler(int sig);
 
@@ -69,7 +69,7 @@ int main(int argc, char * argv[])
 				break;
 
 			case 'h':
-				display_help();
+				display_help(argv[0]);
 				return 0;
 
 			case 'v':
@@ -85,9 +85,9 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void display_help(void)
+void display_help(char * progname)
 {
-	printf("Usage: bugworld [OPTION]...\n");
+	printf("Usage: %s [OPTION]...\n", progname);
 	printf("An animated ncurses based puzzle game.\n\n");
 	printf("The following options can be used.\n");
 	printf("  -b, --backend=BACKEND   Specify the concurrency backend to use.\n");
