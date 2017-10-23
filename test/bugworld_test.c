@@ -30,17 +30,17 @@ int main(int argc, char * argv[])
 {
 	printf("BugWorld Unit Tests\n");
 	
-	// Test the robustness of the random number generator.
-	//M_TRY_TEST(test_rand);
+	/* Test the robustness of the random number generator */
+	/*M_TRY_TEST(test_rand);*/
 
-	// Test the highscore file IO functionality
-	//M_TRY_TEST(test_score_io);
+	/* Test the highscore file IO functionality */
+	/*M_TRY_TEST(test_score_io);*/
 
-	// Test gameobj code
+	/* Test gameobj code */
 	M_TRY_TEST(test_gameobj);
 
-	// Test Perlin noise impl
-	//M_TRY_TEST(test_perlin);
+	/* Test Perlin noise impl */
+	/*M_TRY_TEST(test_perlin);*/
 
 	return 0;
 }

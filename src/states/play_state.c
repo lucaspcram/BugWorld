@@ -51,25 +51,24 @@ void play_state_handle_input(int input)
 void play_state_render(void)
 {
 	int i;
+	char buf[4];
 
 	struct player const * p = get_player(g_world);
 	int const p_decoys = player_get_decoys(p);
 	int const p_stamina = player_get_stamina(p);
-	int const s_offset = (M_SCRWIDTH / 2)- 6;
+	int const s_offset = 4;
 
 	render_world(g_world);
 
 	/* Draw the stamina bar */
-	draw_str("STAMINA", 0, M_SCRHEIGHT - 2, M_MAGENTA);
-	draw_str("<", s_offset, M_SCRHEIGHT - 2, M_MAGENTA);
-	for (i = 0; i < p_stamina; i++) {
-		draw_str("=", s_offset + i + 1, M_SCRHEIGHT - 2, M_MAGENTA);
-	}
-	for (i = p_stamina; i < M_MAX_STAMINA; i++) {
-		draw_str(" ", s_offset + i + 1, M_SCRHEIGHT - 2, M_MAGENTA);
-	}
-	draw_str(">", s_offset + i + 1, M_SCRHEIGHT - 2, M_MAGENTA);
+	snprintf(buf, sizeof(buf), "%d", p_stamina);
+	draw_str("S:", 0, M_SCRHEIGHT - 2, M_MAGENTA);
+	draw_str("[", s_offset, M_SCRHEIGHT - 2, M_MAGENTA);
+	for (i = 1; i <= p_stamina * 2; i += 2)
+		draw_str("==", s_offset + i, M_SCRHEIGHT - 2, M_MAGENTA);
+	draw_str("]", s_offset + M_MAX_STAMINA * 2 + 1, M_SCRHEIGHT - 2, M_MAGENTA);
+	draw_str(buf, s_offset + M_MAX_STAMINA * 2 + 2, M_SCRHEIGHT - 2, M_MAGENTA);
 
 	/* Draw the decoy bar */
-	draw_str("DECOYS", 0, M_SCRHEIGHT - 1, M_MAGENTA);
+	draw_str("D:", 0, M_SCRHEIGHT - 1, M_MAGENTA);
 }
