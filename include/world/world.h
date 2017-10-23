@@ -19,8 +19,8 @@ void destroy_world(struct world * w);
 
 void handle_input_world(struct world * w, int input);
 void tick_world(struct world * w, uint64_t elapsed);
-void render_world(struct world * w);
+void render_world(struct world const * w);
 
-struct player * get_player(struct world * w);
+struct player * get_player(struct world const * w);
 
 #endif

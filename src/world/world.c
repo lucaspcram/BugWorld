@@ -1,6 +1,7 @@
 #include "world/world.h"
 
 #include "common.h"
+#include "gameobj/enemy.h"
 #include "gameobj/player.h"
 #include "gameobj/sprite.h"
 #include "key_bindings.h"
@@ -11,9 +12,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/* Size is intentionally larger than necessary */
+#define M_ENEMIES_SIZE (32)
+
 struct world {
 	struct player * player;
 	struct map * map;
+	struct enemy * enemies[M_ENEMIES_SIZE];
 };
 
 struct world * create_world(void)
@@ -25,6 +30,7 @@ struct world * create_world(void)
 	new_world->map = create_map(M_SCRHEIGHT - 2, M_SCRWIDTH);
 
 	fill_map(new_world->map);
+	spawn_enemies(&(new_world->enemies), new_world->map);
 
 	return new_world;
 }
@@ -93,7 +99,7 @@ void tick_world(struct world * w, uint64_t elapsed)
 	tick_map(w->map, elapsed);
 }
 
-void render_world(struct world * w)
+void render_world(struct world const * w)
 {
 	if (w == NULL)
 		return;
@@ -102,7 +108,7 @@ void render_world(struct world * w)
 	render_player(w->player);
 }
 
-struct player * get_player(struct world * w)
+struct player * get_player(struct world const * w)
 {
 	if (w == NULL)
 		return NULL;

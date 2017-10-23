@@ -14,7 +14,7 @@ void fill_map(struct map * m)
 	int rows, cols;
 	double x, y, n;
 
-	// Perlin generation parameters
+	/* Perlin generation parameters */
 	double const freq = 80;
 	double const ampl = 100.0;
 	double const water_thresh = 35;
@@ -41,4 +41,11 @@ void fill_map(struct map * m)
 			}
 		}
 	}
+}
+
+void spawn_enemies(struct enemy *** enemies, struct map * m)
+{
+	int num_enemies;
+
+	num_enemies = get_rand_int(8, 12);
 }
