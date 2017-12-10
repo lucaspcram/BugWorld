@@ -44,10 +44,10 @@ void destroy_world(struct world * w)
 		return;
 
 	destroy_player(w->player);
-	//destroy_map(w->map);
-	//M_FOR_ALL_ELEMENTS(destroy_enemy, num_enemies, w->enemies);
-	//free(w->enemies);
-	//free(w);
+	destroy_map(w->map);
+	M_FOR_ALL_ELEMENTS(destroy_enemy, num_enemies, w->enemies);
+	free(w->enemies);
+	free(w);
 }
 
 void handle_input_world(struct world * w, int input)

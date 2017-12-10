@@ -74,10 +74,10 @@ void input_loop_pthread(void)
 			pthread_mutex_unlock(&g_ncurses_mut);
 			continue;
 		}
-		pthread_mutex_unlock(&g_ncurses_mut);
 
 		/* send input to the state manager */
 		handle_input(ch);
+		pthread_mutex_unlock(&g_ncurses_mut);
 	}
 }
 
