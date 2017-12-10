@@ -11,7 +11,7 @@ fi
 if valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./bin/bugworld_test;
 then
 	echo $dashes
-	echo "TEST SUCCESS"
+	echo "ALL TESTS PASSED. VALGRIND OK."
 	exit 0
 else
 	echo $dashes

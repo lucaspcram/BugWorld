@@ -15,10 +15,12 @@
 /* Size is intentionally larger than necessary */
 #define M_ENEMIES_SIZE (32)
 
+static int num_enemies = 0;
+
 struct world {
 	struct player * player;
 	struct map * map;
-	struct enemy * enemies[M_ENEMIES_SIZE];
+	struct enemy ** enemies;
 };
 
 struct world * create_world(void)
@@ -30,7 +32,8 @@ struct world * create_world(void)
 	new_world->map = create_map(M_SCRHEIGHT - 2, M_SCRWIDTH);
 
 	fill_map(new_world->map);
-	spawn_enemies(&(new_world->enemies), new_world->map);
+	new_world->enemies = M_SAFEMALLOC(M_ENEMIES_SIZE * sizeof(struct enemy *));
+	num_enemies = spawn_enemies(new_world->enemies, new_world->map);
 
 	return new_world;
 }
@@ -41,8 +44,10 @@ void destroy_world(struct world * w)
 		return;
 
 	destroy_player(w->player);
-	destroy_map(w->map);
-	free(w);
+	//destroy_map(w->map);
+	//M_FOR_ALL_ELEMENTS(destroy_enemy, num_enemies, w->enemies);
+	//free(w->enemies);
+	//free(w);
 }
 
 void handle_input_world(struct world * w, int input)
@@ -83,11 +88,6 @@ void handle_input_world(struct world * w, int input)
 	{
 		player_reset_stamina(w->player);
 	}
-
-	// generate a new world
-	// TODO remove this, just for testing
-	if (input == M_MENU_SELECT)
-		fill_map(w->map);
 }
 
 void tick_world(struct world * w, uint64_t elapsed)
@@ -97,6 +97,7 @@ void tick_world(struct world * w, uint64_t elapsed)
 
 	tick_player(w->player, elapsed);
 	tick_map(w->map, elapsed);
+	M_FOR_ALL_ELEMENTS_EXT(tick_enemy, num_enemies, w->enemies, elapsed);
 }
 
 void render_world(struct world const * w)
@@ -106,6 +107,7 @@ void render_world(struct world const * w)
 
 	render_map(w->map);
 	render_player(w->player);
+	M_FOR_ALL_ELEMENTS(render_enemy, num_enemies, w->enemies);
 }
 
 struct player * get_player(struct world const * w)

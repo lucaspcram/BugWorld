@@ -27,12 +27,12 @@ static const char * G_FRAMES[] = {
 static const int G_FRAMES_LEN = 2;
 /******END SECTION******/
 
-struct player * create_player(int row, int col)
+struct player * create_player(int col, int row)
 {
 	struct player * new_player;
 	new_player = M_SAFEMALLOC(sizeof(*new_player));
 
-	new_player->psprite = create_sprite(row, col, M_PLAYER_WIDTH, M_PLAYER_HEIGHT);
+	new_player->psprite = create_sprite(col, row, M_PLAYER_WIDTH, M_PLAYER_HEIGHT);
 	new_player->stamina = M_MAX_STAMINA;
 	new_player->decoys = M_MAX_DECOYS;
 	set_anim_params(new_player->psprite, 0, 0, M_ANIM_TIMER);

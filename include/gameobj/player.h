@@ -27,7 +27,7 @@ sprite_col(player_get_sprite(player))  \
 
 struct player;
 
-struct player * create_player(int row, int col);
+struct player * create_player(int col, int row);
 void destroy_player(struct player * p);
 
 void tick_player(struct player * p, uint64_t elapsed);

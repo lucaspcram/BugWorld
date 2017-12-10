@@ -108,7 +108,7 @@ void destroy_map(struct map * m)
 	for (i = 0; i < m->rows; i++)
 		free(m->tiles[i]);
 	free(m->tiles);
-	
+
 	destroy_sprite(m->grass_spr);
 	destroy_sprite(m->water_spr);
 	destroy_sprite(m->mound_spr);

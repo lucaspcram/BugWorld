@@ -45,6 +45,11 @@ void play_state_handle_input(int input)
 	if (input == M_MENU_QUIT)
 		force_exit();
 
+	if (input == M_MENU_SELECT) {
+		destroy_world(g_world);
+		g_world = create_world();
+	}
+
 	handle_input_world(g_world, input);
 }
 

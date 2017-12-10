@@ -43,9 +43,24 @@ void fill_map(struct map * m)
 	}
 }
 
-void spawn_enemies(struct enemy *** enemies, struct map * m)
+int spawn_enemies(struct enemy ** enemies, struct map * m)
 {
 	int num_enemies;
+	int enem_r;
+	int enem_c;
+	int map_r;
+	int map_c;
+	int i;
 
-	num_enemies = get_rand_int(8, 12);
+	num_enemies = get_rand_int(6, 10);
+	map_r = map_rows(m);
+	map_c = map_cols(m);
+
+	for (i = 0; i < num_enemies; i++) {
+		enem_r = get_rand_int(0, map_r - 1);
+		enem_c = get_rand_int(0, map_c - 1);
+		enemies[i] = create_enemy(enem_c, enem_r);
+	}
+
+	return num_enemies;
 }

@@ -9,6 +9,6 @@
  */
 
 void fill_map(struct map * m);
-void spawn_enemies(struct enemy *** enemies, struct map * m);
+int spawn_enemies(struct enemy ** enemies, struct map * m);
 
 #endif
