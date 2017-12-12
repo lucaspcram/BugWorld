@@ -23,7 +23,7 @@ for (__i__ = 0; __i__ < max; __i__++) {    \
 }                                          \
 } while(0)                                 \
 
-#define M_FOR_ALL_ELEMENTS_EXT(func, max, arr, __VA_ARGS__) \
+#define M_FOR_ALL_ELEMENTS_EXT(func, max, arr, ...)           \
 do {                                                          \
 int __i__;                                                    \
 for (__i__ = 0; __i__ < max; __i__++) {                       \

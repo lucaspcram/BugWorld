@@ -5,7 +5,7 @@
 # Compiler and options #
 WARN=-Wall #-Wpedantic
 OPT=#-O2 # no opts for now
-STD=
+STD=-std=c99 -D_POSIX_C_SOURCE=200809L
 CFLAGS=$(WARN) $(OPT) $(STD) -g
 
 # project sources #

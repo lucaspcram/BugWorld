@@ -67,6 +67,12 @@ void input_loop_pthread(void)
 	int ch;
 
 	while (!exit_flag) {
+		/*
+		The entire input sequence must be marked as
+		a critical section since it can modify game
+		state currently being accessed by the tick_render
+		thread
+		*/
 		pthread_mutex_lock(&g_ncurses_mut);
 		timeout(0);
 		ch = getch();
@@ -77,6 +83,7 @@ void input_loop_pthread(void)
 
 		/* send input to the state manager */
 		handle_input(ch);
+
 		pthread_mutex_unlock(&g_ncurses_mut);
 	}
 }
@@ -102,12 +109,12 @@ void * tick_pthread(void * arg)
 	uint64_t const nsec_perframe = M_NSEC_PER_SEC / g_fps;
 
 	/*
-	 * NOTE: Two calculations are happening in this loop.
-	 * 1) the elapsed time since the previous tick_render cycle,
-	 *    which is passed into the next tick_render as frame_time
-	 * 2) the time spent in just the tick_render call, so the thread
-	 *    can sleep for an appropriate amount of time to hit g_fps
-	 */
+	NOTE: Two calculations are happening in this loop.
+	1) the elapsed time since the previous tick_render cycle,
+	   which is passed into the next tick_render as frame_time
+	2) the time spent in just the tick_render call, so the thread
+	   can sleep for an appropriate amount of time to hit g_fps
+	*/
 
 	clock_gettime(CLOCK_MONOTONIC_RAW, &cur);
 	while (1) {
