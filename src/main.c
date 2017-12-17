@@ -23,7 +23,6 @@ int main(int argc, char * argv[])
 	struct sigaction sa;
 	struct option long_options[] =
 	{
-		{"backend", required_argument, 0, 'b'},
 		{"fps", required_argument, 0, 'f'},
 		{"help", no_argument, 0, 'h'},
 		{"version", no_argument, 0, 'v'},
@@ -35,49 +34,36 @@ int main(int argc, char * argv[])
 	sigfillset(&sa.sa_mask);
 
 	/* DEFAULTS */
-	g_backend = E_PTHREAD;
 	g_fps = M_DEFAULT_FPS;
 
 	while(1) {
 		option_index = 0;
-		c = getopt_long(argc, argv, "b:f:hv", long_options, &option_index);
+		c = getopt_long(argc, argv, "f:hv", long_options, &option_index);
 		if (c == -1)
 			break;
 		switch(c) {
 			case 0:
-				break;
-
-			case 'b':
-				if (strcmp(optarg, "pthread") == 0)
-					g_backend = E_PTHREAD;
-				else if (strcmp(optarg, "sigalrm") == 0)
-					g_backend = E_SIGALRM;
-				else {
-					fprintf(stderr, "Invalid argument \'%s\' to option \'--backend\'\n", optarg);
-					fprintf(stderr, "Try \'bugworld --help\' for info.\n");
-					return 1;
-				}
-				break;
+			break;
 
 			case 'f':
-				g_fps = atoi(optarg);
-				if (g_fps < 5 || g_fps > 60) {
-					fprintf(stderr, "Invalid argument \'%s\' to option \'--fps\'\n", optarg);
-					fprintf(stderr, "Try \'bugworld --help\' for info.\n");
-					return 1;
-				}
-				break;
+			g_fps = atoi(optarg);
+			if (g_fps < 5 || g_fps > 60) {
+				fprintf(stderr, "Invalid argument \'%s\' to option \'--fps\'\n", optarg);
+				fprintf(stderr, "Try \'bugworld --help\' for info.\n");
+				return 1;
+			}
+			break;
 
 			case 'h':
-				display_help(argv[0]);
-				return 0;
+			display_help(argv[0]);
+			return 0;
 
 			case 'v':
-				display_version();
-				return 0;
+			display_version();
+			return 0;
 
 			default:
-				return 1;
+			return 1;
 		}
 	}
 
@@ -90,11 +76,6 @@ void display_help(char * progname)
 	printf("Usage: %s [OPTION]...\n", progname);
 	printf("An animated ncurses based puzzle game.\n\n");
 	printf("The following options can be used.\n");
-	printf("  -b, --backend=BACKEND   Specify the concurrency backend to use.\n");
-	printf("                          BACKEND can be \'sigalrm\' or \'pthread\'. Different\n");
-	printf("                          backends can cause flicker on different terminals, due to\n");
-	printf("                          the thread-unsafe nature of the ncurses library.\n");
-	printf("                          Use whichever works best. Defaults to \'pthread\'.\n\n");
 	printf("  -f, --fps=FPS           Specify the FPS at which to run. Try setting to different\n");
 	printf("                          values if excessive flickering occurs. Defaults to 30.\n");
 	printf("                          Valid settings range is [5, 60].\n\n");
@@ -111,12 +92,14 @@ void sig_handler(int sig)
 {
 	switch(sig) {
 		case SIGINT:
-			/* fallthru to SIGTERM */
+		/* fallthru to SIGTERM */
+
 		case SIGTERM:
-			destroy_graphics();
-			break;
+		destroy_graphics();
+		break;
+
 		default:
-			return;
+		return;
 	}
 	exit(0);
 }

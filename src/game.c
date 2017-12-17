@@ -17,7 +17,6 @@
 #define M_NSEC_PER_SEC (1000000000)
 #define M_NSEC_PER_USEC (1000)
 
-enum concurrency_backend g_backend;
 int g_fps;
 
 /*
@@ -41,28 +40,20 @@ void init_game(void)
 	init_graphics();
 	init_state_manager();
 
-	if (g_backend == E_PTHREAD) {
-		pthread_mutex_init(&g_ncurses_mut, NULL);
-		err = pthread_create(&thread, NULL, tick_pthread, NULL);
-		if (err)
-			abort_game("pthread_create failed", __FILE__, __LINE__);
-		input_loop_pthread();
-	} else if (g_backend == E_SIGALRM) {
-		set_sigalrm();
-		input_loop_sigalrm();
-	} else {
-		/* this should not happen */
-		abort_game("invalid backend setting", __FILE__, __LINE__);
-	}
+	pthread_mutex_init(&g_ncurses_mut, NULL);
+	err = pthread_create(&thread, NULL, tick, NULL);
+	if (err)
+		abort_game("pthread_create failed", __FILE__, __LINE__);
 
-	if (g_backend == E_PTHREAD) {
-		pthread_join(thread, NULL);
-	}
+	input_loop();
+
+	pthread_join(thread, NULL);
+
 	destroy_state_manager();
 	destroy_graphics();
 }
 
-void input_loop_pthread(void)
+void input_loop(void)
 {
 	int ch;
 
@@ -88,19 +79,7 @@ void input_loop_pthread(void)
 	}
 }
 
-void input_loop_sigalrm(void)
-{
-	int ch;
-
-	while (!exit_flag) {
-		ch = getch();
-
-		/* send input to the state manager */
-		handle_input(ch);
-	}
-}
-
-void * tick_pthread(void * arg)
+void * tick(void * arg)
 {
 	struct timespec req, rem;
 	struct timespec start, end, cur;
@@ -150,26 +129,4 @@ void * tick_pthread(void * arg)
 	}
 
 	return NULL;
-}
-
-void tick_sigalrm(int sig)
-{
-	/* assumes that SIGALRM interrupts are accurate */
-	uint64_t const frame_time = (M_USEC_PER_SEC / g_fps) * M_NSEC_PER_USEC;
-	tick_render(frame_time);
-}
-
-void set_sigalrm(void)
-{
-	struct itimerval timer;
-	struct sigaction action;
-	timer.it_value.tv_sec = 0;
-	timer.it_value.tv_usec = M_USEC_PER_SEC / g_fps;
-	timer.it_interval.tv_sec = 0;
-	timer.it_interval.tv_usec = M_USEC_PER_SEC / g_fps;
-	setitimer(ITIMER_REAL, &timer, NULL);
-
-	action.sa_handler = &tick_sigalrm;
-	action.sa_flags = SA_RESTART;
-	sigaction(SIGALRM, &action, NULL);
 }
