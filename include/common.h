@@ -15,7 +15,7 @@
 
 #define M_ARRAY_SIZE(array) (sizeof(array) / sizeof((array)[0]))
 
-#define M_FOR_ALL_ELEMENTS(func, max, arr) \
+#define M_FOR_ALL_ELEMENTS(arr, max, func) \
 do {                                       \
 int __i__;                                 \
 for (__i__ = 0; __i__ < max; __i__++) {    \
@@ -23,7 +23,7 @@ for (__i__ = 0; __i__ < max; __i__++) {    \
 }                                          \
 } while(0)                                 \
 
-#define M_FOR_ALL_ELEMENTS_EXT(func, max, arr, ...)           \
+#define M_FOR_ALL_ELEMENTS_EXT(arr, max, func, ...)           \
 do {                                                          \
 int __i__;                                                    \
 for (__i__ = 0; __i__ < max; __i__++) {                       \

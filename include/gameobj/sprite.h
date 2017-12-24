@@ -7,7 +7,7 @@
  * Sprites are NxM rectangles made of animated ASCII characters.
  */
 
-#define M_SET_SPRITE_POS(sprite, row, col) \
+#define M_SET_SPRITE_POS(sprite, col, row) \
 do {                                       \
 sprite_set_row(sprite, row);               \
 sprite_set_col(sprite, col);               \

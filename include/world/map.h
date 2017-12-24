@@ -29,6 +29,8 @@ int map_cols(struct map const * m);
 
 void map_set(struct map * m, int i, int j, enum tile_type tile);
 
-bool map_point_ingrass(struct map const * m, int row, int col);
+bool map_point_hastype(struct map const * m,
+                       int col, int row,
+                       enum tile_type tile);
 
 #endif

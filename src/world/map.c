@@ -143,19 +143,19 @@ void render_map(struct map const * m)
 					draw('.', j, i, M_YELLOW);
 					break;
 				case E_GRASS:
-					M_SET_SPRITE_POS(m->grass_spr, i, j);
+					M_SET_SPRITE_POS(m->grass_spr, j, i);
 					render_sprite(m->grass_spr, M_GREEN);
 					break;
 				case E_WATER:
-					M_SET_SPRITE_POS(m->water_spr, i, j);
+					M_SET_SPRITE_POS(m->water_spr, j, i);
 					render_sprite(m->water_spr, M_CYAN);
 					break;
 				case E_MOUND:
-					M_SET_SPRITE_POS(m->mound_spr, i, j);
+					M_SET_SPRITE_POS(m->mound_spr, j, i);
 					render_sprite(m->mound_spr, M_YELLOW);
 					break;
 				case E_GOAL:
-					M_SET_SPRITE_POS(m->goal_spr, i, j);
+					M_SET_SPRITE_POS(m->goal_spr, j, i);
 					render_sprite(m->goal_spr, M_MAGENTA);
 					break;
 			}
@@ -185,7 +185,10 @@ void map_set(struct map * m, int i, int j, enum tile_type tile)
 	m->tiles[i][j] = tile;
 }
 
-bool map_point_ingrass(struct map const * m, int row, int col)
+bool map_point_hastype(struct map const * m,
+                       int col, int row,
+                       enum tile_type tile)
 {
-	return m->tiles[row][col] == E_GRASS;
+	return m->tiles[row][col] == tile;
 }
+

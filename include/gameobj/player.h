@@ -10,7 +10,7 @@
  * Controls player animations and game actions.
  */
 
-#define M_SET_PLAYER_POS(player, row, col)       \
+#define M_SET_PLAYER_POS(player, col, row)       \
 do {                                             \
 sprite_set_row(player_get_sprite(player), row);  \
 sprite_set_col(player_get_sprite(player), col);  \

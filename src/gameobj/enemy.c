@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "gameobj/sprite.h"
+#include "world/map.h"
 #include "view.h"
 
 #include <stdint.h>
@@ -59,4 +60,16 @@ void render_enemy(struct enemy * e)
 		return;
 
 	render_sprite(e->esprite, M_RED);
+}
+
+void act_enemy(struct enemy * e, struct map const * m, int pl_c, int pl_r)
+{
+	int enem_c;
+	int enem_r;
+
+	if (map_point_hastype(m, pl_c, pl_r, E_GRASS))
+		return;
+
+	enem_c = sprite_col(e->esprite);
+	enem_r = sprite_row(e->esprite);
 }

@@ -19,6 +19,7 @@ ______________________
 	- write more robust tests
 	- const pointers to functions that don't change fields
 	- order local variables
+	- access functions should be col,row not row,col
 
 
 BUGWORLD BUGS (hah)

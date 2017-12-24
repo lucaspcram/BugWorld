@@ -1,6 +1,7 @@
 #include "world/world_gen.h"
 
 #include "common.h"
+#include "gameobj/player.h"
 #include "perlin.h"
 #include "world/map.h"
 
@@ -43,7 +44,7 @@ void fill_map(struct map * m)
 	}
 }
 
-int spawn_enemies(struct enemy ** enemies, struct map * m)
+int spawn_enemies(struct enemy ** enemies, struct map const * m)
 {
 	int num_enemies;
 	int enem_r;
@@ -56,11 +57,35 @@ int spawn_enemies(struct enemy ** enemies, struct map * m)
 	map_r = map_rows(m);
 	map_c = map_cols(m);
 
-	for (i = 0; i < num_enemies; i++) {
+	i = 0;
+	while (i < num_enemies) {
 		enem_r = get_rand_int(0, map_r - 1);
 		enem_c = get_rand_int(0, map_c - 1);
-		enemies[i] = create_enemy(enem_c, enem_r);
+		if (!map_point_hastype(m, enem_c, enem_r, E_WATER)) {
+			enemies[i] = create_enemy(enem_c, enem_r);
+			i++;
+		} else {
+			continue;
+		}
 	}
 
 	return num_enemies;
+}
+
+void spawn_player(struct player ** p, struct map const * m)
+{
+	int pl_r;
+	int pl_c;
+	int map_r;
+	int map_c;
+
+	map_r = map_rows(m);
+	map_c = map_cols(m);
+
+	do {
+		pl_r = get_rand_int(0, map_r - 1);
+		pl_c = get_rand_int(0, map_c - 1);
+	} while(!map_point_hastype(m, pl_c, pl_r, E_GRASS));
+
+	*p = create_player(pl_c, pl_r);
 }
