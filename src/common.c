@@ -116,3 +116,31 @@ uint64_t ms2ns(uint64_t msec)
 	uint64_t const ns = msec * 1000000;
 	return ns;
 }
+
+/*
+ * Compute the dot product of two vec2d.
+ */
+double vec2d_dot(struct vec2d const * v1, struct vec2d const * v2)
+{
+	if (v1 == NULL || v2 == NULL)
+		return 0;
+
+	return v1->x * v2->x + v1->y * v2->y;
+}
+
+/*
+ * Compute the magnitude of a vec2d.
+ */
+double vec2d_magn(struct vec2d const * v)
+{
+	double xsq, ysq;
+
+	if (v == NULL)
+		return 0;
+
+	xsq = v->x * v->x;
+	ysq = v->y * v->y;
+
+	return sqrt(xsq + ysq);
+}
+

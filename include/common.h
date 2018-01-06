@@ -11,6 +11,11 @@
  * Collection of unrelated utility functions/definitions.
  */
 
+struct vec2d {
+	double x;
+	double y;
+};
+
 #define M_SAFEMALLOC(size) malloc_safe(size, __FILE__, __LINE__)
 
 #define M_ARRAY_SIZE(array) (sizeof(array) / sizeof((array)[0]))
@@ -44,5 +49,9 @@ void abort_game(char const * msg, char const * file, unsigned long line);
 void * malloc_safe(size_t size, char const * file, unsigned long line);
 
 uint64_t ms2ns(uint64_t msec);
+
+double vec2d_dot(struct vec2d const * v1, struct vec2d const * v2);
+
+double vec2d_magn(struct vec2d const * v);
 
 #endif

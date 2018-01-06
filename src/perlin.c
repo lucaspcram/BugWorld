@@ -6,11 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct vec2d {
-	double x;
-	double y;
-};
-
 /*
  * Values taken from Ken Perlin's improved reference implementation.
  * http://mrl.nyu.edu/~perlin/noise/
@@ -63,7 +58,6 @@ static void shuffle_p(void);
 static double fade(double t);
 static double lerp(double t, double a, double b);
 static void get_grad(int hash, struct vec2d * out);
-static double dot(struct vec2d * v1, struct vec2d * v2);
 
 void init_perlin(bool shuffle)
 {
@@ -143,8 +137,8 @@ double p_noise(double x, double y)
 	p3d.y = p.y - p3.y;
 
 	/* perform interpolations */
-	p0p1 = lerp(u, dot(&g0, &p0d), dot(&g1, &p1d));
-	p2p3 = lerp(u, dot(&g2, &p2d), dot(&g3, &p3d));
+	p0p1 = lerp(u, vec2d_dot(&g0, &p0d), vec2d_dot(&g1, &p1d));
+	p2p3 = lerp(u, vec2d_dot(&g2, &p2d), vec2d_dot(&g3, &p3d));
 	result = lerp(v, p0p1, p2p3);
 
 	/* normalize result to range [0, 1] */
@@ -198,10 +192,3 @@ static void get_grad(int hash, struct vec2d * out)
 	out->y = grad_table[hash & 0xF].y;
 }
 
-static double dot(struct vec2d * v1, struct vec2d * v2)
-{
-	if (v1 == NULL || v2 == NULL)
-		return 0;
-
-	return v1->x * v2->x + v1->y * v2->y;
-}

@@ -177,6 +177,19 @@ int map_cols(struct map const * m) {
 	return m->cols;
 }
 
+bool map_is_valid_tile(struct map const * m, int col, int row)
+{
+	if (m == NULL)
+		return false;
+
+	if (col < 0 || col >= m->cols)
+		return false;
+	if (row < 0 || row >= m->rows)
+		return false;
+
+	return true;
+}
+
 void map_set(struct map * m, int i, int j, enum tile_type tile)
 {
 	if (m == NULL)
