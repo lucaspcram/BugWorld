@@ -10,7 +10,8 @@ A simple ncurses-based action-puzzle game.
 * high score tracking
 
 ## Screenshots
-Screenshots to come!
+![Main Menu](/img/screenshot1.png)
+![In Game](/img/screenshot2.png)
 
 ## Building
 Tested with GCC 4.8.4 as well as Clang 3.9.0.
