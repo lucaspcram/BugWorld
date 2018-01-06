@@ -9,11 +9,11 @@
  */
 
 enum tile_type {
-	E_EMPTY,
-	E_GRASS,
-	E_WATER,
-	E_MOUND,
-	E_GOAL
+    E_EMPTY,
+    E_GRASS,
+    E_WATER,
+    E_MOUND,
+    E_GOAL
 };
 
 struct map;

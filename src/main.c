@@ -18,88 +18,88 @@ static char const * G_VERSION_TEXT =
 
 int main(int argc, char * argv[])
 {
-	int c;
-	int option_index;
-	struct sigaction sa;
-	struct option long_options[] =
-	{
-		{"fps", required_argument, 0, 'f'},
-		{"help", no_argument, 0, 'h'},
-		{"version", no_argument, 0, 'v'},
-		{NULL, 0, NULL, 0}
-	};
+    int c;
+    int option_index;
+    struct sigaction sa;
+    struct option long_options[] =
+    {
+        {"fps", required_argument, 0, 'f'},
+        {"help", no_argument, 0, 'h'},
+        {"version", no_argument, 0, 'v'},
+        {NULL, 0, NULL, 0}
+    };
 
-	sa.sa_handler = &sig_handler;
-	sa.sa_flags = SA_RESTART;
-	sigfillset(&sa.sa_mask);
+    sa.sa_handler = &sig_handler;
+    sa.sa_flags = SA_RESTART;
+    sigfillset(&sa.sa_mask);
 
-	/* DEFAULTS */
-	g_fps = M_DEFAULT_FPS;
+    /* DEFAULTS */
+    g_fps = M_DEFAULT_FPS;
 
-	while(1) {
-		option_index = 0;
-		c = getopt_long(argc, argv, "f:hv", long_options, &option_index);
-		if (c == -1)
-			break;
-		switch(c) {
-			case 0:
-			break;
+    while(1) {
+        option_index = 0;
+        c = getopt_long(argc, argv, "f:hv", long_options, &option_index);
+        if (c == -1)
+            break;
+        switch(c) {
+            case 0:
+            break;
 
-			case 'f':
-			g_fps = atoi(optarg);
-			if (g_fps < 5 || g_fps > 60) {
-				fprintf(stderr, "Invalid argument \'%s\' to option \'--fps\'\n", optarg);
-				fprintf(stderr, "Try \'bugworld --help\' for info.\n");
-				return 1;
-			}
-			break;
+            case 'f':
+            g_fps = atoi(optarg);
+            if (g_fps < 5 || g_fps > 60) {
+                fprintf(stderr, "Invalid argument \'%s\' to option \'--fps\'\n", optarg);
+                fprintf(stderr, "Try \'bugworld --help\' for info.\n");
+                return 1;
+            }
+            break;
 
-			case 'h':
-			display_help(argv[0]);
-			return 0;
+            case 'h':
+            display_help(argv[0]);
+            return 0;
 
-			case 'v':
-			display_version();
-			return 0;
+            case 'v':
+            display_version();
+            return 0;
 
-			default:
-			return 1;
-		}
-	}
+            default:
+            return 1;
+        }
+    }
 
-	init_game();
-	return 0;
+    init_game();
+    return 0;
 }
 
 void display_help(char * progname)
 {
-	printf("Usage: %s [OPTION]...\n", progname);
-	printf("An animated ncurses based puzzle game.\n\n");
-	printf("The following options can be used.\n");
-	printf("  -f, --fps=FPS           Specify the FPS at which to run. Try setting to different\n");
-	printf("                          values if excessive flickering occurs. Defaults to 30.\n");
-	printf("                          Valid settings range is [5, 60].\n\n");
-	printf("  -h, --help              Display this help message and exit.\n\n");
-	printf("  -v, --version           Display the version and exit.\n");
+    printf("Usage: %s [OPTION]...\n", progname);
+    printf("An animated ncurses based puzzle game.\n\n");
+    printf("The following options can be used.\n");
+    printf("  -f, --fps=FPS           Specify the FPS at which to run. Try setting to different\n");
+    printf("                          values if excessive flickering occurs. Defaults to 30.\n");
+    printf("                          Valid settings range is [5, 60].\n\n");
+    printf("  -h, --help              Display this help message and exit.\n\n");
+    printf("  -v, --version           Display the version and exit.\n");
 }
 
 void display_version(void)
 {
-	printf("%s\n", G_VERSION_TEXT);
+    printf("%s\n", G_VERSION_TEXT);
 }
 
 void sig_handler(int sig)
 {
-	switch(sig) {
-		case SIGINT:
-		/* fallthru to SIGTERM */
+    switch(sig) {
+        case SIGINT:
+        /* fallthru to SIGTERM */
 
-		case SIGTERM:
-		destroy_graphics();
-		break;
+        case SIGTERM:
+        destroy_graphics();
+        break;
 
-		default:
-		return;
-	}
-	exit(0);
+        default:
+        return;
+    }
+    exit(0);
 }

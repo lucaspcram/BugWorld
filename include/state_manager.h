@@ -12,16 +12,16 @@
 bool exit_flag;
 
 struct state {
-	/* Lifecycle functions */
-	int (*init)(void);
-	int (*destroy)(void);
-	int (*pause)(void);
-	int (*resume)(void);
-	
-	/* State functions */
-	void (*tick)(uint64_t elapsed);
-	void (*handle_input)(int);
-	void (*render)(void);
+    /* Lifecycle functions */
+    int (*init)(void);
+    int (*destroy)(void);
+    int (*pause)(void);
+    int (*resume)(void);
+
+    /* State functions */
+    void (*tick)(uint64_t elapsed);
+    void (*handle_input)(int);
+    void (*render)(void);
 };
 
 void init_state_manager(void);

@@ -12,8 +12,8 @@
  */
 
 struct vec2d {
-	double x;
-	double y;
+    double x;
+    double y;
 };
 
 #define M_SAFEMALLOC(size) malloc_safe(size, __FILE__, __LINE__)
@@ -24,7 +24,7 @@ struct vec2d {
 do {                                       \
 int __i__;                                 \
 for (__i__ = 0; __i__ < max; __i__++) {    \
-	func(arr[__i__]);                      \
+    func(arr[__i__]);                      \
 }                                          \
 } while(0)                                 \
 
@@ -32,7 +32,7 @@ for (__i__ = 0; __i__ < max; __i__++) {    \
 do {                                                          \
 int __i__;                                                    \
 for (__i__ = 0; __i__ < max; __i__++) {                       \
-	func(arr[__i__], __VA_ARGS__);                            \
+    func(arr[__i__], __VA_ARGS__);                            \
 }                                                             \
 } while(0)                                                    \
 

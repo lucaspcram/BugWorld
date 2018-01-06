@@ -101,122 +101,122 @@ static void draw_menu_option(char const ** menu,
 
 int menu_state_init(void)
 {
-	g_menu_index = M_OPTION_PLAY;
-	g_menu_anim_timer = 0;
-	g_menu_anim_state = 0;
-	g_title_anime_state = 0;
+    g_menu_index = M_OPTION_PLAY;
+    g_menu_anim_timer = 0;
+    g_menu_anim_state = 0;
+    g_title_anime_state = 0;
 
-	/* compute offsets for menu options */
-	G_MENU_PLAY_ROW_OFFSET = G_TITLE_LEN - 0;
-	G_MENU_SCORES_ROW_OFFSET = G_MENU_PLAY_ROW_OFFSET + 3;
-	G_MENU_HELP_ROW_OFFSET = G_MENU_SCORES_ROW_OFFSET + 3;
+    /* compute offsets for menu options */
+    G_MENU_PLAY_ROW_OFFSET = G_TITLE_LEN - 0;
+    G_MENU_SCORES_ROW_OFFSET = G_MENU_PLAY_ROW_OFFSET + 3;
+    G_MENU_HELP_ROW_OFFSET = G_MENU_SCORES_ROW_OFFSET + 3;
 
-	G_MENU_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(G_MENU_PLAY[0])) / 2);
+    G_MENU_COL_OFFSET = (M_SCRWIDTH / 2) - ((strlen(G_MENU_PLAY[0])) / 2);
 
-	return 0;
+    return 0;
 }
 
 int menu_state_destroy(void)
 {
-	return 0;
+    return 0;
 }
 
 int menu_state_pause(void)
 {
-	return menu_state_destroy();
+    return menu_state_destroy();
 }
 
 int menu_state_resume(void)
 {
-	return menu_state_init();
+    return menu_state_init();
 }
 
 void menu_state_tick(uint64_t elapsed)
 {
-	g_menu_anim_timer += elapsed;
-	if (g_menu_anim_timer >= ms2ns(M_MS_UPDATETIMER)) {
-		g_menu_anim_timer = 0;
-		g_menu_anim_state = !g_menu_anim_state;
-		g_title_anime_state = !g_title_anime_state;
-	}
+    g_menu_anim_timer += elapsed;
+    if (g_menu_anim_timer >= ms2ns(M_MS_UPDATETIMER)) {
+        g_menu_anim_timer = 0;
+        g_menu_anim_state = !g_menu_anim_state;
+        g_title_anime_state = !g_title_anime_state;
+    }
 }
 
 void menu_state_handle_input(int input)
 {
-	if (input == M_MENU_SELECT) {
-		if (g_menu_index == M_OPTION_PLAY) {
-			init_state(M_STATE_PLAY);
-		}
-		if (g_menu_index == M_OPTION_SCORES) {
+    if (input == M_MENU_SELECT) {
+        if (g_menu_index == M_OPTION_PLAY) {
+            init_state(M_STATE_PLAY);
+        }
+        if (g_menu_index == M_OPTION_SCORES) {
 
-		}
-		if (g_menu_index == M_OPTION_HELP) {
+        }
+        if (g_menu_index == M_OPTION_HELP) {
 
-		}
-	}
+        }
+    }
 
-	if (input == M_MENU_QUIT)
-		force_exit();
+    if (input == M_MENU_QUIT)
+        force_exit();
 
-	if (input == M_MENU_UP) {
-		if (g_menu_index > 0)
-			g_menu_index--;
-		g_menu_anim_state = 0;
-	}
-	if (input == M_MENU_DOWN) {
-		if (g_menu_index < M_NUM_OPTIONS - 1)
-			g_menu_index++;
-		g_menu_anim_state = 0;
-	}
+    if (input == M_MENU_UP) {
+        if (g_menu_index > 0)
+            g_menu_index--;
+        g_menu_anim_state = 0;
+    }
+    if (input == M_MENU_DOWN) {
+        if (g_menu_index < M_NUM_OPTIONS - 1)
+            g_menu_index++;
+        g_menu_anim_state = 0;
+    }
 }
 
 void menu_state_render(void)
 {
-	int i;
-	char const * help_hint = "WASD to navigate, ENTER to select, Q to quit";
-	int hint_len = strlen(help_hint);
+    int i;
+    char const * help_hint = "WASD to navigate, ENTER to select, Q to quit";
+    int hint_len = strlen(help_hint);
 
-	for (i = 0; i < G_TITLE_LEN; i++) {
-		if (g_title_anime_state == 0)
-			draw_str(G_TITLE_FRAME1[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
-		else
-			draw_str(G_TITLE_FRAME2[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
-	}
+    for (i = 0; i < G_TITLE_LEN; i++) {
+        if (g_title_anime_state == 0)
+            draw_str(G_TITLE_FRAME1[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
+        else
+            draw_str(G_TITLE_FRAME2[i], 0, G_TITLE_ROW_OFFSET + i, M_CYAN);
+    }
 
-	switch (g_menu_index) {
-		case M_OPTION_PLAY:
-			M_DRAW_MENU(PLAY, M_RED, g_menu_anim_state);
-			M_DRAW_MENU(SCORES, M_MAGENTA, 0);
-			M_DRAW_MENU(HELP, M_MAGENTA, 0);
-			break;
-		
-		case M_OPTION_SCORES:
-			M_DRAW_MENU(PLAY, M_MAGENTA, 0);
-			M_DRAW_MENU(SCORES, M_RED, g_menu_anim_state);
-			M_DRAW_MENU(HELP, M_MAGENTA, 0);
-			break;
+    switch (g_menu_index) {
+        case M_OPTION_PLAY:
+            M_DRAW_MENU(PLAY, M_RED, g_menu_anim_state);
+            M_DRAW_MENU(SCORES, M_MAGENTA, 0);
+            M_DRAW_MENU(HELP, M_MAGENTA, 0);
+            break;
+        
+        case M_OPTION_SCORES:
+            M_DRAW_MENU(PLAY, M_MAGENTA, 0);
+            M_DRAW_MENU(SCORES, M_RED, g_menu_anim_state);
+            M_DRAW_MENU(HELP, M_MAGENTA, 0);
+            break;
 
-		case M_OPTION_HELP:
-			M_DRAW_MENU(PLAY, M_MAGENTA, 0);
-			M_DRAW_MENU(SCORES, M_MAGENTA, 0);
-			M_DRAW_MENU(HELP, M_RED, g_menu_anim_state);
-			break;
-	}
+        case M_OPTION_HELP:
+            M_DRAW_MENU(PLAY, M_MAGENTA, 0);
+            M_DRAW_MENU(SCORES, M_MAGENTA, 0);
+            M_DRAW_MENU(HELP, M_RED, g_menu_anim_state);
+            break;
+    }
 
-	draw_str(help_hint, (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1, M_CYAN);
+    draw_str(help_hint, (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1, M_CYAN);
 }
 
 static void draw_menu_option(char const ** menu,
                              int col_offset, int row_offset,
                              int color, int state)
 {
-	if (state == 0) {
-		draw_str(menu[0], col_offset, row_offset, color);
-		draw_str(menu[1], col_offset, row_offset + 1, color);
-		draw_str(menu[0], col_offset, row_offset + 2, color);
-	} else {
-		draw_str(menu[2], col_offset, row_offset, color);
-		draw_str(menu[1], col_offset, row_offset + 1, color);
-		draw_str(menu[2], col_offset, row_offset + 2, color);
-	}
+    if (state == 0) {
+        draw_str(menu[0], col_offset, row_offset, color);
+        draw_str(menu[1], col_offset, row_offset + 1, color);
+        draw_str(menu[0], col_offset, row_offset + 2, color);
+    } else {
+        draw_str(menu[2], col_offset, row_offset, color);
+        draw_str(menu[1], col_offset, row_offset + 1, color);
+        draw_str(menu[2], col_offset, row_offset + 2, color);
+    }
 }

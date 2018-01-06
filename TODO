@@ -15,7 +15,6 @@ ______________________
 + misc. refactoring and cleanup
 	- defensive/DRY design
 	- 80 column soft limit
-	- convert tabs to spaces
 	- useful comments (C style, header explanation, impl WHY not WHAT)
 	- write more robust tests
 	- const pointer params to functions that don't change the param

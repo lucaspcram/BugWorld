@@ -24,16 +24,16 @@ pthread_mutex_t g_ncurses_mut;
  */
 int get_rand_int(int low_incl, int high_excl)
 {
-	int r;
-	int range;
+    int r;
+    int range;
 
-	if (low_incl > high_excl)
-		return 0;
+    if (low_incl > high_excl)
+        return 0;
 
-	r = rand();
-	range = high_excl - low_incl;
+    r = rand();
+    range = high_excl - low_incl;
 
-	return (r % range) + low_incl;
+    return (r % range) + low_incl;
 }
 
 /*
@@ -45,14 +45,14 @@ int get_rand_int(int low_incl, int high_excl)
  */
 bool percentage_chance(double rate)
 {
-	double r;
+    double r;
 
-	if (fabs(rate) < M_EPSILON)
-		return false;
+    if (fabs(rate) < M_EPSILON)
+        return false;
 
-	r = (double) rand() / (double) RAND_MAX;
+    r = (double) rand() / (double) RAND_MAX;
 
-	return r <= rate;
+    return r <= rate;
 }
 
 /*
@@ -61,34 +61,34 @@ bool percentage_chance(double rate)
  */
 void abort_game(char const * msg, char const * file, unsigned long line)
 {
-	/*
-	void * frames[M_MAX_FRAMES];
-	char ** trace;
-	size_t size;
-	size_t i;
-	*/
+    /*
+    void * frames[M_MAX_FRAMES];
+    char ** trace;
+    size_t size;
+    size_t i;
+    */
 
-	destroy_graphics();
+    destroy_graphics();
 
-	/*
-	print a stack trace
-	based on sample from
-	https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
-	FIXME periodically breaks ncurses cleanup for some reason
-	*/
-	
-	/*
-	size = backtrace(frames, M_MAX_FRAMES);
-	trace = backtrace_symbols(frames, size);
-	for (i = 0; i < size; i++)
-		fprintf (stderr, "%s\n", trace[i]);
-	free(trace);
-	*/
+    /*
+    print a stack trace
+    based on sample from
+    https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
+    FIXME periodically breaks ncurses cleanup for some reason
+    */
+    
+    /*
+    size = backtrace(frames, M_MAX_FRAMES);
+    trace = backtrace_symbols(frames, size);
+    for (i = 0; i < size; i++)
+        fprintf (stderr, "%s\n", trace[i]);
+    free(trace);
+    */
 
-	fprintf(stderr, "BugWorld FATAL: %s\n", msg);
-	fprintf(stderr, "Error from %s on line %lu\n", file, line);
-	fprintf(stderr, "Aborting.\n");
-	exit(1);
+    fprintf(stderr, "BugWorld FATAL: %s\n", msg);
+    fprintf(stderr, "Error from %s on line %lu\n", file, line);
+    fprintf(stderr, "Aborting.\n");
+    exit(1);
 }
 
 /*
@@ -98,13 +98,13 @@ void abort_game(char const * msg, char const * file, unsigned long line)
  */
 void * malloc_safe(size_t size, char const * file, unsigned long line)
 {
-	void * ptr;
+    void * ptr;
 
-	ptr = malloc(size);
-	if (ptr == NULL) {
-		abort_game("malloc call failed", file, line);
-	}
-	return ptr;
+    ptr = malloc(size);
+    if (ptr == NULL) {
+        abort_game("malloc call failed", file, line);
+    }
+    return ptr;
 }
 
 /*
@@ -113,8 +113,8 @@ void * malloc_safe(size_t size, char const * file, unsigned long line)
  */
 uint64_t ms2ns(uint64_t msec)
 {
-	uint64_t const ns = msec * 1000000;
-	return ns;
+    uint64_t const ns = msec * 1000000;
+    return ns;
 }
 
 /*
@@ -122,10 +122,10 @@ uint64_t ms2ns(uint64_t msec)
  */
 double vec2d_dot(struct vec2d const * v1, struct vec2d const * v2)
 {
-	if (v1 == NULL || v2 == NULL)
-		return 0;
+    if (v1 == NULL || v2 == NULL)
+        return 0;
 
-	return v1->x * v2->x + v1->y * v2->y;
+    return v1->x * v2->x + v1->y * v2->y;
 }
 
 /*
@@ -133,14 +133,14 @@ double vec2d_dot(struct vec2d const * v1, struct vec2d const * v2)
  */
 double vec2d_magn(struct vec2d const * v)
 {
-	double xsq, ysq;
+    double xsq, ysq;
 
-	if (v == NULL)
-		return 0;
+    if (v == NULL)
+        return 0;
 
-	xsq = v->x * v->x;
-	ysq = v->y * v->y;
+    xsq = v->x * v->x;
+    ysq = v->y * v->y;
 
-	return sqrt(xsq + ysq);
+    return sqrt(xsq + ysq);
 }
 

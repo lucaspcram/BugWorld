@@ -10,10 +10,10 @@
 #include <sys/types.h>
 
 struct score {
-	char name[M_MAX_LEN];
-	int levels_cleared;
-	int turns_elapsed;
-	int decoys_used;
+    char name[M_MAX_LEN];
+    int levels_cleared;
+    int turns_elapsed;
+    int decoys_used;
 };
 
 char * create_scorefile(void);

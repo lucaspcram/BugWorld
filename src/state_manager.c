@@ -32,13 +32,13 @@ static void set_cur_state(int code);
 
 void init_state_manager(void)
 {
-	exit_flag = false;
+    exit_flag = false;
 
-	M_INIT_STATE(MENU, menu);
-	M_INIT_STATE(PLAY, play);
+    M_INIT_STATE(MENU, menu);
+    M_INIT_STATE(PLAY, play);
 
-	g_cur_state = M_STATE_MENU;
-	g_state_tab[g_cur_state].init();
+    g_cur_state = M_STATE_MENU;
+    g_state_tab[g_cur_state].init();
 }
 
 void destroy_state_manager(void)
@@ -48,39 +48,39 @@ void destroy_state_manager(void)
 
 void handle_input(int input)
 {
-	g_state_tab[g_cur_state].handle_input(input);
+    g_state_tab[g_cur_state].handle_input(input);
 }
 
 void tick_render(uint64_t elapsed)
 {
-	g_state_tab[g_cur_state].tick(elapsed);
+    g_state_tab[g_cur_state].tick(elapsed);
 
-	clear_view();
-	g_state_tab[g_cur_state].render();
-	refresh_view();
+    clear_view();
+    g_state_tab[g_cur_state].render();
+    refresh_view();
 }
 
 static void set_cur_state(int code)
 {
-	if (code < 0 || code >= M_NUM_STATES)
-		return;
-	g_cur_state = code;
+    if (code < 0 || code >= M_NUM_STATES)
+        return;
+    g_cur_state = code;
 }
 
 /* Services declared in state_codes.h */
 /**************************************/
 void init_state(int code)
 {
-	g_state_tab[g_cur_state].pause();
-	g_state_tab[code].init();
-	set_cur_state(code);
+    g_state_tab[g_cur_state].pause();
+    g_state_tab[code].init();
+    set_cur_state(code);
 }
 
 void resume_state(int code)
 {
-	g_state_tab[g_cur_state].pause();
-	g_state_tab[code].resume();
-	set_cur_state(code);
+    g_state_tab[g_cur_state].pause();
+    g_state_tab[code].resume();
+    set_cur_state(code);
 }
 
 /*
@@ -90,6 +90,6 @@ void resume_state(int code)
  */
 void force_exit(void)
 {
-	exit_flag = true;
+    exit_flag = true;
 }
 /******END SECTION******/
