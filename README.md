@@ -5,7 +5,7 @@
 A simple ncurses-based action-puzzle game.
 
 ## Features
-* animated ncurses graphics (pthreads or SIGALRM)
+* animated ncurses graphics
 * map generation based on 2D Perlin noise
 * high score tracking
 
