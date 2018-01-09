@@ -12,5 +12,6 @@
 void fill_map(struct map * m);
 int spawn_enemies(struct enemy ** enemies, struct map const * m);
 void spawn_player(struct player ** p, struct map const * m);
+void spawn_goal(struct map * m);
 
 #endif

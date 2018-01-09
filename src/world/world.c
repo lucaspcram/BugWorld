@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/* Size is intentionally larger than necessary */
+/* oversize for safety */
 #define M_ENEMIES_SIZE (32)
 
 static int num_enemies = 0;
@@ -33,6 +33,7 @@ struct world * create_world(void)
     fill_map(new_world->map);
 
     spawn_player(&(new_world->player), new_world->map);
+    spawn_goal(new_world->map);
     new_world->enemies = M_SAFEMALLOC(M_ENEMIES_SIZE * sizeof(struct enemy *));
     num_enemies = spawn_enemies(new_world->enemies, new_world->map);
 

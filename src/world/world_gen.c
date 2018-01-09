@@ -61,7 +61,8 @@ int spawn_enemies(struct enemy ** enemies, struct map const * m)
     while (i < num_enemies) {
         enem_r = get_rand_int(0, map_r - 1);
         enem_c = get_rand_int(0, map_c - 1);
-        if (!map_point_hastype(m, enem_c, enem_r, E_WATER)) {
+        if (!map_point_hastype(m, enem_c, enem_r, E_WATER)
+            && !map_point_hastype(m, enem_c, enem_r, E_GOAL)) {
             enemies[i] = create_enemy(enem_c, enem_r);
             i++;
         } else {
@@ -74,18 +75,37 @@ int spawn_enemies(struct enemy ** enemies, struct map const * m)
 
 void spawn_player(struct player ** p, struct map const * m)
 {
-    int pl_r;
     int pl_c;
-    int map_r;
+    int pl_r;
     int map_c;
+    int map_r;
 
-    map_r = map_rows(m);
     map_c = map_cols(m);
+    map_r = map_rows(m);
 
     do {
-        pl_r = get_rand_int(0, map_r - 1);
         pl_c = get_rand_int(0, map_c - 1);
+        pl_r = get_rand_int(0, map_r - 1);
     } while(!map_point_hastype(m, pl_c, pl_r, E_GRASS));
 
     *p = create_player(pl_c, pl_r);
+}
+
+void spawn_goal(struct map * m)
+{
+    int g_c;
+    int g_r;
+    int map_c;
+    int map_r;
+
+    map_c = map_cols(m);
+    map_r = map_rows(m);
+
+    do {
+        g_c = get_rand_int(0, map_c - 1);
+        g_r = get_rand_int(0, map_r - 1);
+    } while(map_point_hastype(m, g_c, g_r, E_GRASS)
+            || map_point_hastype(m, g_c, g_r, E_WATER));
+
+    map_set(m, g_r, g_c, E_GOAL);
 }

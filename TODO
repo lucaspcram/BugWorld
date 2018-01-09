@@ -4,9 +4,11 @@ ______________________
 + the play state
 	- code the individual game components/logic (player, ants, water, etc)
 	- tweak map generation as we go (Perlin params)
+	- figure out how to decouple sprite animations across the map
 
 + the scores state
-	- how to actually display the scores in a nice way (UX)
+	- phase 1: top 5 scores
+	- phase 2: scrollable menu?
 
 + the help state
 	- best way to explain the game/controls?
@@ -18,9 +20,9 @@ ______________________
 	- useful comments (C style, header explanation, impl WHY not WHAT)
 	- write more robust tests
 	- const pointer params to functions that don't change the param
-	- order local variables
+	- reduce/order local variables
 	- access functions should be (col,row) not (row,col)
-	- change macro constants to static variables if possible
+	- refactor macros into variables/functions when possible
 
 
 BUGWORLD BUGS (hah)

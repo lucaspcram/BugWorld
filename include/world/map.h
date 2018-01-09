@@ -28,7 +28,7 @@ int map_rows(struct map const * m);
 int map_cols(struct map const * m);
 bool map_is_valid_tile(struct map const * m, int col, int row);
 
-void map_set(struct map * m, int i, int j, enum tile_type tile);
+void map_set(struct map * m, int row, int col, enum tile_type tile);
 
 bool map_point_hastype(struct map const * m,
                        int col, int row,

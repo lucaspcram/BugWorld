@@ -36,9 +36,10 @@ static const char * G_MOUND_FRAMES[] = {
 };
 static const int G_MOUND_FRAMES_LEN = 2;
 static const char * G_GOAL_FRAMES[] = {
-    "O"
+    "G",
+    "*"
 };
-static const int G_GOAL_FRAMES_LEN = 1;
+static const int G_GOAL_FRAMES_LEN = 2;
 
 struct map {
     int rows;
@@ -78,7 +79,7 @@ struct map * create_map(int row, int col)
 
     new_map->tiles = new_tiles;
 
-    // initialize the tile sprites
+    /* initialize the tile sprites */
     new_map->grass_spr = create_sprite(0, 0, M_TILE_WIDTH, M_TILE_HEIGHT);
     set_anim_params(new_map->grass_spr, 0, 0, M_GRASS_TIMER);
     set_frames(new_map->grass_spr, G_GRASS_FRAMES, G_GRASS_FRAMES_LEN);
@@ -190,12 +191,12 @@ bool map_is_valid_tile(struct map const * m, int col, int row)
     return true;
 }
 
-void map_set(struct map * m, int i, int j, enum tile_type tile)
+void map_set(struct map * m, int row, int col, enum tile_type tile)
 {
     if (m == NULL)
         return;
 
-    m->tiles[i][j] = tile;
+    m->tiles[row][col] = tile;
 }
 
 bool map_point_hastype(struct map const * m,
