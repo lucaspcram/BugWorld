@@ -13,7 +13,7 @@
 #define M_TILE_HEIGHT (1)
 
 #define M_GRASS_TIMER (700)
-#define M_WATER_TIMER (300)
+#define M_WATER_TIMER (1100)
 #define M_MOUND_TIMER (800)
 #define M_GOAL_TIMER (1000)
 

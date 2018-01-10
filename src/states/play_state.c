@@ -51,6 +51,11 @@ void play_state_handle_input(int input)
     }
 
     handle_input_world(g_world, input);
+
+    if (world_is_complete(g_world)) {
+        destroy_world(g_world);
+        g_world = create_world();
+    }
 }
 
 void play_state_render(void)
