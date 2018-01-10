@@ -39,6 +39,7 @@ struct world * create_world(void)
 
     spawn_player(&(new_world->player), new_world->map);
     spawn_goal(new_world->map);
+    spawn_mounds(new_world->map);
     new_world->enemies = M_SAFEMALLOC(M_ENEMIES_SIZE * sizeof(struct enemy *));
     num_enemies = spawn_enemies(new_world->enemies, new_world->map);
 
@@ -116,7 +117,24 @@ void handle_input_world(struct world * w, int input)
 static void attempt_player_move(struct player * p, struct map * map,
                                 int p_newcol, int p_newrow, bool * update_enem)
 {
-    player_set_pos(p, p_newcol, p_newrow);
+    int m_maxcol;
+    int m_maxrow;
+
+    m_maxcol = map_cols(map);
+    m_maxrow = map_rows(map);
+
+    if (p_newcol < 0 || p_newcol >= m_maxcol)
+        return;
+    if (p_newrow < 0 || p_newrow >= m_maxrow)
+        return;
+
+    if (!map_point_hastype(map,
+                           p_newcol,
+                           p_newrow,
+                           E_MOUND))
+    {
+        player_set_pos(p, p_newcol, p_newrow);
+    }
     player_deplete_stamina(p);
     *update_enem = true;
 }

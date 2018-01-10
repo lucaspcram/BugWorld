@@ -14,11 +14,14 @@ struct player {
     int decoys;
 };
 
+int const G_PLAYER_MAX_STAM = 10;
+int const G_PLAYER_MAX_DECOY = 3;
+
 /* Anim params */
 /***************/
-#define M_PLAYER_WIDTH (1)
-#define M_PLAYER_HEIGHT (1)
-#define M_ANIM_TIMER (1000)
+static int const G_PLAYER_WIDTH = 1;
+static int const G_PLAYER_HEIGHT = 1;
+static int const G_ANIM_TIMER = 1000;
 
 static const char * G_FRAMES[] = {
     "X",
@@ -32,10 +35,10 @@ struct player * create_player(int col, int row)
     struct player * new_player;
     new_player = M_SAFEMALLOC(sizeof(*new_player));
 
-    new_player->psprite = create_sprite(col, row, M_PLAYER_WIDTH, M_PLAYER_HEIGHT);
+    new_player->psprite = create_sprite(col, row, G_PLAYER_WIDTH, G_PLAYER_HEIGHT);
     new_player->stamina = G_PLAYER_MAX_STAM;
     new_player->decoys = G_PLAYER_MAX_DECOY;
-    set_anim_params(new_player->psprite, 0, 0, M_ANIM_TIMER);
+    set_anim_params(new_player->psprite, 0, 0, G_ANIM_TIMER);
     set_frames(new_player->psprite, G_FRAMES, G_FRAMES_LEN);
 
     return new_player;

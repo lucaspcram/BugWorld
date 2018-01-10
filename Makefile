@@ -3,7 +3,7 @@
 ## BEGIN Project specific variables ##
 
 # Compiler and options #
-WARN=-Wall #-Wpedantic
+WARN=-Wall -Wpedantic
 OPT=#-O2 # no opts for now
 STD=-std=c99 -D_POSIX_C_SOURCE=200809L
 CFLAGS=$(WARN) $(OPT) $(STD) -g

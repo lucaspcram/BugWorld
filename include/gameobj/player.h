@@ -10,8 +10,8 @@
  * Controls player animations and game actions.
  */
 
-static int const G_PLAYER_MAX_STAM = 10;
-static int const G_PLAYER_MAX_DECOY = 3;
+extern int const G_PLAYER_MAX_STAM;
+extern int const G_PLAYER_MAX_DECOY;
 
 struct player;
 

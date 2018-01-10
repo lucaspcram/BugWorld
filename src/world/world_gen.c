@@ -109,3 +109,27 @@ void spawn_goal(struct map * m)
 
     map_set(m, g_r, g_c, E_GOAL);
 }
+
+void spawn_mounds(struct map * m)
+{
+    int num_mounds;
+    int i;
+    int m_c;
+    int m_r;
+    int map_c;
+    int map_r;
+
+    num_mounds = get_rand_int(5, 7);
+    map_c = map_cols(m);
+    map_r = map_rows(m);
+
+    i = 0;
+    while (i < num_mounds) {
+        m_c = get_rand_int(0, map_c - 1);
+        m_r = get_rand_int(0, map_r - 1);
+        if (map_point_hastype(m, m_c, m_r, E_EMPTY)) {
+            map_set(m, m_r, m_c, E_MOUND);
+            i++;
+        }
+    }
+}

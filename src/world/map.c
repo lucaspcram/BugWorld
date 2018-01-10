@@ -25,16 +25,18 @@ static const char * G_GRASS_FRAMES[] = {
     "|"
 };
 static const int G_GRASS_FRAMES_LEN = 4;
+
 static const char * G_WATER_FRAMES[] = {
     "~",
     "="
 };
 static const int G_WATER_FRAMES_LEN = 2;
+
 static const char * G_MOUND_FRAMES[] = {
-    "M",
-    "m"
+    "M"
 };
-static const int G_MOUND_FRAMES_LEN = 2;
+static const int G_MOUND_FRAMES_LEN = 1;
+
 static const char * G_GOAL_FRAMES[] = {
     "G",
     "*"
