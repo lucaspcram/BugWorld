@@ -61,15 +61,15 @@ void destroy_world(struct world * w)
 
 void handle_input_world(struct world * w, int input)
 {
-    int p_row;
     int p_col;
+    int p_row;
     bool update_enem = false;
 
     if (w == NULL)
         return;
 
-    p_row = M_GET_PLAYER_ROW(w->player);
-    p_col = M_GET_PLAYER_COL(w->player);
+    p_col = player_get_col(w->player);
+    p_row = player_get_row(w->player);
 
     if (input == M_ACTION_UP && player_has_stamina(w->player)) {
         attempt_player_move(w->player, w->map, p_col, p_row - 1, &update_enem);
@@ -91,22 +91,22 @@ void handle_input_world(struct world * w, int input)
     if (update_enem) {
         M_FOR_ALL_ELEMENTS_EXT(w->enemies, num_enemies,
                                act_enemy, w->map,
-                               M_GET_PLAYER_COL(w->player),
-                               M_GET_PLAYER_ROW(w->player));
+                               player_get_col(w->player),
+                               player_get_row(w->player));
         update_enem = false;
     }
 
     if (map_point_hastype(w->map,
-                          M_GET_PLAYER_COL(w->player),
-                          M_GET_PLAYER_ROW(w->player),
+                          player_get_col(w->player),
+                          player_get_row(w->player),
                           E_GRASS))
     {
         player_reset_stamina(w->player);
     }
 
     if (map_point_hastype(w->map,
-                          M_GET_PLAYER_COL(w->player),
-                          M_GET_PLAYER_ROW(w->player),
+                          player_get_col(w->player),
+                          player_get_row(w->player),
                           E_GOAL))
     {
         w->world_complete = true;
@@ -116,7 +116,7 @@ void handle_input_world(struct world * w, int input)
 static void attempt_player_move(struct player * p, struct map * map,
                                 int p_newcol, int p_newrow, bool * update_enem)
 {
-    M_SET_PLAYER_POS(p, p_newcol, p_newrow);
+    player_set_pos(p, p_newcol, p_newrow);
     player_deplete_stamina(p);
     *update_enem = true;
 }

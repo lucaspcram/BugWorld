@@ -76,8 +76,10 @@ void play_state_render(void)
     draw_str("[", s_offset, M_SCRHEIGHT - 2, M_MAGENTA);
     for (i = 1; i <= p_stamina * 2; i += 2)
         draw_str("==", s_offset + i, M_SCRHEIGHT - 2, M_MAGENTA);
-    draw_str("]", s_offset + M_MAX_STAMINA * 2 + 1, M_SCRHEIGHT - 2, M_MAGENTA);
-    draw_str(buf, s_offset + M_MAX_STAMINA * 2 + 2, M_SCRHEIGHT - 2, M_MAGENTA);
+    draw_str("]",
+             s_offset + G_PLAYER_MAX_STAM * 2 + 1, M_SCRHEIGHT - 2, M_MAGENTA);
+    draw_str(buf,
+             s_offset + G_PLAYER_MAX_STAM * 2 + 2, M_SCRHEIGHT - 2, M_MAGENTA);
 
     /* Draw the decoy bar */
     draw_str("D:", 0, M_SCRHEIGHT - 1, M_MAGENTA);

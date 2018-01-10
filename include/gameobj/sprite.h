@@ -19,7 +19,7 @@ struct sprite * create_sprite(int col, int row, int width, int height);
 void destroy_sprite(struct sprite * s);
 
 void tick_sprite(struct sprite * s, uint64_t elapsed);
-void render_sprite(struct sprite * s, int color);
+void render_sprite(struct sprite const * s, int color);
 void set_anim_params(struct sprite * s, int anim_state, uint64_t anim_timer, uint64_t timer_reset);
 
 /* see comment in sprite.c for format of 'frames' array */

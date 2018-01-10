@@ -69,7 +69,7 @@ void tick_sprite(struct sprite * s, uint64_t elapsed)
     }
 }
 
-void render_sprite(struct sprite * s, int color)
+void render_sprite(struct sprite const * s, int color)
 {
     int i;
     int j;

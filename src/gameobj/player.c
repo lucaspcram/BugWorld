@@ -33,8 +33,8 @@ struct player * create_player(int col, int row)
     new_player = M_SAFEMALLOC(sizeof(*new_player));
 
     new_player->psprite = create_sprite(col, row, M_PLAYER_WIDTH, M_PLAYER_HEIGHT);
-    new_player->stamina = M_MAX_STAMINA;
-    new_player->decoys = M_MAX_DECOYS;
+    new_player->stamina = G_PLAYER_MAX_STAM;
+    new_player->decoys = G_PLAYER_MAX_DECOY;
     set_anim_params(new_player->psprite, 0, 0, M_ANIM_TIMER);
     set_frames(new_player->psprite, G_FRAMES, G_FRAMES_LEN);
 
@@ -58,7 +58,7 @@ void tick_player(struct player * p, uint64_t elapsed)
     tick_sprite(p->psprite, elapsed);
 }
 
-void render_player(struct player * p)
+void render_player(struct player const * p)
 {
     if (p == NULL)
         return;
@@ -66,7 +66,7 @@ void render_player(struct player * p)
     render_sprite(p->psprite, M_MAGENTA);
 }
 
-struct sprite * player_get_sprite(struct player * p)
+struct sprite * player_get_sprite(struct player const * p)
 {
     if (p == NULL)
         return NULL;
@@ -101,7 +101,7 @@ void player_deplete_stamina(struct player * p)
     p->stamina = p->stamina - 1;
 }
 
-bool player_has_stamina(struct player * p)
+bool player_has_stamina(struct player const * p)
 {
     if (p == NULL)
         return false;
@@ -114,7 +114,7 @@ void player_reset_stamina(struct player * p)
     if (p == NULL)
         return;
 
-    p->stamina = M_MAX_STAMINA;
+    p->stamina = G_PLAYER_MAX_STAM;
 }
 
 void player_inc_stamina(struct player * p)
@@ -122,8 +122,33 @@ void player_inc_stamina(struct player * p)
     if (p == NULL)
         return;
 
-    if (p->stamina >= M_MAX_STAMINA)
+    if (p->stamina >= G_PLAYER_MAX_STAM)
         return;
 
     p->stamina = p->stamina + 1;
+}
+
+int player_get_col(struct player const * p)
+{
+    if (p == NULL)
+        return -1;
+
+    return sprite_col(player_get_sprite(p));
+}
+
+int player_get_row(struct player const * p)
+{
+    if (p == NULL)
+        return -1;
+
+    return sprite_row(player_get_sprite(p));
+}
+
+void player_set_pos(struct player * p, int new_col, int new_row)
+{
+    if (p == NULL)
+        return;
+
+    sprite_set_col(player_get_sprite(p), new_col);
+    sprite_set_row(player_get_sprite(p), new_row);
 }
