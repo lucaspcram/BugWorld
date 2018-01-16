@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 static struct world * g_world = NULL;
+static int player_score = 0;
 
 int play_state_init(void)
 {
@@ -53,6 +54,7 @@ void play_state_handle_input(int input)
     handle_input_world(g_world, input);
 
     if (world_is_complete(g_world)) {
+        player_score += world_getscore(g_world);
         destroy_world(g_world);
         g_world = create_world();
     }
@@ -61,26 +63,31 @@ void play_state_handle_input(int input)
 void play_state_render(void)
 {
     int i;
-    char buf[4];
+    char buf[32];
 
     struct player const * p = get_player(g_world);
     int const p_decoys = player_get_decoys(p);
     int const p_stamina = player_get_stamina(p);
-    int const s_offset = 4;
+    int const s_offset = M_SCRWIDTH - 24;
 
     render_world(g_world);
 
     /* Draw the stamina bar */
     snprintf(buf, sizeof(buf), "%d", p_stamina);
-    draw_str("S:", 0, M_SCRHEIGHT - 2, M_MAGENTA);
-    draw_str("[", s_offset, M_SCRHEIGHT - 2, M_MAGENTA);
+    draw_str("[S]", s_offset - 3, M_SCRHEIGHT - 2, M_MAGENTA);
+    draw_str("|", s_offset, M_SCRHEIGHT - 2, M_MAGENTA);
     for (i = 1; i <= p_stamina * 2; i += 2)
         draw_str("==", s_offset + i, M_SCRHEIGHT - 2, M_MAGENTA);
-    draw_str("]",
+    draw_str("|",
              s_offset + G_PLAYER_MAX_STAM * 2 + 1, M_SCRHEIGHT - 2, M_MAGENTA);
     draw_str(buf,
              s_offset + G_PLAYER_MAX_STAM * 2 + 2, M_SCRHEIGHT - 2, M_MAGENTA);
 
     /* Draw the decoy bar */
-    draw_str("D:", 0, M_SCRHEIGHT - 1, M_MAGENTA);
+    draw_str("[D]", s_offset - 3, M_SCRHEIGHT - 1, M_MAGENTA);
+
+    /* Draw the score */
+    draw_str("Score:", 0, M_SCRHEIGHT - 2, M_MAGENTA);
+    snprintf(buf, sizeof(buf), "%d", player_score);
+    draw_str(buf, 7, M_SCRHEIGHT - 2, M_MAGENTA);
 }

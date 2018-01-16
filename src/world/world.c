@@ -23,10 +23,13 @@ struct world {
     struct map * map;
     struct enemy ** enemies;
     bool world_complete;
+    int score;
 };
 
 static void attempt_player_move(struct player * p, struct map * map,
-                                int p_newcol, int p_newrow, bool * update_enem);
+                                struct world * w,
+                                int p_newcol, int p_newrow,
+                                bool * update_enem);
 
 struct world * create_world(void)
 {
@@ -44,6 +47,7 @@ struct world * create_world(void)
     num_enemies = spawn_enemies(new_world->enemies, new_world->map);
 
     new_world->world_complete = false;
+    new_world->score = 100;
 
     return new_world;
 }
@@ -73,16 +77,20 @@ void handle_input_world(struct world * w, int input)
     p_row = player_get_row(w->player);
 
     if (input == M_ACTION_UP && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, p_col, p_row - 1, &update_enem);
+        attempt_player_move(w->player, w->map, w,
+                            p_col, p_row - 1, &update_enem);
     }
     if (input == M_ACTION_DOWN && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, p_col, p_row + 1, &update_enem);
+        attempt_player_move(w->player, w->map, w,
+                            p_col, p_row + 1, &update_enem);
     }
     if (input == M_ACTION_LEFT && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, p_col - 1, p_row, &update_enem);
+        attempt_player_move(w->player, w->map, w,
+                            p_col - 1, p_row, &update_enem);
     }
     if (input == M_ACTION_RIGHT && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, p_col + 1, p_row, &update_enem);
+        attempt_player_move(w->player, w->map, w,
+                            p_col + 1, p_row, &update_enem);
     }
     if (input == M_ACTION_REST) {
         player_inc_stamina(w->player);
@@ -115,7 +123,9 @@ void handle_input_world(struct world * w, int input)
 }
 
 static void attempt_player_move(struct player * p, struct map * map,
-                                int p_newcol, int p_newrow, bool * update_enem)
+                                struct world * w,
+                                int p_newcol, int p_newrow,
+                                bool * update_enem)
 {
     int m_maxcol;
     int m_maxrow;
@@ -134,6 +144,8 @@ static void attempt_player_move(struct player * p, struct map * map,
                            E_MOUND))
     {
         player_set_pos(p, p_newcol, p_newrow);
+        if (w->score > 0)
+            w->score -= 1;
     }
     player_deplete_stamina(p);
     *update_enem = true;
@@ -173,4 +185,12 @@ bool world_is_complete(struct world const * w)
         return false;
 
     return w->world_complete;
+}
+
+int world_getscore(struct world const * w)
+{
+    if (w == NULL)
+        return 0;
+
+    return w->score;
 }

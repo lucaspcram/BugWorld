@@ -2,7 +2,9 @@ TODO LIST FOR BUGWORLD
 ______________________
 
 + the play state
-	- code the individual game components/logic (player, ants, water, etc)
+	- implement player lives/death
+	- implement decoys
+	- implement score system
 	- tweak map generation as we go (Perlin params)
 	- figure out how to decouple sprite animations across the map
 
