@@ -24,6 +24,7 @@ void render_world(struct world const * w);
 struct player * get_player(struct world const * w);
 
 bool world_is_complete(struct world const * w);
+bool world_is_playerdead(struct world const * w);
 int world_getscore(struct world const * w);
 
 #endif

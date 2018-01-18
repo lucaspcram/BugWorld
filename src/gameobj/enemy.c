@@ -63,6 +63,30 @@ void render_enemy(struct enemy * e)
     render_sprite(e->esprite, M_RED);
 }
 
+struct sprite * enemy_get_sprite(struct enemy const * e)
+{
+    if (e == NULL)
+        return NULL;
+
+    return e->esprite;
+}
+
+int enemy_get_col(struct enemy const * e)
+{
+    if (e == NULL)
+        return -1;
+
+    return sprite_col(enemy_get_sprite(e));
+}
+
+int enemy_get_row(struct enemy const * e)
+{
+    if (e == NULL)
+        return -1;
+
+    return sprite_row(enemy_get_sprite(e));
+}
+
 void act_enemy(struct enemy * e, struct map const * m, int pl_c, int pl_r)
 {
     /* Cardinal directions for enemy movement */
@@ -87,6 +111,10 @@ void act_enemy(struct enemy * e, struct map const * m, int pl_c, int pl_r)
 
     enem_c = sprite_col(e->esprite);
     enem_r = sprite_row(e->esprite);
+
+    /* If player is on top of enemy, don't move */
+    if (enem_c == pl_c && enem_r == pl_r)
+        return;
 
     /*
     Calculate vector values for the 8 possible moves each enemy can

@@ -16,13 +16,14 @@
 /* oversize for safety */
 #define M_ENEMIES_SIZE (32)
 
-static int num_enemies = 0;
+static int g_num_enemies = 0;
 
 struct world {
     struct player * player;
     struct map * map;
     struct enemy ** enemies;
     bool world_complete;
+    bool player_dead;
     int score;
 };
 
@@ -44,9 +45,10 @@ struct world * create_world(void)
     spawn_goal(new_world->map);
     spawn_mounds(new_world->map);
     new_world->enemies = M_SAFEMALLOC(M_ENEMIES_SIZE * sizeof(struct enemy *));
-    num_enemies = spawn_enemies(new_world->enemies, new_world->map);
+    g_num_enemies = spawn_enemies(new_world->enemies, new_world->map);
 
     new_world->world_complete = false;
+    new_world->player_dead = false;
     new_world->score = 100;
 
     return new_world;
@@ -59,13 +61,14 @@ void destroy_world(struct world * w)
 
     destroy_player(w->player);
     destroy_map(w->map);
-    M_FOR_ALL_ELEMENTS(w->enemies, num_enemies, destroy_enemy);
+    M_FOR_ALL_ELEMENTS(w->enemies, g_num_enemies, destroy_enemy);
     free(w->enemies);
     free(w);
 }
 
 void handle_input_world(struct world * w, int input)
 {
+    int i;
     int p_col;
     int p_row;
     bool update_enem = false;
@@ -97,28 +100,28 @@ void handle_input_world(struct world * w, int input)
         update_enem = true;
     }
 
+    p_col = player_get_col(w->player);
+    p_row = player_get_row(w->player);
+
     if (update_enem) {
-        M_FOR_ALL_ELEMENTS_EXT(w->enemies, num_enemies,
+        M_FOR_ALL_ELEMENTS_EXT(w->enemies, g_num_enemies,
                                act_enemy, w->map,
-                               player_get_col(w->player),
-                               player_get_row(w->player));
+                               p_col, p_row);
         update_enem = false;
     }
 
-    if (map_point_hastype(w->map,
-                          player_get_col(w->player),
-                          player_get_row(w->player),
-                          E_GRASS))
-    {
+    if (map_point_hastype(w->map, p_col, p_row, E_GRASS))
         player_reset_stamina(w->player);
-    }
 
-    if (map_point_hastype(w->map,
-                          player_get_col(w->player),
-                          player_get_row(w->player),
-                          E_GOAL))
-    {
+    if (map_point_hastype(w->map, p_col, p_row, E_GOAL))
         w->world_complete = true;
+
+    for (i = 0; i < g_num_enemies; i++) {
+        if (enemy_get_col(w->enemies[i]) == p_col
+            && enemy_get_row(w->enemies[i]) == p_row)
+        {
+            w->player_dead = true;
+        }
     }
 }
 
@@ -158,7 +161,7 @@ void tick_world(struct world * w, uint64_t elapsed)
 
     tick_player(w->player, elapsed);
     tick_map(w->map, elapsed);
-    M_FOR_ALL_ELEMENTS_EXT(w->enemies, num_enemies, tick_enemy, elapsed);
+    M_FOR_ALL_ELEMENTS_EXT(w->enemies, g_num_enemies, tick_enemy, elapsed);
 }
 
 void render_world(struct world const * w)
@@ -168,7 +171,7 @@ void render_world(struct world const * w)
 
     render_map(w->map);
     render_player(w->player);
-    M_FOR_ALL_ELEMENTS(w->enemies, num_enemies, render_enemy);
+    M_FOR_ALL_ELEMENTS(w->enemies, g_num_enemies, render_enemy);
 }
 
 struct player * get_player(struct world const * w)
@@ -185,6 +188,14 @@ bool world_is_complete(struct world const * w)
         return false;
 
     return w->world_complete;
+}
+
+bool world_is_playerdead(struct world const * w)
+{
+    if (w == NULL)
+        return false;
+
+    return w->player_dead;
 }
 
 int world_getscore(struct world const * w)

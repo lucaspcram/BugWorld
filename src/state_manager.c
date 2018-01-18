@@ -4,6 +4,9 @@
 #include "pthread.h"
 #include "states/menu_state.h"
 #include "states/play_state.h"
+#include "states/dead_state.h"
+#include "states/goal_state.h"
+#include "states/over_state.h"
 #include "states/state_codes.h"
 #include "view.h"
 
@@ -36,6 +39,9 @@ void init_state_manager(void)
 
     M_INIT_STATE(MENU, menu);
     M_INIT_STATE(PLAY, play);
+    M_INIT_STATE(DEAD, dead);
+    M_INIT_STATE(GOAL, goal);
+    M_INIT_STATE(OVER, over);
 
     g_cur_state = M_STATE_MENU;
     g_state_tab[g_cur_state].init();

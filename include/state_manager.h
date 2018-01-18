@@ -4,6 +4,11 @@
 /*
  * The state manager suite. Interfaces the main game code
  * with the actual state code.
+ *
+ * NOTE This implementation has a design deficiency in that
+ * it has no mechanism for information transfer between game states.
+ * This would be a nice improvement and eliminate the need for a global
+ * score variable.
  */
 
 #include <stdbool.h>

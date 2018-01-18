@@ -12,10 +12,12 @@ struct player {
     struct sprite * psprite;
     int stamina;
     int decoys;
+    int lives;
 };
 
 int const G_PLAYER_MAX_STAM = 10;
 int const G_PLAYER_MAX_DECOY = 3;
+int const G_PLAYER_MAX_LIVES = 3;
 
 /* Anim params */
 /***************/

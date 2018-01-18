@@ -2,9 +2,8 @@ TODO LIST FOR BUGWORLD
 ______________________
 
 + the play state
-	- implement player lives/death
 	- implement decoys
-	- implement score system
+	- tweak score system
 	- tweak map generation as we go (Perlin params)
 	- figure out how to decouple sprite animations across the map
 
@@ -15,6 +14,10 @@ ______________________
 + the help state
 	- best way to explain the game/controls?
 	- good UX?
+
++ the transition states
+	- implement nice graphics for these
+	- implement score dumping after game over
 
 + misc. refactoring and cleanup
 	- defensive/DRY design
