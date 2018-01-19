@@ -16,6 +16,8 @@
 /* oversize for safety */
 #define M_ENEMIES_SIZE (32)
 
+static int const G_STARTING_SCORE = 500;
+
 static int g_num_enemies = 0;
 
 struct world {
@@ -49,7 +51,7 @@ struct world * create_world(void)
 
     new_world->world_complete = false;
     new_world->player_dead = false;
-    new_world->score = 100;
+    new_world->score = G_STARTING_SCORE;
 
     return new_world;
 }
