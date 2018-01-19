@@ -24,6 +24,37 @@ static int g_player_lives;
 static uint64_t g_anim_timer = 0;
 static bool g_anim_frame = false;
 
+static bool g_boss_mode = false;
+
+/* Define boss mode stuff */
+static void render_bossmode(void);
+static char const * G_BOSS_TEXT[] =
+{
+"entym@localhost:~/dev_env$ cat hackermann.c",
+"",
+"#include <stdio.h>",
+"#include <stdlib.h>",
+"",
+"long ack(long x, long y)",
+"{",
+"    if (x == 0) return y + 1;",
+"    if (y == 0) return ack(x-1, 1);",
+"    return ack(x-1, ack(x, y-1));",
+"}",
+"",
+"int main(int argc, char * argv[])",
+"{",
+"    if (argc == 3) {",
+"        long x = atol(argv[1]);",
+"        long y = atol(argv[2]);",
+"        printf(\"ack(%%lf, %%lf) = %%lf\\n\", x, y, ack(x, y));",
+"    }",
+"}",
+"",
+"entym@localhost:~/dev_env$"
+};
+static int const G_BOSS_LEN = 22;
+
 int play_state_init(void)
 {
     if (g_world == NULL)
@@ -65,9 +96,17 @@ void play_state_handle_input(int input)
     if (input == M_MENU_QUIT)
         force_exit();
 
+    if (input == M_PANIC_BOSS) {
+        g_boss_mode = !g_boss_mode;
+        return;
+    }
+
     handle_input_world(g_world, input);
 
     if (world_is_complete(g_world)) {
+        pthread_mutex_unlock(&g_ncurses_mut);
+        sleep(1);
+        pthread_mutex_lock(&g_ncurses_mut);
         g_player_score += world_getscore(g_world);
         init_state(M_STATE_GOAL);
         destroy_world(g_world);
@@ -105,6 +144,11 @@ void play_state_render(void)
     int const p_stamina = player_get_stamina(p);
     int const s_offset = M_SCRWIDTH - 24;
 
+    if (g_boss_mode) {
+        render_bossmode();
+        return;
+    }
+
     render_world(g_world);
 
     /* Draw the stamina bar */
@@ -136,5 +180,14 @@ void play_state_render(void)
         for (i = 0; i < g_player_lives; i++) {
             draw_str("x", 8 + i, M_SCRHEIGHT - 1, M_MAGENTA);
         }
+    }
+}
+
+static void render_bossmode(void)
+{
+    int i;
+
+    for (i = 0; i < G_BOSS_LEN; i++) {
+        draw_str(G_BOSS_TEXT[i], 0, 1 + i, M_WHITE);
     }
 }

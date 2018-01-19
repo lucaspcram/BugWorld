@@ -19,5 +19,8 @@
 #define M_ACTION_LEFT ('a')
 #define M_ACTION_RIGHT ('d')
 #define M_ACTION_REST ('e')
+#define M_ACTION_DECOY ('f')
+
+#define M_PANIC_BOSS ('b')
 
 #endif

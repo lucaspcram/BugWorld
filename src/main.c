@@ -77,7 +77,7 @@ void display_help(char * progname)
     printf("An animated ncurses based puzzle game.\n\n");
     printf("The following options can be used.\n");
     printf("  -f, --fps=FPS           Specify the FPS at which to run. Try setting to different\n");
-    printf("                          values if excessive flickering occurs. Defaults to 30.\n");
+    printf("                          values if excessive flickering occurs. Defaults to 10.\n");
     printf("                          Valid settings range is [5, 60].\n\n");
     printf("  -h, --help              Display this help message and exit.\n\n");
     printf("  -v, --version           Display the version and exit.\n");

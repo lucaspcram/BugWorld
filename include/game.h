@@ -6,7 +6,7 @@
  * updates, initializes the game, etc.
  */
 
-#define M_DEFAULT_FPS (30)
+#define M_DEFAULT_FPS (10)
 
 extern int g_fps;
 
