@@ -98,8 +98,10 @@ void handle_input_world(struct world * w, int input)
                             p_col + 1, p_row, &update_enem);
     }
     if (input == M_ACTION_REST) {
-        player_inc_stamina(w->player);
-        update_enem = true;
+        if (!map_point_hastype(w->map, p_col, p_row, E_WATER)) {
+            player_inc_stamina(w->player);
+            update_enem = true;
+        }
     }
 
     p_col = player_get_col(w->player);
@@ -115,13 +117,17 @@ void handle_input_world(struct world * w, int input)
     if (map_point_hastype(w->map, p_col, p_row, E_GRASS))
         player_reset_stamina(w->player);
 
+    if (map_point_hastype(w->map, p_col, p_row, E_WATER)
+        && !player_has_stamina(w->player)) {
+        w->player_dead = true;
+    }
+
     if (map_point_hastype(w->map, p_col, p_row, E_GOAL))
         w->world_complete = true;
 
     for (i = 0; i < g_num_enemies; i++) {
         if (enemy_get_col(w->enemies[i]) == p_col
-            && enemy_get_row(w->enemies[i]) == p_row)
-        {
+            && enemy_get_row(w->enemies[i]) == p_row) {
             w->player_dead = true;
         }
     }
