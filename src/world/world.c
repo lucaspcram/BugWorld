@@ -29,8 +29,9 @@ struct world {
     int score;
 };
 
-static void attempt_player_move(struct player * p, struct map * map,
-                                struct world * w,
+static void update_world(struct world * w, bool update_enem);
+
+static void attempt_player_move(struct player * p, struct world * w,
                                 int p_newcol, int p_newrow,
                                 bool * update_enem);
 
@@ -70,7 +71,6 @@ void destroy_world(struct world * w)
 
 void handle_input_world(struct world * w, int input)
 {
-    int i;
     int p_col;
     int p_row;
     bool update_enem = false;
@@ -82,19 +82,19 @@ void handle_input_world(struct world * w, int input)
     p_row = player_get_row(w->player);
 
     if (input == M_ACTION_UP && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, w,
+        attempt_player_move(w->player, w,
                             p_col, p_row - 1, &update_enem);
     }
     if (input == M_ACTION_DOWN && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, w,
+        attempt_player_move(w->player, w,
                             p_col, p_row + 1, &update_enem);
     }
     if (input == M_ACTION_LEFT && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, w,
+        attempt_player_move(w->player, w,
                             p_col - 1, p_row, &update_enem);
     }
     if (input == M_ACTION_RIGHT && player_has_stamina(w->player)) {
-        attempt_player_move(w->player, w->map, w,
+        attempt_player_move(w->player, w,
                             p_col + 1, p_row, &update_enem);
     }
     if (input == M_ACTION_REST) {
@@ -104,6 +104,15 @@ void handle_input_world(struct world * w, int input)
         }
     }
 
+    update_world(w, update_enem);
+}
+
+static void update_world(struct world * w, bool update_enem)
+{
+    int i;
+    int p_col;
+    int p_row;
+
     p_col = player_get_col(w->player);
     p_row = player_get_row(w->player);
 
@@ -111,7 +120,6 @@ void handle_input_world(struct world * w, int input)
         M_FOR_ALL_ELEMENTS_EXT(w->enemies, g_num_enemies,
                                act_enemy, w->map,
                                p_col, p_row);
-        update_enem = false;
     }
 
     if (map_point_hastype(w->map, p_col, p_row, E_GRASS))
@@ -133,23 +141,22 @@ void handle_input_world(struct world * w, int input)
     }
 }
 
-static void attempt_player_move(struct player * p, struct map * map,
-                                struct world * w,
+static void attempt_player_move(struct player * p, struct world * w,
                                 int p_newcol, int p_newrow,
                                 bool * update_enem)
 {
     int m_maxcol;
     int m_maxrow;
 
-    m_maxcol = map_cols(map);
-    m_maxrow = map_rows(map);
+    m_maxcol = map_cols(w->map);
+    m_maxrow = map_rows(w->map);
 
     if (p_newcol < 0 || p_newcol >= m_maxcol)
         return;
     if (p_newrow < 0 || p_newrow >= m_maxrow)
         return;
 
-    if (!map_point_hastype(map,
+    if (!map_point_hastype(w->map,
                            p_newcol,
                            p_newrow,
                            E_MOUND))

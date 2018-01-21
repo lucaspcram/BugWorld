@@ -49,11 +49,12 @@ static char const * G_BOSS_TEXT[] =
 "        long y = atol(argv[2]);",
 "        printf(\"ack(%%lf, %%lf) = %%lf\\n\", x, y, ack(x, y));",
 "    }",
+"    return 0;",
 "}",
 "",
 "entom@localhost:~/dev_env$"
 };
-static int const G_BOSS_LEN = 22;
+static int const G_BOSS_LEN = 23;
 
 int play_state_init(void)
 {
