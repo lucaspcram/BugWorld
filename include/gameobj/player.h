@@ -30,6 +30,13 @@ bool player_has_stamina(struct player const * p);
 void player_reset_stamina(struct player * p);
 void player_inc_stamina(struct player * p);
 
+void player_deploy_decoy(struct player * p);
+bool player_has_decoy(struct player const * p);
+void player_reset_decoy(struct player * p);
+void player_inc_decoy(struct player * p);
+bool player_decoy_deployed(struct player const * p);
+void player_update_decoy(struct player * p);
+
 int player_get_col(struct player const * p);
 int player_get_row(struct player const * p);
 void player_set_pos(struct player * p, int new_col, int new_row);
