@@ -2,9 +2,9 @@ TODO LIST FOR BUGWORLD
 ______________________
 
 + the play state
-	- implement decoys
 	- tweak score system
-	- tweak map generation as we go (Perlin params)
+	- tweak map generation (Perlin params)
+	- test the gameplay for misc. tweaks/debugs
 	- figure out how to decouple sprite animations across the map
 
 + the scores state
