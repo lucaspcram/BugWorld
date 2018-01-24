@@ -103,6 +103,9 @@ void handle_input_world(struct world * w, int input)
             update_enem = true;
         }
     }
+    if (input == M_ACTION_DECOY) {
+        player_deploy_decoy(w->player);
+    }
 
     update_world(w, update_enem);
 }
@@ -112,15 +115,27 @@ static void update_world(struct world * w, bool update_enem)
     int i;
     int p_col;
     int p_row;
+    int d_col;
+    int d_row;
 
     p_col = player_get_col(w->player);
     p_row = player_get_row(w->player);
+    d_col = player_get_deccol(w->player);
+    d_row = player_get_decrow(w->player);
 
     if (update_enem) {
-        M_FOR_ALL_ELEMENTS_EXT(w->enemies, g_num_enemies,
-                               act_enemy, w->map,
-                               p_col, p_row);
+        if (player_decoy_deployed(w->player)) {
+            M_FOR_ALL_ELEMENTS_EXT(w->enemies, g_num_enemies,
+                                   act_enemy, w->map,
+                                   d_col, d_row);
+        } else {
+            M_FOR_ALL_ELEMENTS_EXT(w->enemies, g_num_enemies,
+                                   act_enemy, w->map,
+                                   p_col, p_row);
+        }
     }
+
+    player_update_decoy(w->player);
 
     if (map_point_hastype(w->map, p_col, p_row, E_GRASS))
         player_reset_stamina(w->player);
@@ -130,8 +145,11 @@ static void update_world(struct world * w, bool update_enem)
         w->player_dead = true;
     }
 
-    if (map_point_hastype(w->map, p_col, p_row, E_GOAL))
+    if (map_point_hastype(w->map, p_col, p_row, E_GOAL)) {
+        if (!player_has_decoy(w->player))
+            w->score = 0;
         w->world_complete = true;
+    }
 
     for (i = 0; i < g_num_enemies; i++) {
         if (enemy_get_col(w->enemies[i]) == p_col

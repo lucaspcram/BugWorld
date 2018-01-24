@@ -30,6 +30,16 @@ void destroy_graphics(void)
     endwin();
 }
 
+void view_boss_mode_on(void)
+{
+    curs_set(1);
+}
+
+void view_boss_mode_off(void)
+{
+    curs_set(0);
+}
+
 void draw(char ch, int col, int row, int color)
 {
     char buf[2];

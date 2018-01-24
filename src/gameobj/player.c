@@ -18,9 +18,8 @@ struct player {
 };
 
 int const G_PLAYER_MAX_STAM = 10;
-int const G_PLAYER_MAX_DECOY = 3;
-int const G_PLAYER_MAX_LIVES = 3;
-int const G_PLAYER_MAX_DECOYHP = 10;
+int const G_PLAYER_MAX_DECOY = 2;
+int const G_PLAYER_MAX_DECOYHP = 21;
 
 /* Anim params */
 /***************/
@@ -52,8 +51,11 @@ struct player * create_player(int col, int row)
     new_player->stamina = G_PLAYER_MAX_STAM;
     new_player->decoys = G_PLAYER_MAX_DECOY;
     new_player->decoy_hp = 0;
+
     set_anim_params(new_player->psprite, 0, 0, G_ANIM_TIMER);
     set_frames(new_player->psprite, G_FRAMES, G_FRAMES_LEN);
+    set_anim_params(new_player->dsprite, 0, 0, G_ANIM_TIMER);
+    set_frames(new_player->dsprite, G_FRAMESDEC, G_FRAMESDEC_LEN);
 
     return new_player;
 }
@@ -74,6 +76,7 @@ void tick_player(struct player * p, uint64_t elapsed)
         return;
 
     tick_sprite(p->psprite, elapsed);
+    tick_sprite(p->dsprite, elapsed);
 }
 
 void render_player(struct player const * p)
@@ -82,6 +85,8 @@ void render_player(struct player const * p)
         return;
 
     render_sprite(p->psprite, M_MAGENTA);
+    if (p->decoy_hp > 0)
+        render_sprite(p->dsprite, M_MAGENTA);
 }
 
 struct sprite * player_get_sprite(struct player const * p)
@@ -217,7 +222,8 @@ void player_update_decoy(struct player * p)
     if (p == NULL)
         return;
 
-    
+    if (p->decoy_hp > 0)
+        p->decoy_hp -= 1;
 }
 
 int player_get_col(struct player const * p)
@@ -225,7 +231,7 @@ int player_get_col(struct player const * p)
     if (p == NULL)
         return -1;
 
-    return sprite_col(player_get_sprite(p));
+    return sprite_col(p->psprite);
 }
 
 int player_get_row(struct player const * p)
@@ -233,7 +239,23 @@ int player_get_row(struct player const * p)
     if (p == NULL)
         return -1;
 
-    return sprite_row(player_get_sprite(p));
+    return sprite_row(p->psprite);
+}
+
+int player_get_deccol(struct player const * p)
+{
+    if (p == NULL)
+        return -1;
+
+    return sprite_col(p->dsprite);
+}
+
+int player_get_decrow(struct player const * p)
+{
+    if (p == NULL)
+        return -1;
+
+    return sprite_row(p->dsprite);
 }
 
 void player_set_pos(struct player * p, int new_col, int new_row)

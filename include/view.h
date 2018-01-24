@@ -21,6 +21,8 @@
 
 void init_graphics(void);
 void destroy_graphics(void);
+void view_boss_mode_on(void);
+void view_boss_mode_off(void);
 void draw(char ch, int col, int row, int color);
 void draw_str(char const * str, int col, int row, int color);
 void refresh_view(void);

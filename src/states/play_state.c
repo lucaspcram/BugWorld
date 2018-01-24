@@ -26,7 +26,10 @@ static bool g_anim_frame = false;
 
 static bool g_boss_mode = false;
 
-/* Define boss mode stuff */
+/*
+Define boss mode stuff
+NOTE this is a silly feature
+*/
 static void render_bossmode(void);
 static char const * G_BOSS_TEXT[] =
 {
@@ -99,6 +102,10 @@ void play_state_handle_input(int input)
 
     if (input == M_PANIC_BOSS) {
         g_boss_mode = !g_boss_mode;
+        if (g_boss_mode)
+            view_boss_mode_on();
+        else
+            view_boss_mode_off();
         return;
     }
 
@@ -164,7 +171,16 @@ void play_state_render(void)
              s_offset + G_PLAYER_MAX_STAM * 2 + 2, M_SCRHEIGHT - 2, M_MAGENTA);
 
     /* Draw the decoy bar */
+    snprintf(buf, sizeof(buf), "%d", p_decoys);
     draw_str("[D]", s_offset - 3, M_SCRHEIGHT - 1, M_MAGENTA);
+    draw_str("|", s_offset, M_SCRHEIGHT - 1, M_MAGENTA);
+    for (i = 0; i < p_decoys; i++) {
+        draw_str("#", s_offset + 1 + i, M_SCRHEIGHT - 1, M_MAGENTA);
+    }
+    draw_str("|",
+             s_offset + G_PLAYER_MAX_DECOY + 1, M_SCRHEIGHT - 1, M_MAGENTA);
+    draw_str(buf,
+             s_offset + G_PLAYER_MAX_DECOY + 2, M_SCRHEIGHT - 1, M_MAGENTA);
 
     /* Draw the score */
     draw_str("[Score]", 0, M_SCRHEIGHT - 2, M_MAGENTA);
