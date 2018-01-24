@@ -39,6 +39,7 @@ struct sprite * create_sprite(int col, int row, int width, int height)
     new_sprite->timer_reset = DEFAULT_TIMER_RESET;
 
     new_sprite->frames = NULL;
+    new_sprite->frames_len = 0;
 
     return new_sprite;
 }

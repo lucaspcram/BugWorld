@@ -64,6 +64,7 @@ void destroy_player(struct player * p)
         return;
 
     destroy_sprite(p->psprite);
+    destroy_sprite(p->dsprite);
     free(p);
 }
 
