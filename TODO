@@ -16,7 +16,6 @@ ______________________
 	- good UX?
 
 + the transition states
-	- implement nice graphics for these
 	- implement score dumping after game over
 
 + misc. refactoring and cleanup
