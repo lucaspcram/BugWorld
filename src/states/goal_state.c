@@ -1,5 +1,6 @@
 #include "states/goal_state.h"
 
+#include "common.h"
 #include "key_bindings.h"
 #include "states/state_codes.h"
 #include "view.h"
