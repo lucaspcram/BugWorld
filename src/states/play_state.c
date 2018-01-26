@@ -208,3 +208,8 @@ static void render_bossmode(void)
         draw_str(G_BOSS_TEXT[i], 0, 1 + i, M_WHITE);
     }
 }
+
+void play_state_recv_msg(void * msg)
+{
+    
+}

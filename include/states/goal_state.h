@@ -14,5 +14,6 @@ int goal_state_resume(void);
 void goal_state_tick(uint64_t elapsed);
 void goal_state_handle_input(int input);
 void goal_state_render(void);
+void goal_state_recv_msg(void * msg);
 
 #endif

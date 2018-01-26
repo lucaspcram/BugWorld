@@ -14,5 +14,6 @@ int play_state_resume(void);
 void play_state_tick(uint64_t elapsed);
 void play_state_handle_input(int input);
 void play_state_render(void);
+void play_state_recv_msg(void * msg);
 
 #endif

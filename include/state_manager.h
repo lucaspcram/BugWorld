@@ -27,6 +27,9 @@ struct state {
     void (*tick)(uint64_t elapsed);
     void (*handle_input)(int);
     void (*render)(void);
+
+    /* RECV function */
+    void (*recv_msg)(void *);
 };
 
 void init_state_manager(void);

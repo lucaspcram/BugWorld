@@ -93,3 +93,8 @@ void goal_state_render(void)
             (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1,
              M_CYAN);
 }
+
+void goal_state_recv_msg(void * msg)
+{
+    
+}

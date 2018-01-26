@@ -14,5 +14,6 @@ int over_state_resume(void);
 void over_state_tick(uint64_t elapsed);
 void over_state_handle_input(int input);
 void over_state_render(void);
+void over_state_recv_msg(void * msg);
 
 #endif

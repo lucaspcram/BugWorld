@@ -14,5 +14,6 @@ int menu_state_resume(void);
 void menu_state_tick(uint64_t elapsed);
 void menu_state_handle_input(int input);
 void menu_state_render(void);
+void menu_state_recv_msg(void * msg);
 
 #endif

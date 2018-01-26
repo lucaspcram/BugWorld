@@ -25,5 +25,6 @@
 void init_state(int code);
 void resume_state(int code);
 void force_exit(void);
+void send_msg(int code, void * msg);
 
 #endif

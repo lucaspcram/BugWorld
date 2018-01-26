@@ -14,5 +14,6 @@ int dead_state_resume(void);
 void dead_state_tick(uint64_t elapsed);
 void dead_state_handle_input(int input);
 void dead_state_render(void);
+void dead_state_recv_msg(void * msg);
 
 #endif

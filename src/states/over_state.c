@@ -134,3 +134,8 @@ void over_state_render(void)
             (M_SCRWIDTH / 2) - (hint_len2 / 2), M_SCRHEIGHT - 1,
              M_CYAN);
 }
+
+void over_state_recv_msg(void * msg)
+{
+    
+}

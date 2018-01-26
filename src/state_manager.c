@@ -23,6 +23,7 @@ g_state_tab[M_STATE_ ## ST].resume = &st ## _state_resume;             \
 g_state_tab[M_STATE_ ## ST].tick = &st ## _state_tick;                 \
 g_state_tab[M_STATE_ ## ST].handle_input = &st ## _state_handle_input; \
 g_state_tab[M_STATE_ ## ST].render = &st ## _state_render;             \
+g_state_tab[M_STATE_ ## ST].recv_msg = &st ## _state_recv_msg;         \
 } while(0)
 
 /* index into the state table */
@@ -97,5 +98,14 @@ void resume_state(int code)
 void force_exit(void)
 {
     exit_flag = true;
+}
+
+/*
+ * Calls the recv_msg callback associated with the
+ * given state code.
+ */
+void send_msg(int code, void * msg)
+{
+    g_state_tab[code].recv_msg(msg);
 }
 /******END SECTION******/

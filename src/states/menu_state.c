@@ -222,3 +222,8 @@ static void draw_menu_option(char const ** menu,
         draw_str(menu[2], col_offset, row_offset + 2, color);
     }
 }
+
+void menu_state_recv_msg(void * msg)
+{
+    
+}
