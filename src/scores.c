@@ -12,6 +12,7 @@ static char const * G_SCOREFILE = ".bugworldscore";
 
 /*
  * Attempts to create the scorefile in the user's home directory.
+ * If the file exists, exits without modifying it.
  * Returns the path to the file on success.
  */
 char * create_scorefile(void)
@@ -30,7 +31,7 @@ char * create_scorefile(void)
     homedir = getenv("home");
     if (homedir == NULL)
         homedir = getpwuid(getuid())->pw_dir;
-    
+
     len_homedir = strlen(homedir);
     len_scorefile = strlen(G_SCOREFILE);
     /* the +1 is to account for extra '/' between homedir and scorefile */
@@ -112,8 +113,39 @@ struct score ** read_scorefile(char * scorepath)
 
     *tmp = NULL;
     fclose(file);
-    
+
     return scores;
+}
+
+/*
+ * Given a NULL terminated array of score struct pointers, add
+ * the given score to the end of the array.
+ */
+struct score ** add_score(struct score ** scores, struct score * newscore)
+{
+    size_t len;
+    size_t new_len;
+    struct score ** new_scores;
+    int i;
+
+    if (scores == NULL || newscore == NULL)
+        return NULL;
+
+    len = len_scorelist(scores);
+    new_len = len + 1;
+
+    new_scores = M_SAFEMALLOC(sizeof(*new_scores) * (new_len + 1));
+
+    i = 0;
+    while (i < len) {
+        new_scores[i] = scores[i];
+        i++;
+    }
+    new_scores[i++] = newscore;
+    new_scores[i] = NULL;
+    free(scores);
+
+    return new_scores;
 }
 
 void free_scorelist(struct score ** scores)
@@ -160,11 +192,16 @@ int compare_score(void const * a, void const * b)
 {
     struct score * score_a;
     struct score * score_b;
+    int diff;
 
     score_a = *(struct score **) a;
     score_b = *(struct score **) b;
 
-    return score_b->levels_cleared - score_a->levels_cleared;
+    diff = score_b->score - score_a->score;
+    if (diff == 0)
+        return score_b->levels_cleared - score_a->levels_cleared;
+    else
+        return diff;
 }
 
 /*

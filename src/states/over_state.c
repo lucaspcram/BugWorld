@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "key_bindings.h"
+#include "scores.h"
 #include "states/state_codes.h"
 #include "view.h"
 
@@ -64,6 +65,10 @@ static int const G_MS_UPDATETIMER = 500;
 static int g_anim_timer;
 static int g_anim_state;
 
+static struct score * g_score = NULL;
+
+static void save_score(void);
+
 int over_state_init(void)
 {
     return 0;
@@ -96,7 +101,7 @@ void over_state_tick(uint64_t elapsed)
 void over_state_handle_input(int input)
 {
     if (input == M_MENU_SELECT) {
-        /* TODO save score here*/
+        save_score();
         force_exit();
     }
 
@@ -137,5 +142,17 @@ void over_state_render(void)
 
 void over_state_recv_msg(void * msg)
 {
-    
+    g_score = (struct score *) msg;
+}
+
+static void save_score(void)
+{
+    char * path;
+    struct score ** scores;
+
+    path = create_scorefile();
+    scores = read_scorefile(path);
+    scores = add_score(scores, g_score);
+    write_scorefile(scores, path);
+    free_scorelist(scores);
 }

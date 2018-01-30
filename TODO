@@ -15,9 +15,6 @@ ______________________
 	- best way to explain the game/controls?
 	- good UX?
 
-+ the transition states
-	- implement score dumping after game over
-
 + misc. refactoring and cleanup
 	- defensive/DRY design
 	- 80 column soft limit

@@ -4,6 +4,7 @@
 #include "gameobj/player.h"
 #include "gameobj/sprite.h"
 #include "key_bindings.h"
+#include "scores.h"
 #include "states/state_codes.h"
 #include "view.h"
 #include "world/world.h"
@@ -14,10 +15,11 @@
 #include <unistd.h>
 
 static int const G_PLAYER_STARTING_SCORE = 0;
-static int const G_PLAYER_STARTING_LIVES = 3;
+static int const G_PLAYER_STARTING_LIVES = 1;
 static uint64_t const G_FRAME_TIME_NSEC = 500000000;
 
 static struct world * g_world = NULL;
+static int g_player_levelscompl;
 static int g_player_score;
 static int g_player_lives;
 
@@ -25,6 +27,8 @@ static uint64_t g_anim_timer = 0;
 static bool g_anim_frame = false;
 
 static bool g_boss_mode = false;
+
+static struct score * g_score;
 
 /*
 Define boss mode stuff
@@ -55,7 +59,7 @@ static char const * G_BOSS_TEXT[] =
 "    return 0;",
 "}",
 "",
-"entom@localhost:~/dev_env$"
+"entom@localhost:~/dev_env$ "
 };
 static int const G_BOSS_LEN = 23;
 
@@ -65,6 +69,9 @@ int play_state_init(void)
         g_world = create_world();
     g_player_score = G_PLAYER_STARTING_SCORE;
     g_player_lives = G_PLAYER_STARTING_LIVES;
+    g_player_levelscompl = 0;
+
+    g_score = M_SAFEMALLOC(sizeof(*g_score));
 
     return 0;
 }
@@ -112,10 +119,13 @@ void play_state_handle_input(int input)
     handle_input_world(g_world, input);
 
     if (world_is_complete(g_world)) {
+        /* Sleep the input thread to make a nice transition animation */
         pthread_mutex_unlock(&g_ncurses_mut);
         sleep(1);
         pthread_mutex_lock(&g_ncurses_mut);
+
         g_player_score += world_getscore(g_world);
+        g_player_levelscompl += 1;
         init_state(M_STATE_GOAL);
         destroy_world(g_world);
         g_world = create_world();
@@ -127,7 +137,9 @@ void play_state_handle_input(int input)
         pthread_mutex_lock(&g_ncurses_mut);
         g_player_lives -= 1;
         if (g_player_lives == 0) {
-            /* TODO game over screen, save high score */
+            g_score->score = g_player_score;
+            g_score->levels_cleared = g_player_levelscompl;
+            send_msg(M_STATE_OVER, (void *) g_score);
             init_state(M_STATE_OVER);
         } else {
             init_state(M_STATE_DEAD);
@@ -211,5 +223,5 @@ static void render_bossmode(void)
 
 void play_state_recv_msg(void * msg)
 {
-    
+
 }
