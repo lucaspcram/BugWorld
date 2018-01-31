@@ -7,6 +7,7 @@
 #include "states/dead_state.h"
 #include "states/goal_state.h"
 #include "states/over_state.h"
+#include "states/score_state.h"
 #include "states/state_codes.h"
 #include "view.h"
 
@@ -43,6 +44,7 @@ void init_state_manager(void)
     M_INIT_STATE(DEAD, dead);
     M_INIT_STATE(GOAL, goal);
     M_INIT_STATE(OVER, over);
+    M_INIT_STATE(SCORE, score);
 
     g_cur_state = M_STATE_MENU;
     g_state_tab[g_cur_state].init();
