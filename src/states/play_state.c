@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 static int const G_PLAYER_STARTING_SCORE = 0;
-static int const G_PLAYER_STARTING_LIVES = 1;
+static int const G_PLAYER_STARTING_LIVES = 3;
 static uint64_t const G_FRAME_TIME_NSEC = 500000000;
 
 static struct world * g_world = NULL;
