@@ -70,7 +70,7 @@ void goal_state_tick(uint64_t elapsed)
 void goal_state_handle_input(int input)
 {
     if (input == M_MENU_SELECT)
-        resume_state(M_STATE_PLAY);
+        change_state(M_EXIT_DESTROY, M_START_RESUME, M_STATE_PLAY);
 
     if (input == M_MENU_QUIT)
         force_exit();

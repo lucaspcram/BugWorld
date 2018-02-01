@@ -126,7 +126,7 @@ void play_state_handle_input(int input)
 
         g_player_score += world_getscore(g_world);
         g_player_levelscompl += 1;
-        init_state(M_STATE_GOAL);
+        change_state(M_EXIT_PAUSE, M_START_INIT, M_STATE_GOAL);
         destroy_world(g_world);
         g_world = create_world();
     }
@@ -140,9 +140,9 @@ void play_state_handle_input(int input)
             g_score->score = g_player_score;
             g_score->levels_cleared = g_player_levelscompl;
             send_msg(M_STATE_OVER, (void *) g_score);
-            init_state(M_STATE_OVER);
+            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_OVER);
         } else {
-            init_state(M_STATE_DEAD);
+            change_state(M_EXIT_PAUSE, M_START_INIT, M_STATE_DEAD);
             destroy_world(g_world);
             g_world = create_world();
         }

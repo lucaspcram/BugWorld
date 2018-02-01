@@ -7,10 +7,6 @@ ______________________
 	- test the gameplay for misc. tweaks/debugs
 	- figure out how to decouple sprite animations across the map
 
-+ the scores state
-	- phase 1: top 5 scores
-	- phase 2: scrollable menu?
-
 + the help state
 	- best way to explain the game/controls?
 	- good UX?

@@ -50,6 +50,7 @@ char * create_scorefile(void)
         score_file = fopen(scorepath, "w");
         fclose(score_file);
     }
+    free(scorepath);
 
     return scorepath;
 }

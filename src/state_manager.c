@@ -79,21 +79,41 @@ static void set_cur_state(int code)
 /* Services declared in state_codes.h */
 /**************************************/
 
-/*
-TODO provide a way to specify if the exiting state
-should be paused or destroyed
-*/
-void init_state(int code)
+void change_state(int exit_mode, int start_mode, int code)
 {
-    g_state_tab[g_cur_state].pause();
-    g_state_tab[code].init();
-    set_cur_state(code);
-}
+    if (code < 0 || code >= M_NUM_STATES)
+        return;
 
-void resume_state(int code)
-{
-    g_state_tab[g_cur_state].pause();
-    g_state_tab[code].resume();
+    switch (exit_mode) {
+
+        case M_EXIT_DESTROY:
+        g_state_tab[g_cur_state].destroy();
+        break;
+
+        case M_EXIT_PAUSE:
+        g_state_tab[g_cur_state].pause();
+        break;
+
+        default:
+        return;
+
+    }
+
+    switch (start_mode) {
+
+        case M_START_INIT:
+        g_state_tab[code].init();
+        break;
+
+        case M_START_RESUME:
+        g_state_tab[code].resume();
+        break;
+
+        default:
+        return;
+
+    }
+
     set_cur_state(code);
 }
 

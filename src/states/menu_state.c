@@ -123,12 +123,12 @@ int menu_state_destroy(void)
 
 int menu_state_pause(void)
 {
-    return menu_state_destroy();
+    return 0;
 }
 
 int menu_state_resume(void)
 {
-    return menu_state_init();
+    return 0;
 }
 
 void menu_state_tick(uint64_t elapsed)
@@ -145,10 +145,10 @@ void menu_state_handle_input(int input)
 {
     if (input == M_MENU_SELECT) {
         if (g_menu_index == M_OPTION_PLAY) {
-            init_state(M_STATE_PLAY);
+            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_PLAY);
         }
         if (g_menu_index == M_OPTION_SCORES) {
-            init_state(M_STATE_SCORE);
+            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_SCORE);
         }
         if (g_menu_index == M_OPTION_HELP) {
 

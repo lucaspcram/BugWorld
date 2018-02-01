@@ -84,13 +84,11 @@ void score_state_tick(uint64_t elapsed)
 void score_state_handle_input(int input)
 {
     if (input == M_MENU_QUIT) {
-        score_state_destroy();
-        init_state(M_STATE_MENU);
+        change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_MENU);
     }
 
     if (input == M_MENU_SELECT) {
-        score_state_destroy();
-        init_state(M_STATE_MENU);
+        change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_MENU);
     }
 }
 
