@@ -7,6 +7,7 @@
 #include "view.h"
 
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 static char const * G_FRAME1_1[] =
@@ -155,4 +156,5 @@ static void save_score(void)
     scores = add_score(scores, g_score);
     write_scorefile(scores, path);
     free_scorelist(scores);
+    free(path);
 }
