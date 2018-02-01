@@ -16,4 +16,4 @@ void score_state_handle_input(int input);
 void score_state_render(void);
 void score_state_recv_msg(void * msg);
 
-#endif 
+#endif

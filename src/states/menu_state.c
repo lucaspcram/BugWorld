@@ -151,7 +151,7 @@ void menu_state_handle_input(int input)
             change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_SCORE);
         }
         if (g_menu_index == M_OPTION_HELP) {
-
+            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_HELP);
         }
     }
 

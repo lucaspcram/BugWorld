@@ -8,7 +8,7 @@
  */
 
 /* Manually set this to the number of defined states */
-#define M_NUM_STATES (6)
+#define M_NUM_STATES (7)
 
 /* Define all states below */
 #define M_STATE_MENU (0)
@@ -17,6 +17,7 @@
 #define M_STATE_GOAL (3)
 #define M_STATE_OVER (4)
 #define M_STATE_SCORE (5)
+#define M_STATE_HELP (6)
 
 #define M_EXIT_DESTROY (0)
 #define M_EXIT_PAUSE (1)
