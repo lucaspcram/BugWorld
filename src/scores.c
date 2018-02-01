@@ -64,6 +64,9 @@ void write_scorefile(struct score ** scores, char * scorepath)
     struct score ** tmp;
     FILE * file;
 
+    if (scores == NULL || scorepath == NULL)
+        return;
+
     file = fopen(scorepath, "wb");
     if (file == NULL)
         return;
@@ -89,6 +92,7 @@ void write_scorefile(struct score ** scores, char * scorepath)
 struct score ** read_scorefile(char * scorepath)
 {
     int i;
+    size_t size;
     size_t len;
     struct score ** scores;
     struct score ** tmp;
@@ -97,6 +101,14 @@ struct score ** read_scorefile(char * scorepath)
     file = fopen(scorepath, "rb");
     if (file == NULL)
         return NULL;
+
+    fseek(file, 0, SEEK_END);
+    size = ftell(file);
+    if (size == 0) {
+        scores = M_SAFEMALLOC(sizeof(*scores));
+        *scores = NULL;
+        return scores;
+    }
 
     /* first byte of file stores array len */
     fread(&len, sizeof(size_t), 1, file);
@@ -210,6 +222,9 @@ int compare_score(void const * a, void const * b)
 void sort_scores(struct score ** scores)
 {
     size_t len;
+
+    if (scores == NULL)
+        return;
 
     len = len_scorelist(scores);
     qsort((void *) scores, len, sizeof(struct score *), compare_score);

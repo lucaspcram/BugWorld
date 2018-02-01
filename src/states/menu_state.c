@@ -148,7 +148,7 @@ void menu_state_handle_input(int input)
             init_state(M_STATE_PLAY);
         }
         if (g_menu_index == M_OPTION_SCORES) {
-
+            init_state(M_STATE_SCORE);
         }
         if (g_menu_index == M_OPTION_HELP) {
 

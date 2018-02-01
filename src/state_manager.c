@@ -78,6 +78,11 @@ static void set_cur_state(int code)
 
 /* Services declared in state_codes.h */
 /**************************************/
+
+/*
+TODO provide a way to specify if the exiting state
+should be paused or destroyed
+*/
 void init_state(int code)
 {
     g_state_tab[g_cur_state].pause();
