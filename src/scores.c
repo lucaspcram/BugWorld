@@ -102,13 +102,16 @@ struct score ** read_scorefile(char * scorepath)
     if (file == NULL)
         return NULL;
 
+    /* exit early if the file is empty */
     fseek(file, 0, SEEK_END);
     size = ftell(file);
     if (size == 0) {
         scores = M_SAFEMALLOC(sizeof(*scores));
         *scores = NULL;
+        fclose(file);
         return scores;
     }
+    fseek(file, 0, SEEK_SET);
 
     /* first byte of file stores array len */
     fread(&len, sizeof(size_t), 1, file);

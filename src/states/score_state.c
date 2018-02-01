@@ -35,8 +35,9 @@ static int const G_FRAME_LEN = 8;
 static int const G_TITLE_COL_OFFSET = 10;
 static int const G_TITLE_ROW_OFFSET = 1;
 
-static int const G_SCORELIST_COL_OFF = 8;
+static int const G_SCORELIST_COL_OFF = 25;
 static int const G_SCORELIST_ROW_OFF = 12;
+static int const G_LIST_CUTOFF = 8;
 static int const G_MS_UPDATETIMER = 500;
 
 static int g_anim_timer;
@@ -114,11 +115,16 @@ void score_state_render(void)
         return;
 
     i = 0;
+    draw_str("SCORE  |  LEVELS CLEARED",
+             G_SCORELIST_COL_OFF + 7, G_SCORELIST_ROW_OFF - 1, M_CYAN);
     while (*tmp != NULL) {
-        snprintf(buf, sizeof(buf), "%d. Score: %d Levels cleared: %d", i, (*tmp)->score, (*tmp)->levels_cleared);
-        draw_str(buf, G_SCORELIST_COL_OFF, G_SCORELIST_ROW_OFF, M_CYAN);
+        snprintf(buf, sizeof(buf), "%d. %9d  |  %9d",
+                 i + 1, (*tmp)->score, (*tmp)->levels_cleared);
+        draw_str(buf, G_SCORELIST_COL_OFF, G_SCORELIST_ROW_OFF + i, M_CYAN);
         tmp++;
         i++;
+        if (i >= G_LIST_CUTOFF)
+            return;
     }
 #undef M_SCORESTR_LEN
 }
