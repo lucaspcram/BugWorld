@@ -5,11 +5,9 @@ ______________________
 	- tweak score system
 	- tweak map generation (Perlin params)
 	- test the gameplay for misc. tweaks/debugs
-	- figure out how to decouple sprite animations across the map
 
 + the help state
-	- best way to explain the game/controls?
-	- good UX?
+	- redesign to use fancy animations?
 
 + misc. refactoring and cleanup
 	- defensive/DRY design

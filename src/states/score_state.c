@@ -7,6 +7,8 @@
 #include "view.h"
 
 #include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
 static char const * G_FRAME1[] =
 {
@@ -98,6 +100,8 @@ void score_state_render(void)
     int i;
     struct score ** tmp;
     char buf[M_SCORESTR_LEN];
+    char const * help_hint = "Q or ENTER to return to menu";
+    int hint_len = strlen(help_hint);
 
     for (i = 0; i < G_FRAME_LEN; i++) {
         if (g_anim_state == 0)
@@ -124,6 +128,16 @@ void score_state_render(void)
         if (i >= G_LIST_CUTOFF)
             return;
     }
+
+    while (i < G_LIST_CUTOFF) {
+        snprintf(buf, sizeof(buf), "%d. %9s  |  %9s", i + 1, "-", "-");
+        draw_str(buf, G_SCORELIST_COL_OFF, G_SCORELIST_ROW_OFF + i, M_CYAN);
+        i++;
+    }
+
+    draw_str(help_hint,
+            (M_SCRWIDTH / 2) - (hint_len / 2), M_SCRHEIGHT - 1,
+             M_CYAN);
 #undef M_SCORESTR_LEN
 }
 
