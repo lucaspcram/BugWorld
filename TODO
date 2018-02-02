@@ -5,6 +5,13 @@ ______________________
 	- tweak score system
 	- tweak map generation (Perlin params)
 	- test the gameplay for misc. tweaks/debugs
+    - implement selection between curated/random stage mode
+        + use a static vs. dynamic seed
+    - add a UI element that shows stage number
+    - add a UI element to show potential point award
+
++ the score state
+    - show world seed with scores
 
 + the help state
 	- redesign to use fancy animations?

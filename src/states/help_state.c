@@ -51,13 +51,13 @@ void help_state_render(void)
     char const * help_hint = "Q or ENTER to return to menu";
     int hint_len = strlen(help_hint);
 
-    draw_str("Controls: WASD to move, E to rest, F to drop decoy, Q to quit",
+    draw_str("Controls: WASD to move, E to rest, F to drop decoy, Q to quit, B for boss",
              G_COL, G_ROW, M_WHITE);
     draw_str("Basic Rules: Reach the goal to score points! Ants track your",
              G_COL, G_ROW + 2, M_WHITE);
     draw_str("every move unless you stay hidden in the tall grass. You can",
              G_COL, G_ROW + 3, M_WHITE);
-    draw_str("swim unlike the ants, but you cannot pass their anthills.",
+    draw_str("swim - unlike the ants - but you cannot pass the anthills.",
              G_COL, G_ROW + 4, M_WHITE);
     draw_str("If your stamina runs out while exposed, you can restore some",
              G_COL, G_ROW + 5, M_WHITE);
@@ -67,9 +67,9 @@ void help_state_render(void)
              G_COL, G_ROW + 7, M_WHITE);
     draw_str("the water is deadly! You can also deploy a decoy for a limited",
              G_COL, G_ROW + 8, M_WHITE);
-    draw_str("time (and a score penalty), and ants will track that instead of",
+    draw_str("time (using both forfeits your points for that stage), and ants",
              G_COL, G_ROW + 9, M_WHITE);
-    draw_str("you while it remains active.",
+    draw_str("will track it instead of you while it remains active.",
              G_COL, G_ROW + 10, M_WHITE);
 
     draw_str("X", G_COL, G_ROW + 12, M_MAGENTA);

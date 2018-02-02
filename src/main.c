@@ -14,7 +14,7 @@ void display_version(void);
 void sig_handler(int sig);
 
 static char const * G_VERSION_TEXT =
-     "Bugworld v0.1, 2017\nLicensed under the MIT License\nWritten by Lucas Cram";
+     "Bugworld v1.0, 2017\nLicensed under the MIT License\nWritten by Lucas Cram";
 
 int main(int argc, char * argv[])
 {
