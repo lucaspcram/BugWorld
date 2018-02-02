@@ -126,7 +126,7 @@ void score_state_render(void)
         tmp++;
         i++;
         if (i >= G_LIST_CUTOFF)
-            return;
+            break;
     }
 
     while (i < G_LIST_CUTOFF) {
