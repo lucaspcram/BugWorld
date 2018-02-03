@@ -5,6 +5,7 @@
 #include "gameobj/sprite.h"
 #include "key_bindings.h"
 #include "scores.h"
+#include "states/seed_state.h"
 #include "states/state_codes.h"
 #include "view.h"
 #include "world/world.h"
@@ -29,6 +30,8 @@ static bool g_anim_frame = false;
 static bool g_boss_mode = false;
 
 static struct score * g_score;
+
+static int g_worldseed = 0;
 
 /*
 Define boss mode stuff
@@ -72,6 +75,7 @@ int play_state_init(void)
     g_player_levelscompl = 0;
 
     g_score = M_SAFEMALLOC(sizeof(*g_score));
+    srand(g_worldseed);
 
     return 0;
 }
@@ -224,5 +228,5 @@ static void render_bossmode(void)
 
 void play_state_recv_msg(void * msg)
 {
-
+    g_worldseed = ((struct worldseed *) msg)->seed;
 }

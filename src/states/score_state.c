@@ -85,13 +85,11 @@ void score_state_tick(uint64_t elapsed)
 
 void score_state_handle_input(int input)
 {
-    if (input == M_MENU_QUIT) {
-        change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_MENU);
-    }
+    if (input == M_MENU_QUIT)
+        force_exit();
 
-    if (input == M_MENU_SELECT) {
-        change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_MENU);
-    }
+    if (input == M_MENU_SELECT)
+        change_state(M_EXIT_DESTROY, M_START_RESUME, M_STATE_MENU);
 }
 
 void score_state_render(void)
@@ -100,7 +98,7 @@ void score_state_render(void)
     int i;
     struct score ** tmp;
     char buf[M_SCORESTR_LEN];
-    char const * help_hint = "Q or ENTER to return to menu";
+    char const * help_hint = "Q to quit, ENTER to return to menu";
     int hint_len = strlen(help_hint);
 
     for (i = 0; i < G_FRAME_LEN; i++) {

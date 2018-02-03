@@ -40,15 +40,15 @@ void help_state_tick(uint64_t elapsed)
 void help_state_handle_input(int input)
 {
     if (input == M_MENU_QUIT)
-        change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_MENU);
+        force_exit();
 
     if (input == M_MENU_SELECT)
-        change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_MENU);
+        change_state(M_EXIT_DESTROY, M_START_RESUME, M_STATE_MENU);
 }
 
 void help_state_render(void)
 {
-    char const * help_hint = "Q or ENTER to return to menu";
+    char const * help_hint = "Q to quit, ENTER to return to menu";
     int hint_len = strlen(help_hint);
 
     draw_str("Controls: WASD to move, E to rest, F to drop decoy, Q to quit, B for boss",

@@ -145,13 +145,13 @@ void menu_state_handle_input(int input)
 {
     if (input == M_MENU_SELECT) {
         if (g_menu_index == M_OPTION_PLAY) {
-            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_PLAY);
+            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_SEED);
         }
         if (g_menu_index == M_OPTION_SCORES) {
-            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_SCORE);
+            change_state(M_EXIT_PAUSE, M_START_INIT, M_STATE_SCORE);
         }
         if (g_menu_index == M_OPTION_HELP) {
-            change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_HELP);
+            change_state(M_EXIT_PAUSE, M_START_INIT, M_STATE_HELP);
         }
     }
 

@@ -9,6 +9,7 @@
 #include "states/over_state.h"
 #include "states/score_state.h"
 #include "states/help_state.h"
+#include "states/seed_state.h"
 #include "states/state_codes.h"
 #include "view.h"
 
@@ -47,6 +48,7 @@ void init_state_manager(void)
     M_INIT_STATE(OVER, over);
     M_INIT_STATE(SCORE, score);
     M_INIT_STATE(HELP, help);
+    M_INIT_STATE(SEED, seed);
 
     g_cur_state = M_STATE_MENU;
     g_state_tab[g_cur_state].init();

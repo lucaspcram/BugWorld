@@ -36,7 +36,6 @@ void init_game(void)
     pthread_t thread;
     int err;
 
-    srand(time(NULL));
     init_graphics();
     init_state_manager();
 
