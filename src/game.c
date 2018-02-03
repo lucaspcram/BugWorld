@@ -18,7 +18,7 @@
 #define M_NSEC_PER_USEC (1000)
 
 int g_fps;
-int g_seed;
+time_t g_seed;
 
 /*
  * Combines POSIX threads with ncurses to achieve animated graphical
@@ -39,6 +39,7 @@ void init_game(void)
 
     init_graphics();
     init_state_manager();
+    srand(g_seed);
 
     pthread_mutex_init(&g_ncurses_mut, NULL);
     err = pthread_create(&thread, NULL, tick, NULL);

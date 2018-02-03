@@ -98,12 +98,15 @@ int test_score_io()
 
     score1.score = 12;
     score1.levels_cleared = 3;
+    score1.seed = 1;
 
     score2.score = 490;
     score2.levels_cleared = 1;
+    score2.seed = 112312;
 
     score3.score = 12;
     score3.levels_cleared = 100;
+    score3.seed = 10;
 
     new_score = M_SAFEMALLOC(sizeof(*new_score));
     new_score->score = 5000;
@@ -130,7 +133,7 @@ int test_score_io()
     tmp = scores;
     while (*tmp != NULL) {
         printf("---SCORE STRUCT---\n");
-        printf("%d\n%d\n\n", (*tmp)->score, (*tmp)->levels_cleared);
+        printf("%d\n%d\n%ld\n\n", (*tmp)->score, (*tmp)->levels_cleared, (*tmp)->seed);
         tmp++;
     }
 
@@ -140,7 +143,7 @@ int test_score_io()
     tmp = scores;
     while (*tmp != NULL) {
         printf("---SCORE STRUCT---\n");
-        printf("%d\n%d\n\n", (*tmp)->score, (*tmp)->levels_cleared);
+        printf("%d\n%d\n%ld\n\n", (*tmp)->score, (*tmp)->levels_cleared, (*tmp)->seed);
         tmp++;
     }
 

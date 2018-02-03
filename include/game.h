@@ -6,10 +6,12 @@
  * updates, initializes the game, etc.
  */
 
+#include <time.h>
+
 #define M_DEFAULT_FPS (10)
 
 extern int g_fps;
-extern int g_seed;
+extern time_t g_seed;
 
 void init_game(void);
 void input_loop(void);

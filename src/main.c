@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 void display_help(char * progname);
@@ -25,7 +26,7 @@ int main(int argc, char * argv[])
     {
         {"fps", required_argument, 0, 'f'},
         {"help", no_argument, 0, 'h'},
-        {"seed", required_argument, 0, 'f'},
+        {"seed", required_argument, 0, 's'},
         {"version", no_argument, 0, 'v'},
         {NULL, 0, NULL, 0}
     };
@@ -36,10 +37,11 @@ int main(int argc, char * argv[])
 
     /* DEFAULTS */
     g_fps = M_DEFAULT_FPS;
+    g_seed = time(NULL);
 
     while(1) {
         option_index = 0;
-        c = getopt_long(argc, argv, "f:hv", long_options, &option_index);
+        c = getopt_long(argc, argv, "f:hs:v", long_options, &option_index);
         if (c == -1)
             break;
         switch(c) {

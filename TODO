@@ -5,11 +5,6 @@ ______________________
 	- tweak score system
 	- tweak map generation (Perlin params)
 	- test the gameplay for misc. tweaks/debugs
-	- implement selection between curated/random stage mode
-		+ use a static vs. dynamic seed
-
-+ the score state
-	- show world seed with scores
 
 + the help state
 	- redesign to use fancy animations?
@@ -28,4 +23,6 @@ ______________________
 BUGWORLD BUGS (hah)
 ___________________
 
+- first level repeats twice
 
+- score screen always shows seed as 0

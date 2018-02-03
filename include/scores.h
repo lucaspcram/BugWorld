@@ -6,10 +6,12 @@
  */
 
 #include <sys/types.h>
+#include <time.h>
 
 struct score {
     int score;
     int levels_cleared;
+    time_t seed;
 };
 
 char * create_scorefile(void);
