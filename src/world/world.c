@@ -137,6 +137,9 @@ static void update_world(struct world * w, bool update_enem)
 
     player_update_decoy(w->player);
 
+    if (!player_has_decoy(w->player))
+        w->score = 0;
+
     if (map_point_hastype(w->map, p_col, p_row, E_GRASS))
         player_reset_stamina(w->player);
 
@@ -146,8 +149,6 @@ static void update_world(struct world * w, bool update_enem)
     }
 
     if (map_point_hastype(w->map, p_col, p_row, E_GOAL)) {
-        if (!player_has_decoy(w->player))
-            w->score = 0;
         w->world_complete = true;
     }
 

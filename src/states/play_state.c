@@ -196,7 +196,8 @@ void play_state_render(void)
 
     /* Draw the score */
     draw_str("[Score]", 0, M_SCRHEIGHT - 2, M_MAGENTA);
-    snprintf(buf, sizeof(buf), "%d", g_player_score);
+    snprintf(buf, sizeof(buf), "%d (+%d) (L%d)",
+             g_player_score, world_getscore(g_world), g_player_levelscompl);
     draw_str(buf, 8, M_SCRHEIGHT - 2, M_MAGENTA);
 
     /* Draw remaining lives */
