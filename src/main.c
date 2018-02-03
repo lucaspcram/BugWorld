@@ -25,6 +25,7 @@ int main(int argc, char * argv[])
     {
         {"fps", required_argument, 0, 'f'},
         {"help", no_argument, 0, 'h'},
+        {"seed", required_argument, 0, 'f'},
         {"version", no_argument, 0, 'v'},
         {NULL, 0, NULL, 0}
     };
@@ -58,6 +59,15 @@ int main(int argc, char * argv[])
             display_help(argv[0]);
             return 0;
 
+            case 's':
+            g_seed = atoi(optarg);
+            if (g_seed < 1 || g_seed > 10000) {
+                fprintf(stderr, "Invalid argument \'%s\' to option \'--seed\'\n", optarg);
+                fprintf(stderr, "Try \'bugworld --help\' for info.\n");
+                return 1;
+            }
+            break;
+
             case 'v':
             display_version();
             return 0;
@@ -80,6 +90,9 @@ void display_help(char * progname)
     printf("                          values if excessive flickering occurs. Defaults to 10.\n");
     printf("                          Valid settings range is [5, 60].\n\n");
     printf("  -h, --help              Display this help message and exit.\n\n");
+    printf("  -s, --seed=SEED         Specify a seed for the world generator. The provided seed\n");
+    printf("                          must be in range [1, 10000]. If no seed is given, defaults\n");
+    printf("                          to the current system time.\n\n");
     printf("  -v, --version           Display the version and exit.\n");
 }
 

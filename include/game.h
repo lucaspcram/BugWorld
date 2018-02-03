@@ -9,6 +9,7 @@
 #define M_DEFAULT_FPS (10)
 
 extern int g_fps;
+extern int g_seed;
 
 void init_game(void);
 void input_loop(void);

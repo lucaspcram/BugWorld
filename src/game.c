@@ -18,6 +18,7 @@
 #define M_NSEC_PER_USEC (1000)
 
 int g_fps;
+int g_seed;
 
 /*
  * Combines POSIX threads with ncurses to achieve animated graphical
