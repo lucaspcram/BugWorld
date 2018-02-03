@@ -61,29 +61,7 @@ bool percentage_chance(double rate)
  */
 void abort_game(char const * msg, char const * file, unsigned long line)
 {
-    /*
-    void * frames[M_MAX_FRAMES];
-    char ** trace;
-    size_t size;
-    size_t i;
-    */
-
     destroy_graphics();
-
-    /*
-    print a stack trace
-    based on sample from
-    https://www.gnu.org/software/libc/manual/html_node/Backtraces.html
-    FIXME periodically breaks ncurses cleanup for some reason
-    */
-    
-    /*
-    size = backtrace(frames, M_MAX_FRAMES);
-    trace = backtrace_symbols(frames, size);
-    for (i = 0; i < size; i++)
-        fprintf (stderr, "%s\n", trace[i]);
-    free(trace);
-    */
 
     fprintf(stderr, "BugWorld FATAL: %s\n", msg);
     fprintf(stderr, "Error from %s on line %lu\n", file, line);

@@ -28,6 +28,4 @@ ______________________
 BUGWORLD BUGS (hah)
 ___________________
 
-+ sometimes the abort_game() function screws up the terminal
-	- it has something to do with the stacktrace code
 
