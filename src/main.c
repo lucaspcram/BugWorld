@@ -63,7 +63,7 @@ int main(int argc, char * argv[])
 
             case 's':
             g_seed = atoi(optarg);
-            if (g_seed < 1 || g_seed > 1000000000) {
+            if (g_seed < 1 || g_seed > 999999999) {
                 fprintf(stderr, "Invalid argument \'%s\' to option \'--seed\'\n", optarg);
                 fprintf(stderr, "Try \'bugworld --help\' for info.\n");
                 return 1;
@@ -93,7 +93,7 @@ void display_help(char * progname)
     printf("                          Valid settings range is [5, 60].\n\n");
     printf("  -h, --help              Display this help message and exit.\n\n");
     printf("  -s, --seed=SEED         Specify a seed for the world generator. The provided seed\n");
-    printf("                          must be in range [1, 1000000000]. If no seed is given, defaults\n");
+    printf("                          must be in range [1, 999999999]. If no seed is given, defaults\n");
     printf("                          to the current system time.\n\n");
     printf("  -v, --version           Display the version and exit.\n");
 }
