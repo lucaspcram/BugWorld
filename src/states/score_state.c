@@ -37,7 +37,7 @@ static int const G_FRAME_LEN = 8;
 static int const G_TITLE_COL_OFFSET = 10;
 static int const G_TITLE_ROW_OFFSET = 1;
 
-static int const G_SCORELIST_COL_OFF = 10;
+static int const G_SCORELIST_COL_OFF = 11;
 static int const G_SCORELIST_ROW_OFF = 12;
 static int const G_LIST_CUTOFF = 8;
 static int const G_MS_UPDATETIMER = 500;

@@ -73,7 +73,6 @@ int play_state_init(void)
     g_player_levelscompl = 0;
 
     g_score = M_SAFEMALLOC(sizeof(*g_score));
-    srand(g_seed);
 
     return 0;
 }
@@ -141,6 +140,7 @@ void play_state_handle_input(int input)
         if (g_player_lives == 0) {
             g_score->score = g_player_score;
             g_score->levels_cleared = g_player_levelscompl;
+            g_score->seed = g_seed;
             send_msg(M_STATE_OVER, (void *) g_score);
             change_state(M_EXIT_DESTROY, M_START_INIT, M_STATE_OVER);
         } else {

@@ -111,6 +111,7 @@ int test_score_io()
     new_score = M_SAFEMALLOC(sizeof(*new_score));
     new_score->score = 5000;
     new_score->levels_cleared = 100;
+    new_score->seed = 123;
 
     scores = M_SAFEMALLOC(sizeof(*scores) * 4);
     scores[0] = &score1;
