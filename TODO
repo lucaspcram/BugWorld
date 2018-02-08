@@ -3,8 +3,11 @@ ______________________
 
 + the play state
 	- tweak score system
+        + lower initial score
+        + penalties for decoys?
 	- tweak map generation (Perlin params)
 	- test the gameplay for misc. tweaks/debugs
+    - expand seed range to UINT64_MAXh
 
 + the help state
 	- redesign to use fancy animations?
