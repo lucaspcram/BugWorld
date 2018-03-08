@@ -1,9 +1,9 @@
 #ifndef WORLD_GEN_H
 #define WORLD_GEN_H
 
-#include "gameobj/enemy.h"
-#include "gameobj/player.h"
-#include "world/map.h"
+#include "enemy.h"
+#include "player.h"
+#include "map.h"
 
 /*
  * Routines for generating unique, random maps.

@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "gameobj/sprite.h"
+#include "sprite.h"
 
 #include <stdbool.h>
 #include <stdint.h>

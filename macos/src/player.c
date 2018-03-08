@@ -1,7 +1,7 @@
-#include "gameobj/player.h"
+#include "player.h"
 
 #include "common.h"
-#include "gameobj/sprite.h"
+#include "sprite.h"
 #include "view.h"
 
 #include <stdbool.h>

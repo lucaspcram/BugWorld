@@ -1,8 +1,8 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "gameobj/sprite.h"
-#include "world/map.h"
+#include "sprite.h"
+#include "map.h"
 
 #include <stdint.h>
 

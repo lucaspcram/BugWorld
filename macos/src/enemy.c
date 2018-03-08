@@ -1,8 +1,8 @@
-#include "gameobj/enemy.h"
+#include "enemy.h"
 
 #include "common.h"
-#include "gameobj/sprite.h"
-#include "world/map.h"
+#include "sprite.h"
+#include "map.h"
 #include "view.h"
 
 #include <float.h>

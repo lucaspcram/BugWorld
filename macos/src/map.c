@@ -1,7 +1,7 @@
-#include "world/map.h"
+#include "map.h"
 
 #include "common.h"
-#include "gameobj/sprite.h"
+#include "sprite.h"
 #include "view.h"
 
 #include <stdbool.h>

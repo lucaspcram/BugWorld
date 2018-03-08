@@ -2,14 +2,14 @@
 
 #include "common.h"
 #include "pthread.h"
-#include "states/menu_state.h"
-#include "states/play_state.h"
-#include "states/dead_state.h"
-#include "states/goal_state.h"
-#include "states/over_state.h"
-#include "states/score_state.h"
-#include "states/help_state.h"
-#include "states/state_codes.h"
+#include "menu_state.h"
+#include "play_state.h"
+#include "dead_state.h"
+#include "goal_state.h"
+#include "over_state.h"
+#include "score_state.h"
+#include "help_state.h"
+#include "state_codes.h"
 #include "view.h"
 
 #include <stdint.h>

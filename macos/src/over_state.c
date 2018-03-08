@@ -1,9 +1,9 @@
-#include "states/over_state.h"
+#include "over_state.h"
 
 #include "common.h"
 #include "key_bindings.h"
 #include "scores.h"
-#include "states/state_codes.h"
+#include "state_codes.h"
 #include "view.h"
 
 #include <stdint.h>

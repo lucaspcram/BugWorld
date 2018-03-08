@@ -1,14 +1,14 @@
-#include "states/play_state.h"
+#include "play_state.h"
 
 #include "common.h"
 #include "game.h"
-#include "gameobj/player.h"
-#include "gameobj/sprite.h"
+#include "player.h"
+#include "sprite.h"
 #include "key_bindings.h"
 #include "scores.h"
-#include "states/state_codes.h"
+#include "state_codes.h"
 #include "view.h"
-#include "world/world.h"
+#include "world.h"
 
 #include <pthread.h>
 #include <stdint.h>

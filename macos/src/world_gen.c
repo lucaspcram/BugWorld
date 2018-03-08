@@ -1,9 +1,9 @@
-#include "world/world_gen.h"
+#include "world_gen.h"
 
 #include "common.h"
-#include "gameobj/player.h"
+#include "player.h"
 #include "perlin.h"
-#include "world/map.h"
+#include "map.h"
 
 #include <stdbool.h>
 #include <stdio.h>

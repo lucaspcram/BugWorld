@@ -15,11 +15,11 @@ SRCDIR=src
 SRCEXT=c
 OBJEXT=o
 BUILDDIR=build
-SUBDIRS=$(shell find $(SRCDIR)/* -type d -printf '%f\n')
-BUILDSUBDIRS=$(addprefix $(BUILDDIR)/, $(shell find $(SRCDIR)/* -type d -printf '%f\n'))
-ifeq ($(SUBDIRS),)
-BUILDSUBDIRS=$(BUILDDIR)
-endif
+#SUBDIRS=$(shell find $(SRCDIR)/* -type d -printf '%f\n')
+#BUILDSUBDIRS=$(addprefix $(BUILDDIR)/, $(shell find $(SRCDIR)/* -type d -printf '%f\n'))
+#ifeq ($(SUBDIRS),)
+#BUILDSUBDIRS=$(BUILDDIR)
+#endif
 BINDIR=bin
 
 # test sources #
@@ -46,14 +46,14 @@ SOURCES=$(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS=$(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SOURCES:.$(SRCEXT)=.o))
 OBJECTSNOMAIN=$(filter-out $(BUILDDIR)/main.$(OBJEXT), $(OBJECTS))
 
-$(TARGET): $(OBJECTS)
+$(TARGET): checkenv $(OBJECTS)
 	@echo "Linking..."
 	@mkdir -p $(BINDIR)
 	@$(CC) $^ -o $(TARGET) $(LIB) $(LDFLAGS) $(PTHREAD)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
-	@mkdir -p $(BUILDSUBDIRS)
+#@mkdir -p $(BUILDSUBDIRS)
 	@echo "Compiling ($(CC)) $<..."
 	@$(CC) $(CFLAGS) $(PTHREAD) $(INCDIR) -c -o $@ $<
 
@@ -77,3 +77,9 @@ run:
 runtest:
 	@echo "Running tests..."
 	@./$(TESTEXEC)
+
+checkenv:
+ifndef CC
+    $(error CC is undefined)
+endif
+

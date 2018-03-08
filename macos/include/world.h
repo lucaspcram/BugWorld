@@ -1,7 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "gameobj/player.h"
+#include "player.h"
 
 #include <stdint.h>
 

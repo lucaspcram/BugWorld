@@ -1,8 +1,8 @@
-#include "states/dead_state.h"
+#include "dead_state.h"
 
 #include "common.h"
 #include "key_bindings.h"
-#include "states/state_codes.h"
+#include "state_codes.h"
 #include "view.h"
 
 #include <stdint.h>

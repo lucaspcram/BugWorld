@@ -1,12 +1,12 @@
-#include "world/world.h"
+#include "world.h"
 
 #include "common.h"
-#include "gameobj/enemy.h"
-#include "gameobj/player.h"
-#include "gameobj/sprite.h"
+#include "enemy.h"
+#include "player.h"
+#include "sprite.h"
 #include "key_bindings.h"
-#include "world/map.h"
-#include "world/world_gen.h"
+#include "map.h"
+#include "world_gen.h"
 #include "view.h"
 
 #include <stdbool.h>

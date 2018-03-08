@@ -1,5 +1,5 @@
 #include "common.h"
-#include "gameobj/sprite.h"
+#include "sprite.h"
 #include "view.h"
 
 #include <stdint.h>
