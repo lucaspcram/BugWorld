@@ -55,7 +55,7 @@ static char const * G_BOSS_TEXT[] =
 "    if (argc == 3) {",
 "        long x = atol(argv[1]);",
 "        long y = atol(argv[2]);",
-"        printf(\"ack(%%lf, %%lf) = %%lf\\n\", x, y, ack(x, y));",
+"        printf(\"ack(%%ld, %%ld) = %%ld\\n\", x, y, ack(x, y));",
 "    }",
 "    return 0;",
 "}",
