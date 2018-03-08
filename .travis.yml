@@ -1,6 +1,10 @@
+os:
+- linux
+- osx
+
 before_install:
-- sudo apt-get install libncurses5-dev
-- sudo apt-get install valgrind
+- if [[ "$TRAVIS_OS_NAME" == "linux"  ]]; then sudo apt-get install libncurses5-dev; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux"  ]]; then sudo apt-get install valgrind; fi
 
 compiler:
 - gcc
@@ -12,3 +16,4 @@ script:
 
 language:
 - c
+
