@@ -96,9 +96,9 @@ void * tick(void * arg)
        can sleep for an appropriate amount of time to hit g_fps
     */
 
-    clock_gettime(CLOCK_MONOTONIC_RAW, &cur);
+    clock_gettime(CLOCK_MONOTONIC, &cur);
     while (1) {
-        clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+        clock_gettime(CLOCK_MONOTONIC, &start);
         if (start.tv_sec > cur.tv_sec) {
             frame_time = (M_NSEC_PER_SEC * start.tv_sec + start.tv_nsec)
                          - (M_NSEC_PER_SEC * cur.tv_sec + cur.tv_nsec);
@@ -112,7 +112,7 @@ void * tick(void * arg)
         tick_render(frame_time);
         pthread_mutex_unlock(&g_ncurses_mut);
 
-        clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+        clock_gettime(CLOCK_MONOTONIC, &end);
 
         /*
         NOTE: all of this code relies on the elapsed time

@@ -1,10 +1,10 @@
 
 #include "common.h"
-#include "gameobj/sprite.h"
-#include "gameobj/player.h"
+#include "sprite.h"
+#include "player.h"
 #include "perlin.h"
 #include "scores.h"
-#include "world/world.h"
+#include "world.h"
 
 #include <stdbool.h>
 #include <stdio.h>
