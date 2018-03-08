@@ -1,0 +1,29 @@
+TODO LIST FOR BUGWORLD
+______________________
+
++ the play state
+	- tweak score system
+        + lower initial score
+        + penalties for decoys?
+	- tweak map generation (Perlin params)
+	- test the gameplay for misc. tweaks/debugs
+    - expand seed range to UINT64_MAXh
+
++ the help state
+	- redesign to use fancy animations?
+
++ misc. refactoring and cleanup
+	- defensive/DRY design
+	- 80 column soft limit
+	- useful comments (C style, header explanation, impl WHY not WHAT)
+	- write more robust tests
+	- const pointer params to functions that don't change the param
+	- reduce/order local variables
+	- access functions should be (col,row) not (row,col)
+	- refactor macros into variables/functions when possible
+
+
+BUGWORLD BUGS (hah)
+___________________
+
+
