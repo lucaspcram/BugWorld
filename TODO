@@ -7,7 +7,7 @@ ______________________
         + penalties for decoys?
 	- tweak map generation (Perlin params)
 	- test the gameplay for misc. tweaks/debugs
-    - expand seed range to UINT64_MAXh
+    - expand seed range to UINT64_MAX
 
 + the help state
 	- redesign to use fancy animations?
@@ -22,6 +22,17 @@ ______________________
 	- access functions should be (col,row) not (row,col)
 	- refactor macros into variables/functions when possible
 
+MATTHIEU FEATURES
+_________________
+
++ SERVERSIDE FEATURES
+    - include code that allows the player to connect to a high score server?
+    - is multiplayer a thing that makes sense?
+
++ ADJUSTABLE MAP SIZE
+    - allow for bigger maps to be generated
+    - base this on command line parameters?
+    - this will require a scoring system tweak 
 
 BUGWORLD BUGS (hah)
 ___________________
