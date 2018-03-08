@@ -1,6 +1,6 @@
 # Contributing
 
-Contribution is pretty simple. BugWorld prefers that you submit
+Contributing is pretty simple. BugWorld prefers that you submit
 changes using a forking workflow. For this, you will need a GitHub
 account. The basic workflow for contributing is outlined below.
 
