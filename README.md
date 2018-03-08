@@ -5,7 +5,7 @@
 A simple ncurses-based action-puzzle game.
 
 ## Features
-* animated ncurses graphics
+* animated ASCII graphics
 * map generation based on 2D Perlin noise
 * high score tracking
 
@@ -14,32 +14,39 @@ A simple ncurses-based action-puzzle game.
 ![In Game](/img/screenshot2.png)
 ![High Score Screen](/img/screenshot3.png)
 
+## Supported Operating Systems
+* GNU/Linux
+* macOS (tested on High Sierra 10.13)
+* Windows 10 (using Windows Subsystem for Linux)
+* Cygwin (WIP support coming soon, hopefully)
+* Probably more, feel free to test and contribute!
+
 ## Building
-Tested with GCC 4.8.4 as well as Clang 3.9.0.
+Requires the ncurses development libraries to build and run.
+Check your operating system documentation for instructions
+on installing ncurses if you need it - you probably already have it.
 
-Requires the ncurses development libraries to build.
-
-On Debian/Ubuntu
-```
-$ sudo apt-get install libncurses5-dev
-```
-
-Or on CentOS/RHEL/Fedora
-```
-$ sudo yum install ncurses-devel
-```
-Then just
+Build just like:
 ```
 $ export CC=gcc
-# or export CC=clang
 $ make all
-$ ./bin/bugworld
 ```
-to get the game running. You can install the `bugworld` executable anywhere
+Note you can use clang instead if you wish.
+
+Read the help menu first!
+```
+$ ./bin/bugworld --help
+```
+
+You can install the `bugworld` executable anywhere
 once it is compiled.
 
 ## Notes
 * BugWorld writes score information to the file `.bugworldscore` in your home folder
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is released under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+See the [CONTRIBUTING.md](CONTRIBUTING.md) file for details.
+
