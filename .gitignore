@@ -1,8 +1,11 @@
 # gitignore for bugworld
 
 # Object files and executables
-build/
-bin/
+**/build/
+**/bin/
 
 # Other nonsense
 **/.*.swp
+.DS_Store
+**/.DS_Store
+
