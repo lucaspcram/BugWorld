@@ -2,28 +2,32 @@ TODO LIST FOR BUGWORLD
 ______________________
 
 + the play state
-	- tweak score system
+    - balance changes
         + lower initial score
-        + penalties for decoys?
-	- tweak map generation (Perlin params)
-	- test the gameplay for misc. tweaks/debugs
+        + change to only 1 decoy?
+        + death should restart current level
+        + start on level 1, not level 0
+        + 1 life instead of 3?
+    - tweak map generation (Perlin params)
     - expand seed range to UINT64_MAX
 
 + the help state
-	- redesign to use fancy animations?
+    - redesign to use fancy animations?
 
 + misc. refactoring and cleanup
-	- defensive/DRY design
-	- 80 column soft limit
-	- useful comments (C style, header explanation, impl WHY not WHAT)
-	- write more robust tests
-	- const pointer params to functions that don't change the param
-	- reduce/order local variables
-	- access functions should be (col,row) not (row,col)
-	- refactor macros into variables/functions when possible
+    - defensive/DRY design
+    - 80 column soft limit
+    - comment refactoring (C style, header explanation, impl WHY not WHAT)
+    - write more robust tests
+        + improve unit test framework (see minunit for example)
+    - const pointer params to functions that don't change the param
+    - reduce/order local variables
+    - access functions should be (col,row) not (row,col)
+    - refactor macros into variables/functions when possible
+    - keep functions short and modular
 
-MATTHIEU FEATURES
-_________________
+REQUESTED FEATURES
+__________________
 
 + SERVERSIDE FEATURES
     - include code that allows the player to connect to a high score server?
