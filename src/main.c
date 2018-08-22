@@ -85,7 +85,7 @@ int main(int argc, char * argv[])
 
 void display_help(char * progname)
 {
-    printf("Usage: %s [OPTION]...\n", progname);
+    printf("Usage: %s [OPTION ...]\n", progname);
     printf("An animated ncurses based puzzle game.\n\n");
     printf("The following options can be used.\n");
     printf("  -f, --fps=FPS           Specify the FPS at which to run. Try setting to different\n");
