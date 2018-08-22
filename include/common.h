@@ -20,21 +20,21 @@ struct vec2d {
 
 #define M_ARRAY_SIZE(array) (sizeof(array) / sizeof((array)[0]))
 
-#define M_FOR_ALL_ELEMENTS(arr, max, func) \
-do {                                       \
-int __i__;                                 \
-for (__i__ = 0; __i__ < max; __i__++) {    \
-    func(arr[__i__]);                      \
-}                                          \
-} while(0)                                 \
+#define M_FOR_ALL_ELEMENTS(arr, max, func)                         \
+do {                                                               \
+int __BUGWORLD_i__;                                                \
+for (__BUGWORLD_i__ = 0; __BUGWORLD_i__ < max; __BUGWORLD_i__++) { \
+    func(arr[__BUGWORLD_i__]);                                     \
+}                                                                  \
+} while(0)                                                         \
 
-#define M_FOR_ALL_ELEMENTS_EXT(arr, max, func, ...)           \
-do {                                                          \
-int __i__;                                                    \
-for (__i__ = 0; __i__ < max; __i__++) {                       \
-    func(arr[__i__], __VA_ARGS__);                            \
-}                                                             \
-} while(0)                                                    \
+#define M_FOR_ALL_ELEMENTS_EXT(arr, max, func, ...)                \
+do {                                                               \
+int __BUGWORLD_i__;                                                \
+for (__BUGWORLD_i__ = 0; __BUGWORLD_i__ < max; __BUGWORLD_i__++) { \
+    func(arr[__BUGWORLD_i__], __VA_ARGS__);                        \
+}                                                                  \
+} while(0)                                                         \
 
 extern pthread_mutex_t g_ncurses_mut;
 
