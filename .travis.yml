@@ -3,7 +3,8 @@ os:
 - osx
 
 before_install:
-- if [[ "$TRAVIS_OS_NAME" == "linux"  ]]; then sudo apt-get install libncurses5-dev; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux"  ]]; then sudo apt-get install libncurses5-dev;
+  fi
 - if [[ "$TRAVIS_OS_NAME" == "linux"  ]]; then sudo apt-get install valgrind; fi
 
 compiler:
@@ -11,9 +12,16 @@ compiler:
 - clang
 
 script:
-- make all
-- ./runtests.sh
+- "./build.sh"
+- "./runtests.sh"
+#- build-wrapper --out-dir bw-outputs ./build.sh
+#- sonar-scanner
 
 language:
 - c
 
+addons:
+  sonarcloud:
+    organization: "lucaspcram-github"
+    token:
+      secure: "cYetJIR6hXOfUjEITHEOUfym36hBIwQTJ+YUyZ1/uMaq+8nlVDwZbtXpD+VqVG+rmrlspubqf1XYOmuDWP0LlsJoh4Cp5/2wZBtvZW3nROHwyO+oABAgNOurN4YZPJq/vs0KNXjanfvFjV+PmlWB5ar10n6TbH9rQ4o3ekafsUCghHX5yH1YAs4SzhYRFp4VysTa6VEa026omoXKM57Ts69g0bZJc8OVSS9U++pkPcS/GXDbJkCKPYb8JkhZeaf7dG9bAxUxEVKzTuD8YVm2lq7JNvAfiiBcyvvRIa6r0YzJXtAUbTN2eMm40Jm4E3Pt610NbqxZkiAC07/hDaCeSv36ZhgkaiAv4Se5cPLSxp4kStV//x/AqRdVWqemx5j2ZDY00qgYYi57lYngmJDkcXzv8Vg85hioZgcFNnZhUOgrqU0RoWSWpptKoXg7/7Xoti5zoPIZRPaYK0jnrlyQT4NyuG/jPhZhCFcrbp9UMK3BX5kmYkO4q4GIb73zIkgupzPq7eXCztueeg9RL7EkrqshE9b/9eNRcQyj+PK4TqapJUmpNClTNHqV/lYkJKVXgwNUkK1qCWk9L/CWidc+wH4vYu69l5ot8mgXZpqPeg1Q5ERhWqSJYQmmr40q5PqyB419JqUj64CNAg5mhQfu1tUxgOcgLbYBGQQ/KhGyPmQ="
