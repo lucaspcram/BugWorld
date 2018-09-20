@@ -10,6 +10,7 @@ ______________________
         + 1 life instead of 3?
     - tweak map generation (Perlin params)
     - expand seed range to UINT64_MAX
+    - decoy in brush should do nothing instead of freezing the ants
 
 + the help state
     - redesign to use fancy animations?
