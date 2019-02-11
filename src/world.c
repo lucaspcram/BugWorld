@@ -104,7 +104,8 @@ void handle_input_world(struct world * w, int input)
         }
     }
     if (input == M_ACTION_DECOY) {
-        player_deploy_decoy(w->player);
+        if (!map_point_hastype(w->map, p_col, p_row, E_GRASS))
+            player_deploy_decoy(w->player);
     }
 
     update_world(w, update_enem);

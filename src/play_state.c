@@ -120,7 +120,10 @@ void play_state_handle_input(int input)
     handle_input_world(g_world, input);
 
     if (world_is_complete(g_world)) {
-        /* Sleep the input thread to make a nice transition animation */
+        /*
+        Sleep the input thread to make a nice transition animation.
+        We also unlock the global mutex to allow other waiting threads to work.
+        */
         pthread_mutex_unlock(&g_ncurses_mut);
         sleep(1);
         pthread_mutex_lock(&g_ncurses_mut);
@@ -156,7 +159,7 @@ void play_state_render(void)
     /* 
     NOTE this function makes use of
     a lot of magic numbers in order to
-    get the UI to look good on a 80x24 terminal
+    get the UI to look good on a 80x24 terminal. Perhaps refactor?
     */
     int i;
     char buf[32];
