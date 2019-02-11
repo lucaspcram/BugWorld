@@ -2,6 +2,7 @@
 #include "game.h"
 #include "view.h"
 
+#include <errno.h>
 #include <getopt.h>
 #include <signal.h>
 #include <stdio.h>
@@ -62,11 +63,14 @@ int main(int argc, char * argv[])
             return 0;
 
             case 's':
-            g_seed = atoi(optarg);
-            if (g_seed < 1 || g_seed > 999999999) {
-                fprintf(stderr, "Invalid argument \'%s\' to option \'--seed\'\n", optarg);
-                fprintf(stderr, "Try \'bugworld --help\' for info.\n");
-                return 1;
+            // NOTE overflow can occurr here if user inputs huge number
+            g_seed = strtoull(optarg, NULL, 10);
+            if (g_seed == 0) {
+                if (errno == EINVAL || errno == ERANGE) {
+                    fprintf(stderr, "Invalid argument \'%s\' to option \'--seed\'\n", optarg);
+                    fprintf(stderr, "Try \'bugworld --help\' for info.\n");
+                    return 1;
+                }
             }
             break;
 
